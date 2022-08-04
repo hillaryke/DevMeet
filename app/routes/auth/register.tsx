@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react';
-import { Form, Link } from "@remix-run/react";
+import { Form, Link, useResolvedPath } from "@remix-run/react";
+import { ActionFunction, redirect } from "@remix-run/node";
+import invariant from "tiny-invariant";
 // import { Link, Redirect } from "react-router-dom";
 // import { connect } from "react-redux";
 // import { setAlert } from "../../actions/alert";
@@ -33,17 +35,51 @@ import { Form, Link } from "@remix-run/react";
 //       return <Redirect to="/dashboard"/>;
 //    }
 
+import { createUser } from "~/models/user.server";
+
+export const action: ActionFunction = async ({ request }) => {
+   const formData = await request.formData();
+   const email = formData.get("email");
+   const password = formData.get("password");
+   const password2 = formData.get("password2");
+   const name = formData.get("name");
+
+   try {
+      if (!name) throw Error('name should not be empty');
+      if (!email) throw Error('Email must be valid');
+      if (!password) throw Error('invalid password');
+      if (!password2) throw Error('invalid password');
+      invariant(password === password2, 'Password not the same!');
+      if (!password) throw Error('name should not be empty');
+
+      const userName = name.toString();
+      const userEmail = email.toString();
+      const userPassword = password.toString();
+
+      const user = await createUser(userName, userEmail, userPassword);
+      console.log(user);
+
+   } catch (err) {
+      // @ts-ignore
+      console.log(err.message);
+      return null;
+   }
+
+
+   return redirect("/");
+};
+
 export default function Register() {
 
    return (
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
          <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign Up</h2>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create account</h2>
          </div>
 
-         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-               <Form method="post" className="space-y-6" action="create-profile.html">
+               <Form method="post" className="space-y-6">
                   <div className="mt-1">
                      <input
                         type="text"
@@ -61,8 +97,7 @@ export default function Register() {
 
                      />
                      <small
-                     >This site uses Gravatar so if you want a profile image, use a
-                        Gravatar email</small
+                     > For a profile image, we recommend using a Gravatar email </small
                      >
                   </div>
                   <div className="mt-1">
@@ -83,15 +118,19 @@ export default function Register() {
                   </div>
                   <button
                      type="submit"
-                     className="btn-primary"
+                     className="bg-blueGreen text-lightColor w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium focus:outline-none hover:bg-teal-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300"
                   >
                      Register
                   </button>
+                  <div className="text-center text-sm text-gray-500">
+                     Already have an account?{"  "}
+                     <Link
+                        to="/auth/login"
+                        className="underline text-blue-500"
+                     >Sign In</Link>
+                  </div>
                </Form>
-               <div className="text-center text-sm text-gray-500">
-                  Already have an account?
-                  <Link to="/auth/login">Sign In</Link>
-               </div>
+
             </div>
          </div>
 

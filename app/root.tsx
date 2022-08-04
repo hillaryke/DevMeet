@@ -38,15 +38,15 @@ export default function App() {
   return (
     <html lang="en">
       <head>
-        <Meta />
-        <Links />
+         <Meta/>
+         <Links/>
       </head>
-      <body>
-        <Outlet />
-        <ScrollRestoration />
-        <script src="https://kit.fontawesome.com/b6db36476d.js" crossOrigin="anonymous"/>
-        <Scripts />
-        <LiveReload />
+      <body className="font-Railway">
+      <Outlet/>
+      <ScrollRestoration/>
+      <script src="https://kit.fontawesome.com/b6db36476d.js" crossOrigin="anonymous"/>
+      <Scripts/>
+      <LiveReload/>
       </body>
     </html>
   );

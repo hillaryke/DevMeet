@@ -4,17 +4,17 @@ import bcrypt from "bcryptjs";
 import gravatar from "gravatar";
 
 export async function getUserById(id: User["id"]) {
-   return prisma.user.findUnique({ where: { id }});
+   return prisma.user.findUnique({ where: { id } });
 }
 
 export async function getUserByEmail(email: User["email"]) {
-   return prisma.user.findUnique({ where: { email }});
+   return prisma.user.findUnique({ where: { email } });
 }
 
 export async function createUser(
+   name: User["name"],
    email: User["email"],
    password: User["password"],
-   name: User["name"]
 ) {
    const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -23,7 +23,7 @@ export async function createUser(
       s: "200",
       r: "pg",
       d: "mm"
-   })
+   });
 
    return prisma.user.create({
       data: {
@@ -32,7 +32,7 @@ export async function createUser(
          password: hashedPassword,
          avatar
       }
-   })
+   });
 }
 
 export type { User } from "@prisma/client";
