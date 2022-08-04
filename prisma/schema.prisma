@@ -12,6 +12,7 @@ generator client {
 
 model User {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
     email       String @unique
     password    String
     avatar      String
@@ -23,6 +24,7 @@ model User {
 
 model Post {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
     slug        String @unique
     userId      String
     user        User   @relation(fields: [userId], references: [id])
@@ -45,6 +47,9 @@ model Comment {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     postId      String @db.ObjectId
     post        Post   @relation(fields: [postId], references: [id])
+    text        String
+    avatar      String
+    date        DateTime @default(now())
 }
 
 model Profile {

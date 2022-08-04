@@ -1,30 +1,31 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
-  LinkProps,
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
+   LinkProps,
+   Links,
+   LiveReload,
+   Meta,
+   Outlet,
+   Scripts,
+   ScrollRestoration,
 } from "@remix-run/react";
-import appstyles from "~/styles/App.css";
+import appstyles from "~/styles/OldApp.css";
+import styles from "~/styles/app.css";
 
 export const links: LinksFunction = () => {
-  return [
-    {
-      rel: "stylesheet",
-      href: appstyles
-    },
-    {
-      rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css?family=Raleway"
-    },
-    {
-      rel: "stylesheet",
-      href: "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-    }
-  ]
+   return [
+      {
+         rel: "stylesheet",
+         href: styles
+      },
+      // {
+      //   rel: "stylesheet",
+      //   href: appstyles
+      // },
+      {
+         rel: "stylesheet",
+         href: "https://fonts.googleapis.com/css?family=Raleway"
+      },
+   ];
 }
 
 export const meta: MetaFunction = () => ({
