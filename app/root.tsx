@@ -41,7 +41,7 @@ export default function App() {
          <Meta/>
          <Links/>
       </head>
-      <body className="font-Railway">
+      <body className="font-Railway bg-sky-7">
       <Outlet/>
       <ScrollRestoration/>
       <script src="https://kit.fontawesome.com/b6db36476d.js" crossOrigin="anonymous"/>
