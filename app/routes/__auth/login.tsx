@@ -41,7 +41,7 @@ export const action: ActionFunction = async ({ request }) => {
       session.flash("error", "Invalid username or password");
 
       // Redirect back to the login page with errors
-      return redirect("/auth/login", {
+      return redirect("/login", {
          headers: { "Set-Cookie": await sessionStorage.commitSession(session) }
       });
    }

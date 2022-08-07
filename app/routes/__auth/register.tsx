@@ -1,55 +1,40 @@
 import React from 'react';
 import { Form, Link, useActionData } from "@remix-run/react";
 import type { ActionFunction } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 
 import { createUser } from "~/models/user.server";
 import { createUserSession } from "~/session.server";
-import { validateFields } from "~/utils/util.server";
+import { formDataToString, validateFields } from "~/utils/util.server";
 
 export const action: ActionFunction = async ({ request }) => {
    const formData = await request.formData();
-   const email = formData.get("email");
-   const password = formData.get("password");
-   const password2 = formData.get("password2");
-   const name = formData.get("name");
 
-   const fields = { email, password, password2, name };
+   const { name, email, password, password2 } = formDataToString(formData,
+      'name', 'email', 'password', 'password2'
+   );
+
+   const fields = { name, email, password, password2 };
+
    const errorMessages = {
+      name: "Name should not be empty",
       email: "Email must not be empty",
       password: "Password is required",
-      password2: "Password confirmation is required",
-      name: "Name should not be empty"
+      password2: "Password confirmation is required"
    };
 
-   try {
-      const errors = validateFields(fields, errorMessages);
-      if (errors) return json({ errors: errors });
-      if (password !== password2) return json({ errors: { password2: 'Password does not match!' } });
-      return null;
+   const errors = validateFields(fields, errorMessages);
+   if (errors) return json({ errors: errors });
+   if (password !== password2) return json({ errors: { password2: 'Password does not match!' } });
 
-      // const userName = name.toString();
-      // const userEmail = email.toString();
-      // const userPassword = password.toString();
-      //
-      // const user = await createUser(userName, userEmail, userPassword);
-      // console.log(user);
-      // return createUserSession(user.id, request, '/');
-
-   } catch (err) {
-      // @ts-ignore
-      console.log(err);
-      return null;
-   }
-
-
-   return redirect("/");
+   const user = await createUser(name, email, password);
+   return createUserSession(user.id, request, '/dashboard');
 };
 
 export default function Register() {
    // TODO fix 4 renders after actionFunction
    const actionData = useActionData();
-   console.log(actionData);
+   // console.log(actionData);
 
    return (
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
