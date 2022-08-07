@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Form, Link, useResolvedPath } from "@remix-run/react";
-import { ActionFunction, redirect } from "@remix-run/node";
+import type { ActionFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 // import { Link, Redirect } from "react-router-dom";
 // import { connect } from "react-redux";

@@ -3,17 +3,17 @@ import { prisma } from "~/db.server";
 import bcrypt from "bcryptjs";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
+import invariant from "tiny-invariant";
 
 const JWT_SECRET = process.env.JWT_SECRET;
+invariant(JWT_SECRET, "JWT_SECRET must be specified");
 
-export const generateToken = (user: User) => {
-   const userId = user.id;
-
+export const generateToken = (userId: string) => {
    try {
       const token = jwt.sign(
          { userId },
          JWT_SECRET!,
-         { expiresIn: 36000 }
+         { expiresIn: 60 * 1000 }
       );
       return token;
    } catch (err) {
