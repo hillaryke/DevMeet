@@ -2,6 +2,7 @@ import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { generateToken } from "~/models/user.server";
 import jwt from "jsonwebtoken";
+import type { User } from "~/models/user.server";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be specified");
 invariant(process.env.JWT_SECRET, "JWT_SECRET must be specified");
@@ -30,13 +31,10 @@ export async function createUserSession(userId: string, request: Request, redire
    });
 }
 
-export async function isAuthenticated(request: Request) {
+export async function authenticatedUser(request: Request): Promise<User["id"] | null> {
    const session = await getSession(request);
-
-   if (!(session.has("token"))) return false;
-
+   if (session.has("token")) return null;
    const token = session.get("token");
-
    try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET!);
       // @ts-ignore
@@ -46,4 +44,9 @@ export async function isAuthenticated(request: Request) {
       console.log(err);
    }
    return null;
+}
+
+export async function isAuthenticated(request: Request): Promise<boolean> {
+   const session = await getSession(request);
+   return session.has("token");
 }

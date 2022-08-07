@@ -1,11 +1,18 @@
 import React from 'react';
 import { Form, Link, useActionData } from "@remix-run/react";
-import type { ActionFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 
 import { createUser } from "~/models/user.server";
-import { createUserSession } from "~/session.server";
+import { createUserSession, isAuthenticated } from "~/session.server";
 import { formDataToString, validateFields } from "~/utils/util.server";
+
+export const loader: LoaderFunction = async ({ request }) => {
+   const isAuth = await isAuthenticated(request);
+   if (isAuth) {
+      return redirect("/dashboard");
+   }
+};
 
 export const action: ActionFunction = async ({ request }) => {
    const formData = await request.formData();
