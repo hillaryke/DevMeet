@@ -1,42 +1,11 @@
-import React, { Fragment, useState } from 'react';
-import { Form, Link, useResolvedPath } from "@remix-run/react";
+import React from 'react';
+import { Form, Link, useActionData } from "@remix-run/react";
 import type { ActionFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
-import invariant from "tiny-invariant";
-// import { Link, Redirect } from "react-router-dom";
-// import { connect } from "react-redux";
-// import { setAlert } from "../../actions/alert";
-// import { registerUser } from "../../actions/auth";
-//
-// import PropTypes from "prop-types";
-//
-// const Register = ( { setAlert, registerUser, isAuthenticated } ) => {
-//    const [formData, setFormData] = useState({
-//       name: '',
-//       email: '',
-//       password: '',
-//       password2: ''
-//    });
-//
-//    const { name, email, password, password2 } = formData;
-//
-//    const onInputChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-//
-//    const onFormSubmit = event => {
-//       event.preventDefault();
-//
-//       if (password !== password2) {
-//          setAlert('Passwords do not match', 'danger');
-//       } else {
-//          registerUser({ name, email, password });
-//       }
-//    };
-//
-//    if (isAuthenticated) {
-//       return <Redirect to="/dashboard"/>;
-//    }
+import { json, redirect } from "@remix-run/node";
 
 import { createUser } from "~/models/user.server";
+import { createUserSession } from "~/session.server";
+import { validateFields } from "~/utils/util.server";
 
 export const action: ActionFunction = async ({ request }) => {
    const formData = await request.formData();
@@ -45,24 +14,31 @@ export const action: ActionFunction = async ({ request }) => {
    const password2 = formData.get("password2");
    const name = formData.get("name");
 
+   const fields = { email, password, password2, name };
+   const errorMessages = {
+      email: "Email must not be empty",
+      password: "Password is required",
+      password2: "Password confirmation is required",
+      name: "Name should not be empty"
+   };
+
    try {
-      if (!name) throw Error('name should not be empty');
-      if (!email) throw Error('Email must be valid');
-      if (!password) throw Error('invalid password');
-      if (!password2) throw Error('invalid password');
-      invariant(password === password2, 'Password not the same!');
-      if (!password) throw Error('name should not be empty');
+      const errors = validateFields(fields, errorMessages);
+      if (errors) return json({ errors: errors });
+      if (password !== password2) return json({ errors: { password2: 'Password does not match!' } });
+      return null;
 
-      const userName = name.toString();
-      const userEmail = email.toString();
-      const userPassword = password.toString();
-
-      const user = await createUser(userName, userEmail, userPassword);
-      console.log(user);
+      // const userName = name.toString();
+      // const userEmail = email.toString();
+      // const userPassword = password.toString();
+      //
+      // const user = await createUser(userName, userEmail, userPassword);
+      // console.log(user);
+      // return createUserSession(user.id, request, '/');
 
    } catch (err) {
       // @ts-ignore
-      console.log(err.message);
+      console.log(err);
       return null;
    }
 
@@ -71,6 +47,9 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Register() {
+   // TODO fix 4 renders after actionFunction
+   const actionData = useActionData();
+   console.log(actionData);
 
    return (
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -88,6 +67,9 @@ export default function Register() {
                         name="name"
                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                      />
+                     {actionData?.errors?.name ?
+                        <div className="pt-1 text-red-700 text-sm">{actionData.errors.name}</div> : null
+                     }
                   </div>
                   <div className="mt-1">
                      <input
@@ -97,6 +79,9 @@ export default function Register() {
                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 
                      />
+                     {actionData?.errors?.email ?
+                        <div className="py-1 text-red-700 text-sm">{actionData.errors.email}</div> : null
+                     }
                      <small
                      > For a profile image, we recommend using a Gravatar email </small
                      >
@@ -108,6 +93,10 @@ export default function Register() {
                         name="password"
                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                      />
+
+                     {actionData?.errors?.password ?
+                        <div className="pt-1 text-red-700 text-sm">{actionData.errors.password}</div> : null
+                     }
                   </div>
                   <div className="mt-1">
                      <input
@@ -116,6 +105,9 @@ export default function Register() {
                         name="password2"
                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                      />
+                     {actionData?.errors?.password2 ?
+                        <div className="pt-1 text-red-700 text-sm">{actionData.errors.password2}</div> : null
+                     }
                   </div>
                   <button
                      type="submit"
