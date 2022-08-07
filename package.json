@@ -11,6 +11,8 @@
     "start": "cross-env NODE_ENV=production node ./server.js"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.6",
+    "@heroicons/react": "^1.0.6",
     "@prisma/client": "^4.1.1",
     "@remix-run/express": "^1.6.7",
     "@remix-run/node": "^1.6.7",

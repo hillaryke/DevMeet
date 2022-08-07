@@ -36,18 +36,18 @@ export const meta: MetaFunction = () => ({
 
 export default function App() {
   return (
-    <html lang="en">
-      <head>
-         <Meta/>
-         <Links/>
-      </head>
-      <body className="font-Railway bg-sky-7">
-      <Outlet/>
-      <ScrollRestoration/>
-      <script src="https://kit.fontawesome.com/b6db36476d.js" crossOrigin="anonymous"/>
-      <Scripts/>
-      <LiveReload/>
-      </body>
+    <html lang="en" className="h-full bg-gray-100">
+    <head>
+       <Meta/>
+       <Links/>
+    </head>
+    <body className="h-full font-Railway bg-sky-7">
+    <Outlet/>
+    <ScrollRestoration/>
+    <script src="https://kit.fontawesome.com/b6db36476d.js" crossOrigin="anonymous"/>
+    <Scripts/>
+    <LiveReload/>
+    </body>
     </html>
   );
 }
