@@ -4,18 +4,27 @@ import {
    BriefcaseIcon
 } from '@heroicons/react/outline';
 import { Link } from "@remix-run/react";
-
-const navigation = [
-   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-   { name: 'Experience', href: '#', icon: BriefcaseIcon, current: false },
-   { name: 'Education', href: '#', icon: AcademicCapIcon, current: false },
-];
+import { useState } from "react";
 
 function classNames(...classes: string[]) {
    return classes.filter(Boolean).join(' ');
 }
 
 export default function Sidebarr() {
+   const [active, setActive] = useState(true);
+
+   const navigation = [
+      { name: 'Dashboard', href: '/dashboard/', icon: HomeIcon, current: active },
+      { name: 'Experience', href: '/dashboard/experiences', icon: BriefcaseIcon, current: !active },
+      { name: 'Education', href: '/dashboard/education', icon: AcademicCapIcon, current: !active },
+   ];
+
+   // TODO setcurrent if clicked
+   const setCurrent = (item: any) => {
+      const currentItem = navigation.find(navItem => navItem.name === item.name);
+      currentItem!.current = true;
+   };
+
    return (
       <>
          {/*
@@ -31,28 +40,32 @@ export default function Sidebarr() {
                <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                   <nav className="mt-5 flex-1 px-2 bg-white space-y-1">
                      {navigation.map((item) => (
-                        <a
+                        <Link
                            key={item.name}
-                           href={item.href}
-                           className={classNames(
-                              item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                              'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-                           )}
+                           to={item.href}
+                           onClick={() => setCurrent(item)}
+                           className="focus:bg-gray-100 focus:text-gray-900 text-gray-600 hover:bg-gray-50 hover:text-gray-900
+                              group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                           // className={classNames(
+                           //    item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                           //    'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+                           // )}
                         >
                            <item.icon
-                              className={classNames(
-                                 item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
-                                 'mr-3 flex-shrink-0 h-6 w-6'
-                              )}
+                              className="focus:text-gray-500 text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
+                              // className={classNames(
+                              //    item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                              //    'mr-3 flex-shrink-0 h-6 w-6'
+                              // )}
                               aria-hidden="true"
                            />
                            {item.name}
-                        </a>
+                        </Link>
                      ))}
                   </nav>
                </div>
                <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                  <Link to="#" className="flex-shrink-0 w-full group block">
+                  <Link to="/dashboard/profile" className="flex-shrink-0 w-full group block">
                      <div className="flex items-center">
                         <div>
                            <img
