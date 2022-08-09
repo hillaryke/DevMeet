@@ -43,6 +43,7 @@ export default function Sidebarr({ user }: { user: User }) {
                   <nav className="mt-5 flex-1 px-2 bg-white space-y-1">
                      {navigation.map((item) => (
                         <Link
+                           prefetch="intent"
                            key={item.name}
                            to={item.href}
                            onClick={() => setCurrent(item)}
@@ -67,7 +68,7 @@ export default function Sidebarr({ user }: { user: User }) {
                   </nav>
                </div>
                <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                  <Link to="/dashboard/profile" className="flex-shrink-0 w-full group block">
+                  <Link prefetch="intent" to="/dashboard/profile" className="flex-shrink-0 w-full group block">
                      <div className="flex items-center">
                         <div>
                            <img
