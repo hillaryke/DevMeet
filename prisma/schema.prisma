@@ -63,7 +63,7 @@ model Profile {
     skills           String[]
     status           String?
     githubUsername   String?
-    experience       Experience[]
+    experiences      Experience[]
     education        Education[]
     social           Social?
     date             DateTime @default(now())
@@ -76,11 +76,11 @@ model Experience {
     profile         Profile @relation(fields: [profileId], references: [id])
     title           String
     company         String
-    location        String
+    location        String?
     from            DateTime
-    to              DateTime
+    to              DateTime?
     current         Boolean @default(false)
-    description     String
+    description     String?
 }
 
 model Education {
@@ -89,20 +89,20 @@ model Education {
     profile         Profile @relation(fields: [profileId], references: [id])
     school          String
     degree          String
-    fieldofstudy    String
+    fieldofstudy    String?
     from            String
-    to              String
+    to              String?
     current         Boolean @default(false)
-    description     String
+    description     String?
 }
 
 model Social {
     id              String @id @default(auto()) @map("_id") @db.ObjectId
     profileId       String @db.ObjectId @unique
     profile         Profile @relation(fields: [profileId], references: [id])
-    youtube         String
-    twitter         String
-    facebook        String
-    linkedin        String
-    instagram       String
+    youtube         String?
+    twitter         String?
+    facebook        String?
+    linkedin        String?
+    instagram       String?
 }

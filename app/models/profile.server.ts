@@ -3,6 +3,10 @@ import type { IErrors } from "~/utils/util.server";
 import type { User } from "@prisma/client";
 import { prisma } from "~/db.server";
 
+import { authenticatedUser } from "~/session.server";
+
+export type { Profile } from "@prisma/client";
+
 export const createProfile = async (formData: FormData, userId: User["id"]) => {
    const errors: IErrors = {};
    const errorMessages = {
@@ -44,4 +48,16 @@ export const createProfile = async (formData: FormData, userId: User["id"]) => {
    });
 
    return { user };
+};
+
+export const getProfile = async (request: Request) => {
+   const userId = await authenticatedUser(request);
+   if (!userId) return null;
+
+   const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { profile: true },
+   });
+
+   return user?.profile;
 };

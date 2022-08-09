@@ -1,3 +1,5 @@
+import { findVariable } from "@typescript-eslint/utils/dist/ast-utils";
+
 export interface IErrors {
    [key: string]: string;
 }
@@ -6,13 +8,28 @@ interface IFormData {
    [key: string]: string;
 }
 
-export const validateFields = (fields: any, errorMessages: any) => {
+export const validateFields = (formatedFormData: any, errorMessages?: any, fieldsToValidate?: string[],) => {
    const errors: IErrors = {};
-   for (const field of Object.keys(fields)) {
-      if (!fields[field as keyof typeof fields]) {
-         errors[field] = errorMessages[field] || "This field is required";
+   if (!fieldsToValidate) {
+      for (const field of Object.keys(formatedFormData)) {
+         if (!formatedFormData[field as keyof typeof formatedFormData]) {
+            if (errorMessages) {
+               errors[field] = errorMessages[field] || "This field is required";
+            } else {
+               errors[field] = "This field is required";
+            }
+         }
       }
    }
+
+   for (const index in fieldsToValidate) {
+      const field = fieldsToValidate[index as any];
+      if (!formatedFormData[field]) {
+         errors[field] = errorMessages[field] || "This field is required";
+      }
+
+   }
+
    if (Object.keys(errors).length !== 0) {
       return errors;
    }
@@ -38,4 +55,18 @@ export const formDataToObject = (formData: any, fieldNames: string[]) => {
       Data[field] = fieldData;
    }
    return Data;
+};
+
+export const processFormData = async (
+   request: Request,
+   fieldNames: string[],
+   errorMessages?: any,
+   fieldsTovalidate?: string[]
+) => {
+   const formData = await request.formData();
+   const formated = formDataToObject(formData, fieldNames);
+
+   const errors = validateFields(formated, errorMessages, fieldsTovalidate);
+
+   return { errors, data: formated };
 };

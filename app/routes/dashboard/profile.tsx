@@ -59,8 +59,9 @@ export default function ProfileShow() {
                         />
                      </div>
                      <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">{user.name}</h1>
-                     <h3 className="text-gray-600 font-lg text-semibold leading-6 text-center">Owner at Her Company
-                        Inc.</h3>
+                     <h3 className="text-gray-600 font-lg text-semibold leading-6 text-center">
+                        {user.profile.status} at {user.profile.company}
+                     </h3>
                      <div className="text-center mt-2 space-x-3 text-xl">
                         <FontAwesomeIcon icon={faGlobe} className="text-blue-500"/>
                         <FontAwesomeIcon icon={faFacebookF} className="text-blue-700"/>

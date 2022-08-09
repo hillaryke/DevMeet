@@ -1,4 +1,28 @@
 import { useState } from "react";
+import { ActionFunction, json } from "@remix-run/node";
+import { getUserWithProfile } from "~/models/user.server";
+import { getProfile } from "~/models/profile.server";
+import { Form } from "@remix-run/react";
+import { processFormData } from "~/utils/util.server";
+
+export const action: ActionFunction = async ({ request }) => {
+   const fieldNames = ["title", "company", "location", "from", "to", "current", "description"];
+   const fieldsToValidate = ["title", "company", "from"];
+   const errorMessages = {
+      title: "Job Title is required",
+      company: "Company is required",
+   };
+   const { errors } = await processFormData(
+      request,
+      fieldNames,
+      errorMessages,
+      fieldsToValidate
+   );
+   if (errors) return json({ errors });
+
+   const profile = await getProfile(request);
+};
+
 
 export default function Experience() {
    const [isCurrentJob, toggleCurrentJob] = useState(false);
@@ -12,18 +36,18 @@ export default function Experience() {
          </div>
          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <div className="mt-10 sm:mt-5 lg:max-w-3xl">
-               <form action="#" method="POST">
+               <Form method="post">
                   <div className="shadow overflow-hidden sm:rounded-md">
                      <div className="px-4 py-5 bg-white sm:p-6 space-y-5">
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="job"
-                                  placeholder="Job Title"
+                                  placeholder="* Job Title"
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="company"
-                                  placeholder="Company"
+                                  placeholder="* Company"
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                         </div>
 
@@ -31,15 +55,6 @@ export default function Experience() {
                            <input type="text" name="location"
                                   placeholder="Location"
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
-                        </div>
-
-                        <div className="col-span-6 sm:col-span-3">
-                           <select id="country" name="country" autoComplete="country-name"
-                                   className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                              <option>United States</option>
-                              <option>Canada</option>
-                              <option>Mexico</option>
-                           </select>
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
@@ -62,10 +77,10 @@ export default function Experience() {
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
-                                    <textarea id="about" name="about" rows={3}
-                                              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                              placeholder="Job Description"
-                                    ></textarea>
+                              <textarea name="description" rows={3}
+                                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        placeholder="Job Description"
+                              ></textarea>
                         </div>
 
                      </div>
@@ -76,7 +91,7 @@ export default function Experience() {
                         </button>
                      </div>
                   </div>
-               </form>
+               </Form>
             </div>
          </div>
       </div>

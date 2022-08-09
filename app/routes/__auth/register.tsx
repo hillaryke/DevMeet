@@ -5,7 +5,7 @@ import { json, redirect } from "@remix-run/node";
 
 import { createUser } from "~/models/user.server";
 import { createUserSession, isAuthenticated } from "~/session.server";
-import { formDataToString, validateFields } from "~/utils/util.server";
+import { processFormData } from "~/utils/util.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const isAuth = await isAuthenticated(request);
@@ -16,23 +16,16 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export const action: ActionFunction = async ({ request }) => {
-   const formData = await request.formData();
    const fieldNames = ['name', 'email', 'password', 'password2'];
-
-   const { name, email, password, password2 } = formDataToString(formData,
-      fieldNames
-   );
-
-   const fields = { name, email, password, password2 };
-
    const errorMessages = {
       name: "Name should not be empty",
       email: "Email must not be empty",
       password: "Password is required",
       password2: "Password confirmation is required"
    };
+   const { errors, data } = await processFormData(request, fieldNames, errorMessages);
+   const { name, email, password, password2 } = data;
 
-   const errors = validateFields(fields, errorMessages);
    if (errors) return json({ errors: errors });
    if (password !== password2) return json({ errors: { password2: 'Password does not match!' } });
 
@@ -43,7 +36,6 @@ export const action: ActionFunction = async ({ request }) => {
 export default function Register() {
    // TODO fix 4 renders after actionFunction
    const actionData = useActionData();
-   // console.log(actionData);
 
    return (
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -112,7 +104,7 @@ export default function Register() {
                   <div className="text-center text-sm text-gray-500">
                      Already have an account?{"  "}
                      <Link
-                        to="/auth/login"
+                        to="/login"
                         className="underline text-blue-500"
                      >Sign In</Link>
                   </div>
@@ -124,18 +116,3 @@ export default function Register() {
       </div>
    );
 };
-
-// Register.propTypes = {
-//    setAlert: PropTypes.func.isRequired,
-//    registerUser: PropTypes.func.isRequired,
-//    isAuthenticated: PropTypes.bool
-// };
-//
-// const mapStateToProps = state => ( {
-//    isAuthenticated: state.auth.isAuthenticated
-// } );
-//
-// export default connect(
-//    mapStateToProps,
-//    { setAlert, registerUser }
-// )(Register);

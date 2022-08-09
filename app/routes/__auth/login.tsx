@@ -4,8 +4,7 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { createUserSession, getSession, sessionStorage } from "~/session.server";
 import { json, redirect } from "@remix-run/node";
 import { validateCredentials } from "~/models/user.server";
-import invariant from "tiny-invariant";
-import { formDataToObject, validateFields } from "~/utils/util.server";
+import { processFormData } from "~/utils/util.server";
 import React from "react";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -27,15 +26,14 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
    const session = await getSession(request);
 
-   const formData = await request.formData();
    const fieldNames = ["email", "password"];
-   const { email, password } = formDataToObject(formData, fieldNames);
 
    const errorMessages = {
       email: "Email is required",
       password: "Password is required",
    };
-   const errors = validateFields({ email, password }, errorMessages);
+   const { errors, data } = await processFormData(request, fieldNames, errorMessages);
+   const { email, password } = data;
    if (errors) return json({ errors: errors });
 
    const userId = await validateCredentials(email, password);
@@ -119,7 +117,7 @@ export default function Login() {
                   <div className="text-center text-sm text-gray-500">
                      Don't have an account?{" "}
                      <Link
-                        to="/auth/register"
+                        to="/register"
                         className="text-blue-500"
                      >Register</Link>
                   </div>
