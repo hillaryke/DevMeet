@@ -32,6 +32,7 @@ export const action: ActionFunction = async ({ request }) => {
       email: "Email is required",
       password: "Password is required",
    };
+
    const { errors, data } = await processFormData(request, fieldNames, errorMessages);
    const { email, password } = data;
    if (errors) return json({ errors: errors });

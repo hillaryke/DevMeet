@@ -1,11 +1,9 @@
-import { findVariable } from "@typescript-eslint/utils/dist/ast-utils";
-
 export interface IErrors {
    [key: string]: string;
 }
 
 interface IFormData {
-   [key: string]: string;
+   [key: string]: any;
 }
 
 export const validateFields = (formatedFormData: any, errorMessages?: any, fieldsToValidate?: string[],) => {
@@ -52,7 +50,14 @@ export const formDataToObject = (formData: any, fieldNames: string[]) => {
    for (const index in fieldNames) {
       const field = fieldNames[index];
       const fieldData = formData.get(field);
-      Data[field] = fieldData;
+
+      if (fieldData === null) {
+         Data[field] = false;
+      } else if (fieldData == "false" || fieldData == "true") {
+         Data[field] = JSON.parse(fieldData);
+      } else {
+         Data[field] = fieldData;
+      }
    }
    return Data;
 };
@@ -61,10 +66,22 @@ export const processFormData = async (
    request: Request,
    fieldNames: string[],
    errorMessages?: any,
-   fieldsTovalidate?: string[]
+   fieldsTovalidate?: string[],
+   dateFields?: string[],
 ) => {
    const formData = await request.formData();
-   const formated = formDataToObject(formData, fieldNames);
+   let formated = formDataToObject(formData, fieldNames);
+
+   if (dateFields) {
+      for (const field of dateFields) {
+         const date = formated[field];
+         if (date) {
+            formated[field] = new Date(date);
+         } else {
+            formated[field] = null;
+         }
+      }
+   }
 
    const errors = validateFields(formated, errorMessages, fieldsTovalidate);
 

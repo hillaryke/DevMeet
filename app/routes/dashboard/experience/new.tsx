@@ -1,30 +1,44 @@
-import { useState } from "react";
-import { ActionFunction, json } from "@remix-run/node";
-import { getUserWithProfile } from "~/models/user.server";
-import { getProfile } from "~/models/profile.server";
-import { Form } from "@remix-run/react";
+import React, { useState } from "react";
+import type { ActionFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import { Form, useActionData } from "@remix-run/react";
 import { processFormData } from "~/utils/util.server";
+import { createExperience } from "~/models/experience.server";
 
 export const action: ActionFunction = async ({ request }) => {
    const fieldNames = ["title", "company", "location", "from", "to", "current", "description"];
    const fieldsToValidate = ["title", "company", "from"];
+   const dateFields = ["from", "to"];
    const errorMessages = {
       title: "Job Title is required",
       company: "Company is required",
+      from: "From date is required",
    };
-   const { errors } = await processFormData(
+   let { errors, data } = await processFormData(
       request,
       fieldNames,
       errorMessages,
-      fieldsToValidate
+      fieldsToValidate,
+      dateFields
    );
+   // To date is required if the user is not currently working
+   if (!data["current"]) {
+      if (!errors) errors = {};
+      errors["to"] = "To date is required";
+   }
+
    if (errors) return json({ errors });
 
-   const profile = await getProfile(request);
+   const experience = await createExperience(request, data);
+   console.log(experience);
+
+   return redirect('/dashboard/experiences');
 };
 
 
 export default function Experience() {
+   const actionData = useActionData();
+
    const [isCurrentJob, toggleCurrentJob] = useState(false);
 
    return (
@@ -40,40 +54,58 @@ export default function Experience() {
                   <div className="shadow overflow-hidden sm:rounded-md">
                      <div className="px-4 py-5 bg-white sm:p-6 space-y-5">
                         <div className="col-span-6 sm:col-span-4">
-                           <input type="text" name="job"
+                           <input type="text" name="title"
                                   placeholder="* Job Title"
-                                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           />
+                           {actionData?.errors?.title ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.title}</div> : null
+                           }
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="company"
                                   placeholder="* Company"
-                                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           />
+                           {actionData?.errors?.company ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.company}</div> : null
+                           }
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="location"
                                   placeholder="Location"
-                                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           />
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="date" name="from"
-                                  className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                                  className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           />
+                           {actionData?.errors?.from ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.from}</div> : null
+                           }
                         </div>
 
                         <div className="flex items-center">
                            {/* @ts-ignore */}
-                           <input name="current" type="checkbox" value={isCurrentJob}
+                           <input name="current" type="checkbox" defaultValue={isCurrentJob} value={isCurrentJob}
                                   onChange={() => toggleCurrentJob(!isCurrentJob)}
-                                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"/>
+                                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                           />
                            <label htmlFor="push-everything"
                                   className="ml-2 block text-sm font-medium text-gray-700">Current Job</label>
                         </div>
                         <div className="col-span-6 sm:col-span-4">
                            <input type="date" name="to"
                                   disabled={isCurrentJob}
-                                  className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                                  className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           />
+                           {actionData?.errors?.to ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.to}</div> : null
+                           }
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
