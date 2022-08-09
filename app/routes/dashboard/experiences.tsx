@@ -1,10 +1,24 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Form, Link } from "@remix-run/react";
+import { LoaderFunction, redirect } from "@remix-run/node";
+import { isAuthenticated } from "~/session.server";
+import { getExperience } from "~/models/experience.server";
+import util from "util";
 
 const people = [
    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
    // More people...
 ];
+
+export const loader: LoaderFunction = async ({ request }) => {
+   const isAuth = await isAuthenticated(request);
+   if (!isAuth) return redirect("/");
+
+   const experience = await getExperience(request);
+   console.log(util.inspect(experience, false, null, true));
+
+   return null;
+};
 
 export default function ExperienceList() {
    return (

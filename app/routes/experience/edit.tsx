@@ -1,9 +1,15 @@
 import { useState } from "react";
-import { LoaderFunction } from "@remix-run/node";
-import { authenticatedUser } from "~/session.server";
+import { LoaderFunction, redirect } from "@remix-run/node";
+import { isAuthenticated } from "~/session.server";
+import { getExperience } from "~/models/experience.server";
+import * as util from "util";
 
 export const loader: LoaderFunction = async ({ request }) => {
-   const userId = await authenticatedUser(request);
+   const isAuth = await isAuthenticated(request);
+   if (!isAuth) return redirect("/");
+
+   const experience = await getExperience(request);
+   console.log(util.inspect(experience, false, null, true));
 
    return null;
 };

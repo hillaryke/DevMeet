@@ -22,7 +22,7 @@ export const action: ActionFunction = async ({ request }) => {
       dateFields
    );
    // To date is required if the user is not currently working
-   if (!data["current"]) {
+   if (!data["current"] && !data["to"]) {
       if (!errors) errors = {};
       errors["to"] = "To date is required";
    }

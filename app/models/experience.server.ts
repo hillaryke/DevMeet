@@ -32,3 +32,15 @@ export const createExperience = async (request: Request, formData: any) => {
 
    return experience;
 };
+
+export const getExperience = async (request: Request) => {
+   const profile = await getProfile(request);
+   if (!profile) return null;
+
+   const data = await prisma.profile.findUnique({
+      where: { id: profile.id },
+      select: { experience: true },
+   });
+
+   return data!.experience;
+};
