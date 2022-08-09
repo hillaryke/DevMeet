@@ -1,33 +1,47 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import type { LoaderFunction } from "@remix-run/node";
+import { authenticatedUser } from "~/session.server";
+import { json } from "@remix-run/node";
+import { getUserWithProfile } from "~/models/user.server";
 
 const people = [
    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
    // More people...
 ];
 
+export const loader: LoaderFunction = async ({ request }) => {
+   const userId = await authenticatedUser(request);
+
+   const user = await getUserWithProfile(userId!);
+   return json({ user });
+};
+
 export default function DashboardIndex() {
+   const { user } = useLoaderData();
+
    return (
       <div>
-         <div className="px-4 sm:px-6 lg:px-8 mb-7 lg:w-10/12">
-            <div className="sm:flex flex-col">
-               <div className="flex items-center">
-                  <FontAwesomeIcon icon={faUser} className="text-lg"/>
-                  <h1 className="ml-2 text-xl font-semibold text-gray-900">Create Your Profile</h1>
-               </div>
+         {user.profile ? null :
+            <div className="px-4 sm:px-6 lg:px-8 mb-7 lg:w-10/12">
+               <div className="sm:flex flex-col">
+                  <div className="flex items-center">
+                     <FontAwesomeIcon icon={faUser} className="text-lg"/>
+                     <h1 className="ml-2 text-xl font-semibold text-gray-900">Create Your Profile</h1>
+                  </div>
 
-               <div className="mt-4 ml-4 sm:flex-none">
-                  <Link
-                     to="/dashboard/create-profile"
-                     className="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white font-semibold shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 sm:w-auto"
-                  >
-                     Create Profile
-                  </Link>
+                  <div className="mt-4 ml-4 sm:flex-none">
+                     <Link
+                        to="/dashboard/create-profile"
+                        className="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white font-semibold shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 sm:w-auto"
+                     >
+                        Create Profile
+                     </Link>
+                  </div>
                </div>
             </div>
-         </div>
+         }
 
          {/* Experience Credentials */}
          <div className="px-4 sm:px-6 lg:px-8 mb-7 lg:w-10/12">

@@ -2,9 +2,9 @@ import Sidebarr from "~/components/Sidebarr";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import Menu from "~/components/Menu";
 import { json, LoaderFunction, redirect } from "@remix-run/node";
-import { authenticatedUser, isAuthenticated } from "~/session.server";
-import { CustomError } from "~/utils/errors.server";
-import { getUserById } from "~/models/user.server";
+import { authenticatedUser } from "~/session.server";
+import { getUserById, getUserWithProfile } from "~/models/user.server";
+import util from "util";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);
