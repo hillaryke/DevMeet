@@ -1,10 +1,12 @@
-import { Form, Link, useLoaderData, useTransition } from "@remix-run/react";
+import { Form, Link, useActionData, useLoaderData, useTransition } from "@remix-run/react";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 
 import { createUserSession, getSession, sessionStorage } from "~/session.server";
 import { json, redirect } from "@remix-run/node";
 import { validateCredentials } from "~/models/user.server";
 import invariant from "tiny-invariant";
+import { formDataToObject, validateFields } from "~/utils/util.server";
+import React from "react";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const session = await getSession(request);
@@ -25,17 +27,18 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
    const session = await getSession(request);
 
-   const form = await request.formData();
-   const email = form.get("email");
-   const password = form.get("password");
+   const formData = await request.formData();
+   const fieldNames = ["email", "password"];
+   const { email, password } = formDataToObject(formData, fieldNames);
 
-   invariant(email, "Invalid email");
-   invariant(password, "Invalid password");
+   const errorMessages = {
+      email: "Email is required",
+      password: "Password is required",
+   };
+   const errors = validateFields({ email, password }, errorMessages);
+   if (errors) return json({ errors: errors });
 
-   const userEmail = email.toString();
-   const userPassword = password.toString();
-
-   const userId = await validateCredentials(userEmail, userPassword);
+   const userId = await validateCredentials(email, password);
 
    if (userId === null) {
       session.flash("error", "Invalid username or password");
@@ -45,11 +48,12 @@ export const action: ActionFunction = async ({ request }) => {
          headers: { "Set-Cookie": await sessionStorage.commitSession(session) }
       });
    }
-   return createUserSession(userId, request, '/');
+   return createUserSession(userId, request, '/dashboard');
 };
 
 export default function Login() {
    const { error } = useLoaderData();
+   const actionData = useActionData();
    console.log("actionData: ", error);
 
    const transition = useTransition();
@@ -77,6 +81,9 @@ export default function Login() {
                            autoComplete="email"
                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
+                        {actionData?.errors?.email ?
+                           <div className="py-1 text-red-700 text-sm">{actionData?.errors.email}</div> : null
+                        }
                      </div>
                   </div>
 
@@ -92,6 +99,9 @@ export default function Login() {
                            autoComplete="current-password"
                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
+                        {actionData?.errors?.password ?
+                           <div className="py-1 text-red-700 text-sm">{actionData?.errors.password}</div> : null
+                        }
                      </div>
                      <div className="pt-2 text-red-700" role="alert">{error}</div>
                   </div>
