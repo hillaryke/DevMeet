@@ -44,25 +44,25 @@ model Like {
 }
 
 model Comment {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    postId      String @db.ObjectId
-    post        Post   @relation(fields: [postId], references: [id])
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    postId      String   @db.ObjectId
+    post        Post     @relation(fields: [postId], references: [id])
     text        String
     avatar      String
     date        DateTime @default(now())
 }
 
 model Profile {
-    id               String @id @default(auto()) @map("_id") @db.ObjectId
-    userId           String @db.ObjectId @unique
-    user             User   @relation(fields: [userId], references: [id])
-    company          String
-    website          String
-    bio              String
-    location         String
-    skills           String
-    status           String
-    githubUsername   String
+    id               String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId           String   @db.ObjectId @unique
+    user             User     @relation(fields: [userId], references: [id])
+    company          String?
+    website          String?
+    bio              String?
+    location         String?
+    skills           String[]
+    status           String?
+    githubUsername   String?
     experience       Experience[]
     education        Education[]
     social           Social?
