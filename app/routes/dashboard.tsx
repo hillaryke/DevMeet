@@ -3,8 +3,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import Menu from "~/components/Menu";
 import { json, LoaderFunction, redirect } from "@remix-run/node";
 import { authenticatedUser } from "~/session.server";
-import { getUserById, getUserWithProfile } from "~/models/user.server";
-import util from "util";
+import { getUserById } from "~/models/user.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);
