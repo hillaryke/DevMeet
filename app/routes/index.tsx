@@ -3,8 +3,8 @@ import { isAuthenticated } from "~/session.server";
 import { Link } from "@remix-run/react";
 
 export const loader: LoaderFunction = async ({ request }) => {
-   const userId = await isAuthenticated(request);
-   console.log("userId: ", userId);
+   const isAuth = await isAuthenticated(request);
+   console.log("isAuth: ", isAuth);
 
    return {};
 };

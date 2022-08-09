@@ -12,13 +12,15 @@ export const loader: LoaderFunction = async ({ request }) => {
    if (isAuth) {
       return redirect("/dashboard");
    }
+   return null;
 };
 
 export const action: ActionFunction = async ({ request }) => {
    const formData = await request.formData();
+   const fieldNames = ['name', 'email', 'password', 'password2'];
 
    const { name, email, password, password2 } = formDataToString(formData,
-      'name', 'email', 'password', 'password2'
+      fieldNames
    );
 
    const fields = { name, email, password, password2 };

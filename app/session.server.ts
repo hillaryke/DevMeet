@@ -33,7 +33,7 @@ export async function createUserSession(userId: string, request: Request, redire
 
 export async function authenticatedUser(request: Request): Promise<User["id"] | null> {
    const session = await getSession(request);
-   if (session.has("token")) return null;
+   if (!session.has("token")) return null;
    const token = session.get("token");
    try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET!);

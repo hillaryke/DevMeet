@@ -5,6 +5,8 @@ import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
 import invariant from "tiny-invariant";
 
+export type { User } from "@prisma/client";
+
 const JWT_SECRET = process.env.JWT_SECRET;
 invariant(JWT_SECRET, "JWT_SECRET must be specified");
 
@@ -69,5 +71,10 @@ export const validateCredentials = async (
    return existingUser.id;
 };
 
-export type { User } from "@prisma/client";
+export const getUserWithProfile = (userId: User["id"]) => {
+   return prisma.user.findUnique({
+      where: { id: userId },
+      include: { profile: true }
+   });
+};
 
