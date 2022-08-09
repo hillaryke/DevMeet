@@ -1,6 +1,7 @@
 import { prisma } from "~/db.server";
-import type { Profile } from "~/models/profile.server";
 import { getProfile } from "~/models/profile.server";
+
+export type { Experience } from "@prisma/client";
 
 export const createExperience = async (request: Request, formData: any) => {
    const profile = await getProfile(request);
@@ -13,7 +14,7 @@ export const createExperience = async (request: Request, formData: any) => {
 
    console.log(data!.experience);
 
-   const experience = await prisma.profile.update({
+   return prisma.profile.update({
       where: { id: profile.id },
       data: {
          experience: {
@@ -29,8 +30,6 @@ export const createExperience = async (request: Request, formData: any) => {
          }
       }
    });
-
-   return experience;
 };
 
 export const getExperience = async (request: Request) => {

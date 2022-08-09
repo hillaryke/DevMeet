@@ -1,14 +1,13 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Form, Link } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import { LoaderFunction, redirect } from "@remix-run/node";
+import { format, formatDistance, formatRelative, subDays } from 'date-fns';
+
 import { isAuthenticated } from "~/session.server";
 import { getExperience } from "~/models/experience.server";
+import type { Experience } from "~/models/experience.server";
 import util from "util";
-
-const people = [
-   { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-   // More people...
-];
+import { formatDate } from "~/utils/date.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const isAuth = await isAuthenticated(request);
@@ -17,10 +16,12 @@ export const loader: LoaderFunction = async ({ request }) => {
    const experience = await getExperience(request);
    console.log(util.inspect(experience, false, null, true));
 
-   return null;
+   return { experience };
 };
 
 export default function ExperienceList() {
+   const { experience } = useLoaderData();
+
    return (
       <div className="px-4 sm:px-6 lg:px-8">
          <div className="sm:flex sm:items-center">
@@ -66,18 +67,21 @@ export default function ExperienceList() {
                         </tr>
                         </thead>
                         <tbody className="bg-white">
-                        {people.map((person, personIdx) => (
-                           <tr key={person.email} className={personIdx % 2 === 0 ? undefined : 'bg-gray-50'}>
+                        {experience.map((exp: Experience, expIndex: number) => (
+                           <tr key={exp.id} className={expIndex % 2 === 0 ? undefined : 'bg-gray-50'}>
                               <td
                                  className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                 {person.name}
+                                 {exp.company}
                               </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.title}</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{exp.title}</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                 {format(new Date(exp.from), 'MM/dd/yyyy')} - {" "}
+                                 {exp.to ? format(new Date(exp.to), 'MM/dd/yyyy') : 'Present'}
+                              </td>
                               <td
                                  className="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-sm font-medium sm:pr-6">
                                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                    Edit<span className="sr-only">, {person.name}</span>
+                                    Edit<span className="sr-only">, {exp.title}</span>
                                  </a>
                               </td>
                               <td
