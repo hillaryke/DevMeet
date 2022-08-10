@@ -1,6 +1,6 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Form, Link, useLoaderData } from "@remix-run/react";
-import { LoaderFunction, redirect } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { format } from 'date-fns';
 
 import { isAuthenticated } from "~/session.server";

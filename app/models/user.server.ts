@@ -89,7 +89,14 @@ export const getUserALl = async (userId: User["id"]) => {
                education: true,
                social: true
             }
-         }
+         },
+         posts: {
+            include: {
+               comments: true,
+               likes: true,
+            }
+         },
+         likes: true,
       }
    });
 };

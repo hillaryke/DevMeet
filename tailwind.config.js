@@ -14,6 +14,9 @@ module.exports = {
          lineHeight: {
             xsm: '1.25rem',
          },
+         padding: {
+            18: '4.5rem',
+         },
          colors: {
             blueGreen: '#17a2b8',
             lightColor: '#f4f4f4',
