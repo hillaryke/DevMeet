@@ -1,29 +1,35 @@
+import type { LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
+import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import type { LoaderFunction } from "@remix-run/node";
-import { authenticatedUser } from "~/session.server";
-import { json } from "@remix-run/node";
-import { getUserWithProfile } from "~/models/user.server";
 
-const people = [
-   { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-   // More people...
-];
+import { authenticatedUser } from "~/session.server";
+import { getUserALl } from "~/models/user.server";
+import type { Experience } from "~/models/experience.server";
+import type { Education } from "~/models/education.server";
+import util from "util";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);
+   if (!userId) return redirect("/");
 
-   const user = await getUserWithProfile(userId!);
+   const user = await getUserALl(userId);
+   console.log(util.inspect(user, false, null, true));
+
    return json({ user });
 };
 
 export default function DashboardIndex() {
    const { user } = useLoaderData();
+   const profile = user.profile;
+   const experience = profile?.experience;
+   const education = profile?.education;
 
    return (
       <div>
-         {user.profile ? null :
+         {profile ? null :
             <div className="px-4 sm:px-6 lg:px-8 mb-7 lg:w-10/12">
                <div className="sm:flex flex-col">
                   <div className="flex items-center">
@@ -72,16 +78,20 @@ export default function DashboardIndex() {
                            </tr>
                            </thead>
                            <tbody className="bg-white">
-                           {people.map((person, personIdx) => (
-                              <tr key={person.email} className={personIdx % 2 === 0 ? undefined : 'bg-gray-50'}>
+                           {(experience && experience.length > 0) ? experience.map((exp: Experience, expIndex: number) => (
+                              <tr key={exp.title} className={expIndex % 2 === 0 ? undefined : 'bg-gray-50'}>
                                  <td
-                                    className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                    {person.name}
+                                    className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                                 >
+                                    {exp.company}
                                  </td>
-                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.title}</td>
-                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
+                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{exp.title}</td>
+                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    {format(new Date(exp.from), 'MM/dd/yyyy')} - {" "}
+                                    {exp.to ? format(new Date(exp.to), 'MM/dd/yyyy') : 'Present'}
+                                 </td>
                               </tr>
-                           ))}
+                           )) : null}
                            </tbody>
                         </table>
                      </div>
@@ -116,16 +126,19 @@ export default function DashboardIndex() {
                            </tr>
                            </thead>
                            <tbody className="bg-white">
-                           {people.map((person, personIdx) => (
-                              <tr key={person.email} className={personIdx % 2 === 0 ? undefined : 'bg-gray-50'}>
+                           {education && education.length > 0 ? education.map((edu: Education, eduIndex: number) => (
+                              <tr key={edu.degree} className={eduIndex % 2 === 0 ? undefined : 'bg-gray-50'}>
                                  <td
                                     className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                    {person.name}
+                                    {edu.school}
                                  </td>
-                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.title}</td>
-                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
+                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{edu.degree}</td>
+                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    {format(new Date(edu.from), 'MM/dd/yyyy')} - {" "}
+                                    {edu.to ? format(new Date(edu.to), 'MM/dd/yyyy') : 'Present'}
+                                 </td>
                               </tr>
-                           ))}
+                           )) : null}
                            </tbody>
                         </table>
                      </div>

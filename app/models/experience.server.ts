@@ -1,5 +1,6 @@
 import { prisma } from "~/db.server";
 import { getProfile } from "~/models/profile.server";
+import type { Experience } from "@prisma/client";
 
 export type { Experience } from "@prisma/client";
 
@@ -42,4 +43,11 @@ export const getExperience = async (request: Request) => {
    });
 
    return data!.experience;
+};
+
+export const getExperienceById = async (expId: Experience["id"]) => {
+   const data = await prisma.experience.findUnique({
+      where: { id: expId },
+   });
+   return data;
 };

@@ -1,13 +1,12 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import { LoaderFunction, redirect } from "@remix-run/node";
-import { format, formatDistance, formatRelative, subDays } from 'date-fns';
+import { format } from 'date-fns';
 
 import { isAuthenticated } from "~/session.server";
 import { getExperience } from "~/models/experience.server";
 import type { Experience } from "~/models/experience.server";
 import util from "util";
-import { formatDate } from "~/utils/date.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const isAuth = await isAuthenticated(request);
@@ -80,9 +79,10 @@ export default function ExperienceList() {
                               </td>
                               <td
                                  className="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-sm font-medium sm:pr-6">
-                                 <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                 <Link to={`/dashboard/experience/edit/${exp.id}`}
+                                       className="text-indigo-600 hover:text-indigo-900">
                                     Edit<span className="sr-only">, {exp.title}</span>
-                                 </a>
+                                 </Link>
                               </td>
                               <td
                                  className="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">

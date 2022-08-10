@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import gravatar from "gravatar";
 import jwt from "jsonwebtoken";
 import invariant from "tiny-invariant";
+import { authenticatedUser } from "~/session.server";
 
 export type { User } from "@prisma/client";
 
@@ -75,6 +76,21 @@ export const getUserWithProfile = (userId: User["id"]) => {
    return prisma.user.findUnique({
       where: { id: userId },
       include: { profile: true }
+   });
+};
+
+export const getUserALl = async (userId: User["id"]) => {
+   return prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+         profile: {
+            include: {
+               experience: true,
+               education: true,
+               social: true
+            }
+         }
+      }
    });
 };
 

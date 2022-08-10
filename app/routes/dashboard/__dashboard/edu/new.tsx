@@ -33,15 +33,6 @@ export default function Experience() {
                                   className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                         </div>
 
-                        <div className="col-span-6 sm:col-span-3">
-                           <select id="country" name="country" autoComplete="country-name"
-                                   className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                              <option>United States</option>
-                              <option>Canada</option>
-                              <option>Mexico</option>
-                           </select>
-                        </div>
-
                         <div className="col-span-6 sm:col-span-4">
                            <input type="date" name="from"
                                   className="font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
@@ -50,12 +41,14 @@ export default function Experience() {
                         <div className="flex items-center">
                            {/* @ts-ignore */}
                            <input name="current" type="checkbox" value={isCurrentJob}
+                                  checked={isCurrentJob}
                                   onChange={() => toggleCurrentJob(!isCurrentJob)}
                                   className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"/>
                            <label htmlFor="push-everything"
                                   className="ml-2 block text-sm font-medium text-gray-700">Current School or
                               Bootcamp</label>
                         </div>
+
                         <div className="col-span-6 sm:col-span-4">
                            <input type="date" name="to"
                                   disabled={isCurrentJob}
