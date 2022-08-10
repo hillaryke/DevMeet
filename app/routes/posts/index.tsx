@@ -1,9 +1,34 @@
+import type { ActionFunction } from "@remix-run/node";
+import { useState } from "react";
+import { Form, Link, useActionData } from "@remix-run/react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { Link } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
+import { createPost } from "~/models/post.server";
+import util from "util";
+
+
+export const action: ActionFunction = async ({ request }) => {
+   const formData = await request.formData();
+   let text = formData.get("text");
+   text = text!.toString();
+
+   if (text.length < 6) {
+      return json({ errors: { post: "Post must be at least 6 characters" } });
+   }
+
+   const user = await createPost(request, text);
+   console.log(util.inspect(user, false, null, true));
+
+   // return redirect('/posts')
+
+   return null;
+};
 
 export default function PostsIndex() {
+   const actionData = useActionData();
+
    const [liked, setLiked] = useState(false);
 
    return (
@@ -22,15 +47,21 @@ export default function PostsIndex() {
                            className="w-full bg-blueGreen font-semibold text-lg text-gray-50 mb-3 px-3 py-1 rounded-sm">Say
                            something...
                         </div>
-                        <textarea name="description" rows={4}
-                                  className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blueGreen focus:border-blueGreen sm:text-sm"
-                                  placeholder="Create a post"
-                        ></textarea>
-                        <div className="flex justify-between mt-2">
-                           <button
-                              className="flex items-center text-gray-50 h-8 px-3 text-sm rounded bg-gray-600 hover:bg-gray-700">Submit
-                           </button>
-                        </div>
+                        <Form method="post">
+                           <textarea name="text" rows={4}
+                                     className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blueGreen focus:border-blueGreen sm:text-sm"
+                                     placeholder="Create a post"
+                           />
+                           {actionData?.errors?.post ? (
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.post}</div>
+                           ) : null}
+                           <div className="flex justify-between mt-2">
+                              <button
+                                 type="submit"
+                                 className="flex items-center text-gray-50 h-8 px-3 text-sm rounded bg-gray-600 hover:bg-gray-700">Submit
+                              </button>
+                           </div>
+                        </Form>
                      </div>
                   </div>
                   <div className="flex w-full p-8 border-b border-gray-300">
