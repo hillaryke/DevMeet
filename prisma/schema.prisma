@@ -59,7 +59,7 @@ model Profile {
     skills           String[]
     status           String?
     githubUsername   String?
-    experiences      Experience[]
+    experience       Experience[]
     education        Education[]
     social           Social?
     date             DateTime @default(now())
