@@ -1,6 +1,7 @@
 import type { Education } from "@prisma/client";
 import { getProfile } from "~/models/profile.server";
 import { prisma } from "~/db.server";
+import { Experience } from "@prisma/client";
 
 export type { Education } from "@prisma/client";
 
@@ -37,4 +38,11 @@ export const getEducation = async (request: Request) => {
    });
 
    return data!.education;
+};
+
+export const getEducationById = async (expId: Experience["id"]) => {
+   const data = await prisma.education.findUnique({
+      where: { id: expId },
+   });
+   return data;
 };

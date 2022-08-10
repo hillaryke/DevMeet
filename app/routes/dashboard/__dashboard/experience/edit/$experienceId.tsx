@@ -4,8 +4,7 @@ import { redirect } from "@remix-run/node";
 import { isAuthenticated } from "~/session.server";
 import { getExperienceById } from "~/models/experience.server";
 import * as util from "util";
-import { Form, useLoaderData } from "@remix-run/react";
-import moment from "moment";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { format } from "date-fns";
 
 
@@ -24,6 +23,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function EditExperience() {
    const { experience } = useLoaderData();
+   const actionData = useActionData();
 
    const [isCurrentJob, toggleCurrentJob] = useState(experience.current);
 
@@ -31,7 +31,8 @@ export default function EditExperience() {
       <div>
          <div className="md:flex md:items-center md:justify-between mx-9">
             <div className="flex-1 min-w-0">
-               <h2 className="text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Add an Experience</h2>
+               <h2 className="text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Edit Experience
+                  Credential</h2>
             </div>
          </div>
          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -45,6 +46,9 @@ export default function EditExperience() {
                                   placeholder="* Job Title"
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
+                           {actionData?.errors?.title ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.title}</div> : null
+                           }
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
@@ -53,6 +57,9 @@ export default function EditExperience() {
                                   placeholder="* Company"
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
+                           {actionData?.errors?.company ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.company}</div> : null
+                           }
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
@@ -68,6 +75,9 @@ export default function EditExperience() {
                                   defaultValue={format(new Date(experience.from), "yyyy-MM-dd")}
                                   className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
+                           {actionData?.errors?.from ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.from}</div> : null
+                           }
                         </div>
 
                         <div className="flex items-center">
@@ -85,6 +95,9 @@ export default function EditExperience() {
                                   disabled={isCurrentJob}
                                   className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
+                           {actionData?.errors?.to ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.to}</div> : null
+                           }
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">

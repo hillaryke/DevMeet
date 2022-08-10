@@ -1,10 +1,31 @@
 import { useState } from "react";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { LoaderFunction, redirect } from "@remix-run/node";
+import { isAuthenticated } from "~/session.server";
+import { getExperienceById } from "~/models/experience.server";
+import util from "util";
+import { getEducation, getEducationById } from "~/models/education.server";
+import { format } from "date-fns";
+
+export const loader: LoaderFunction = async ({ request, params }) => {
+   const isAuth = await isAuthenticated(request);
+   if (!isAuth) return redirect("/");
+
+   const eduId = params.educationId;
+   if (!eduId) throw new Error("Experience not found");
+
+   const education = await getEducationById(eduId);
+   console.log(util.inspect(education, false, null, true));
+
+   return { education };
+};
+
 
 export default function Experience() {
+   const { education } = useLoaderData();
    const actionData = useActionData();
 
-   const [isCurrentJob, toggleCurrentJob] = useState(false);
+   const [isCurrentJob, toggleCurrentJob] = useState(education.current);
 
    return (
       <div>
@@ -20,6 +41,7 @@ export default function Experience() {
                      <div className="px-4 py-5 bg-white sm:p-6 space-y-5">
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="school"
+                                  defaultValue={education.school}
                                   placeholder="* School or Bootcamp"
                                   className="font-bold font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
@@ -30,6 +52,7 @@ export default function Experience() {
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="degree"
+                                  defaultValue={education.degree}
                                   placeholder="* Degree or Certificate"
                                   className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
@@ -40,12 +63,14 @@ export default function Experience() {
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="fieldofstudy"
+                                  defaultValue={education.fieldofstudy}
                                   placeholder="Field Of Study"
                                   className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="date" name="from"
+                                  defaultValue={format(new Date(education.from), "yyyy-MM-dd")}
                                   className="font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
                            {actionData?.errors?.from ?
@@ -56,6 +81,7 @@ export default function Experience() {
                         <div className="flex items-center">
                            {/* @ts-ignore */}
                            <input name="current" type="checkbox" value={isCurrentJob}
+                                  checked={isCurrentJob}
                                   onChange={() => toggleCurrentJob(!isCurrentJob)}
                                   className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"/>
                            <label htmlFor="push-everything"
@@ -65,7 +91,11 @@ export default function Experience() {
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
-                           <input type="date" name="to"
+                           {/* @ts-ignore */}
+                           <input type="date" name="to" value={education.to && !isCurrentJob ?
+                              format(new Date(education.to), "yyyy-MM-dd")
+                              : null
+                           }
                                   disabled={isCurrentJob}
                                   className="font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
@@ -76,6 +106,7 @@ export default function Experience() {
 
                         <div className="col-span-6 sm:col-span-4">
                            <textarea name="description" rows={3}
+                                     defaultValue={education.description}
                                      className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                      placeholder="Program Description"
                            ></textarea>
