@@ -1,6 +1,45 @@
 import { useState } from "react";
+import type { ActionFunction } from "@remix-run/node";
+import { Form, useActionData } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
+
+import { processFormData } from "~/utils/util.server";
+import { createEducation } from "~/models/education.server";
+
+export const action: ActionFunction = async ({ request }) => {
+   const fieldNames = ["school", "degree", "fieldofstudy", "from", "to", "current", "description"];
+   const fieldsToValidate = ["school", "degree", "from"];
+   const dateFields = ["from", "to"];
+   const errorMessages = {
+      school: "School or bootcamp is required",
+      degree: "Degree is required",
+      from: "From date is required",
+   };
+   let { errors, data } = await processFormData(
+      request,
+      fieldNames,
+      errorMessages,
+      fieldsToValidate,
+      dateFields
+   );
+   // To date is required if the user is not currently working
+   if (!data["current"] && !data["to"]) {
+      if (!errors) errors = {};
+      errors["to"] = "To date is required";
+   }
+
+   if (errors) return json({ errors });
+
+   const education = await createEducation(request, data);
+   console.log(education);
+
+   return redirect('/dashboard/education');
+};
+
 
 export default function Experience() {
+   const actionData = useActionData();
+
    const [isCurrentJob, toggleCurrentJob] = useState(false);
 
    return (
@@ -12,19 +51,27 @@ export default function Experience() {
          </div>
          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <div className="mt-10 sm:mt-5 lg:max-w-3xl">
-               <form action="#" method="POST">
+               <Form method="post">
                   <div className="shadow overflow-hidden sm:rounded-md">
                      <div className="px-4 py-5 bg-white sm:p-6 space-y-5">
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="school"
                                   placeholder="* School or Bootcamp"
-                                  className="font-bold font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                                  className="font-bold font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           />
+                           {actionData?.errors?.school ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.school}</div> : null
+                           }
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="degree"
                                   placeholder="* Degree or Certificate"
-                                  className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                                  className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           />
+                           {actionData?.errors?.degree ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.degree}</div> : null
+                           }
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
@@ -35,24 +82,32 @@ export default function Experience() {
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="date" name="from"
-                                  className="font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                                  className="font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           />
+                           {actionData?.errors?.from ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.from}</div> : null
+                           }
                         </div>
 
                         <div className="flex items-center">
                            {/* @ts-ignore */}
                            <input name="current" type="checkbox" value={isCurrentJob}
-                                  checked={isCurrentJob}
                                   onChange={() => toggleCurrentJob(!isCurrentJob)}
                                   className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"/>
                            <label htmlFor="push-everything"
-                                  className="ml-2 block text-sm font-medium text-gray-700">Current School or
-                              Bootcamp</label>
+                                  className="ml-2 block text-sm font-medium text-gray-700"
+                           >Current School or Bootcamp
+                           </label>
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="date" name="to"
                                   disabled={isCurrentJob}
-                                  className="font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                                  className="font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           />
+                           {actionData?.errors?.to ?
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.to}</div> : null
+                           }
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
@@ -70,7 +125,7 @@ export default function Experience() {
                         </button>
                      </div>
                   </div>
-               </form>
+               </Form>
             </div>
          </div>
       </div>

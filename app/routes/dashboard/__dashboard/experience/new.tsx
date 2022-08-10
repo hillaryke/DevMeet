@@ -35,7 +35,6 @@ export const action: ActionFunction = async ({ request }) => {
    return redirect('/dashboard/experiences');
 };
 
-
 export default function Experience() {
    const actionData = useActionData();
 

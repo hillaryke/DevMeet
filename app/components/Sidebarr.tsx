@@ -18,7 +18,7 @@ export default function Sidebarr({ user }: { user: User }) {
    const navigation = [
       { name: 'Dashboard', href: '/dashboard/', icon: HomeIcon, current: active },
       { name: 'Experience', href: '/dashboard/experiences', icon: BriefcaseIcon, current: !active },
-      { name: 'Education', href: '/dashboard/education', icon: AcademicCapIcon, current: !active },
+      { name: 'Education', href: '/dashboard/educations', icon: AcademicCapIcon, current: !active },
    ];
 
    // TODO setcurrent if clicked

@@ -1,12 +1,25 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Form, Link } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
+import { LoaderFunction, redirect } from "@remix-run/node";
+import { format } from "date-fns";
+import util from "util";
 
-const people = [
-   { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-   // More people...
-];
+import { isAuthenticated } from "~/session.server";
+import { getEducation } from "~/models/education.server";
+import type { Education } from "~/models/education.server";
+
+export const loader: LoaderFunction = async ({ request }) => {
+   const isAuth = await isAuthenticated(request);
+   if (!isAuth) return redirect("/");
+
+   const education = await getEducation(request);
+   console.log(util.inspect(education, false, null, true));
+
+   return { education };
+};
 
 export default function EducationList() {
+   const { education } = useLoaderData();
+
    return (
       <div className="px-4 sm:px-6 lg:px-8">
          <div className="sm:flex sm:items-center">
@@ -18,7 +31,7 @@ export default function EducationList() {
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                <Link
-                  to="/dashboard/edu/new"
+                  to="/dashboard/education/new"
                   className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                >
                   Add Education
@@ -51,19 +64,23 @@ export default function EducationList() {
                         </tr>
                         </thead>
                         <tbody className="bg-white">
-                        {people.map((person, personIdx) => (
-                           <tr key={person.email} className={personIdx % 2 === 0 ? undefined : 'bg-gray-50'}>
+                        {education && education.map((edu: Education, eduIndex: number) => (
+                           <tr key={edu.degree} className={eduIndex % 2 === 0 ? undefined : 'bg-gray-50'}>
                               <td
                                  className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                 {person.name}
+                                 {edu.school}
                               </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.title}</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{edu.degree}</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                 {format(new Date(edu.from), 'MM/dd/yyyy')} - {" "}
+                                 {edu.to ? format(new Date(edu.to), 'MM/dd/yyyy') : 'Present'}
+                              </td>
                               <td
                                  className="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-sm font-medium sm:pr-6">
-                                 <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                    Edit<span className="sr-only">, {person.name}</span>
-                                 </a>
+                                 <Link to={`/dashboard/education/edit/${edu.id}`}
+                                       className="text-indigo-600 hover:text-indigo-900">
+                                    Edit<span className="sr-only">, {edu.degree}</span>
+                                 </Link>
                               </td>
                               <td
                                  className="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
