@@ -28,6 +28,12 @@ export const createPost = async (user: User, text: string) => {
 export const getPostsWithCount = async () => {
    return prisma.post.findMany({
       include: {
+         user: {
+            select: {
+               name: true,
+               avatar: true
+            }
+         },
          _count: {
             select: {
                comments: true,
