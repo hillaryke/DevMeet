@@ -29,6 +29,7 @@ export async function getUserById(id: User["id"]) {
 }
 
 export async function getUserByEmail(email: User["email"]) {
+   // @ts-ignore
    return prisma.user.findUnique({ where: { email } });
 }
 

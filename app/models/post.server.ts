@@ -2,8 +2,6 @@ import type { User } from "~/models/user.server";
 import type { Post } from "@prisma/client";
 import { prisma } from "~/db.server";
 
-import { authenticatedUser } from "~/session.server";
-
 export type { Post } from "@prisma/client";
 
 export const createPost = async (user: User, text: string) => {
@@ -27,11 +25,15 @@ export const createPost = async (user: User, text: string) => {
    });
 };
 
-export const getPosts = async () => {
+export const getPostsWithCount = async () => {
    return prisma.post.findMany({
       include: {
-         comments: true,
-         likes: true,
+         _count: {
+            select: {
+               comments: true,
+               likes: true
+            }
+         }
       }
    });
 };
@@ -40,6 +42,4 @@ export const getPostById = async (postId: Post["id"]) => {
    return prisma.post.findUnique({
       where: { id: postId }
    });
-
-
 };
