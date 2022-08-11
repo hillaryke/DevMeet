@@ -27,8 +27,6 @@ model Post {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     userId      String
     user        User     @relation(fields: [userId], references: [id])
-    userName    String
-    userAvatar  String
     text        String
     comments    Comment[]
     likes       Like[]
@@ -49,8 +47,6 @@ model Comment {
     post        Post     @relation(fields: [postId], references: [id])
     userId       String   @db.ObjectId
     user        User     @relation(fields: [userId], references: [id])
-    userName    String   
-    userAvatar  String   
     text        String
     date        DateTime @default(now())
 }
