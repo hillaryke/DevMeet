@@ -1,7 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useState } from "react";
 import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
 import { json, redirect } from "@remix-run/node";
 import { createComment, getComments } from "~/models/comment.server";
@@ -41,10 +38,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function Post() {
    const { post, userId } = useLoaderData();
-   console.log(post.comments);
    const actionData = useActionData();
-
-   const [liked, setLiked] = useState(false);
 
    return (
       <div className="flex justify-center w-screen h-screen px-4 text-gray-700">
