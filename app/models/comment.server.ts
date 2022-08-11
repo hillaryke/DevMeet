@@ -32,3 +32,31 @@ export const createComment = async (userId: User["id"], postId: Post["id"], text
       }
    });
 };
+
+export const getComments = async (postId: Post["id"]) => {
+   return prisma.post.findUnique({
+      where: { id: postId },
+      include: {
+         user: {
+            select: {
+               id: true,
+               name: true,
+               avatar: true
+            }
+         },
+         comments: {
+            select: {
+               id: true,
+               text: true,
+               date: true,
+               user: {
+                  select: {
+                     name: true,
+                     avatar: true
+                  }
+               },
+            }
+         },
+      }
+   });
+};
