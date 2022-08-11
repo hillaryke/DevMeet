@@ -13,8 +13,6 @@ export const createPost = async (user: User, text: string) => {
          posts: {
             create: {
                text,
-               userName: user.name,
-               userAvatar: user.avatar,
             }
          }
       },

@@ -16,11 +16,6 @@ export const action: ActionFunction = async ({ request, params }) => {
       return json({ errors: { post: "You must login or register to create a post" } });
    }
 
-   let user = await getUserById(userId);
-   if (!user) {
-      throw new Error("User not found");
-   }
-
    const formData = await request.formData();
    let text = formData.get("text");
 
@@ -28,7 +23,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       return json({ errors: { post: "Post must be at least 6 characters" } });
    }
 
-   const postUpdated = await createComment(user, postId!, text.toString());
+   const postUpdated = await createComment(userId, postId!, text.toString());
    console.log(util.inspect(postUpdated, false, null, true));
 
    return redirect(`/posts/${postId}`);
