@@ -1,9 +1,44 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { Link, Outlet } from "@remix-run/react";
+import { Form, Link, useActionData } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import type { ActionFunction } from "@remix-run/node";
+import { createComment } from "~/models/comment.server";
+import util from "util";
+import { authenticatedUser } from "~/session.server";
+import { getUserById } from "~/models/user.server";
+
+export const action: ActionFunction = async ({ request, params }) => {
+   const postId = params.postId;
+   const userId = await authenticatedUser(request);
+   if (!userId) {
+      return json({ errors: { post: "You must login or register to create a post" } });
+   }
+
+   let user = await getUserById(userId);
+   if (!user) {
+      throw new Error("User not found");
+   }
+
+   const formData = await request.formData();
+   let text = formData.get("text");
+
+   if (!text || text.toString().length < 6) {
+      return json({ errors: { post: "Post must be at least 6 characters" } });
+   }
+
+   user = await createComment(user, postId!, text.toString());
+   console.log(util.inspect(user, false, null, true));
+
+   // return redirect('/posts')
+
+   return null;
+};
 
 export default function Post() {
+   const actionData = useActionData();
+
    const [liked, setLiked] = useState(false);
 
    return (
@@ -44,15 +79,20 @@ export default function Post() {
                            className="w-full bg-blueGreen font-semibold text-lg text-gray-50 mb-3 px-3 py-1 rounded-sm">
                            Leave a comment
                         </div>
-                        <textarea name="description" rows={4}
-                                  className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blueGreen focus:border-blueGreen sm:text-sm"
-                                  placeholder="Comment on this post"
-                        ></textarea>
-                        <div className="flex justify-between mt-2">
-                           <button
-                              className="flex items-center text-gray-50 h-8 px-3 text-sm rounded bg-gray-600 hover:bg-gray-700">Submit
-                           </button>
-                        </div>
+                        <Form method="post">
+                           <textarea name="text" rows={4}
+                                     className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blueGreen focus:border-blueGreen sm:text-sm"
+                                     placeholder="Comment on this post"
+                           ></textarea>
+                           {actionData?.errors?.post ? (
+                              <div className="py-1 text-red-700 text-sm">{actionData?.errors.post}</div>
+                           ) : null}
+                           <div className="flex justify-between mt-2">
+                              <button
+                                 className="flex items-center text-gray-50 h-8 px-3 text-sm rounded bg-gray-600 hover:bg-gray-700">Submit
+                              </button>
+                           </div>
+                        </Form>
                      </div>
                   </div>
                   {/* Comments */}

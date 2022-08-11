@@ -7,9 +7,21 @@ import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { json, redirect } from "@remix-run/node";
 import { createPost } from "~/models/post.server";
 import util from "util";
+import { authenticatedUser } from "~/session.server";
+import { getUserById } from "~/models/user.server";
 
 
 export const action: ActionFunction = async ({ request }) => {
+   const userId = await authenticatedUser(request);
+   if (!userId) {
+      return json({ errors: { post: "You must login or register to create a post" } });
+   }
+
+   let user = await getUserById(userId);
+   if (!user) {
+      throw new Error("User not found");
+   }
+
    const formData = await request.formData();
    let text = formData.get("text");
    text = text!.toString();
@@ -18,7 +30,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json({ errors: { post: "Post must be at least 6 characters" } });
    }
 
-   const user = await createPost(request, text);
+   user = await createPost(user, text);
    console.log(util.inspect(user, false, null, true));
 
    // return redirect('/posts')

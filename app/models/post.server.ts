@@ -1,3 +1,4 @@
+import type { User } from "~/models/user.server";
 import type { Post } from "@prisma/client";
 import { prisma } from "~/db.server";
 
@@ -5,17 +6,15 @@ import { authenticatedUser } from "~/session.server";
 
 export type { Post } from "@prisma/client";
 
-export const createPost = async (request: Request, text: string) => {
-   const userId = await authenticatedUser(request);
-   if (!userId) {
-      throw new Error("Not authenticated");
-   }
-   return await prisma.user.update({
-      where: { id: userId },
+export const createPost = async (user: User, text: string) => {
+   return prisma.user.update({
+      where: { id: user.id },
       data: {
          posts: {
             create: {
                text,
+               userName: user.name,
+               userAvatar: user.avatar,
             }
          }
       },
@@ -28,5 +27,12 @@ export const createPost = async (request: Request, text: string) => {
          }
       }
    });
+};
+
+export const getPostById = async (postId: Post["id"]) => {
+   return prisma.post.findUnique({
+      where: { id: postId }
+   });
+
 
 };
