@@ -1,5 +1,4 @@
 import type { User } from "~/models/user.server";
-import type { Post } from "@prisma/client";
 import { prisma } from "~/db.server";
 
 export type { Post } from "@prisma/client";
@@ -30,6 +29,7 @@ export const getPostsWithCount = async () => {
       include: {
          user: {
             select: {
+               id: true,
                name: true,
                avatar: true
             }
@@ -41,11 +41,5 @@ export const getPostsWithCount = async () => {
             }
          }
       }
-   });
-};
-
-export const getPostById = async (postId: Post["id"]) => {
-   return prisma.post.findUnique({
-      where: { id: postId }
    });
 };

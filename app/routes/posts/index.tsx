@@ -1,20 +1,25 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useState } from "react";
-import { Form, Link, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { json } from "@remix-run/node";
 import { createPost, getPostsWithCount } from "~/models/post.server";
 import util from "util";
 import { authenticatedUser } from "~/session.server";
 import { getUserById } from "~/models/user.server";
+import moment from "moment";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const posts = await getPostsWithCount();
 
    console.log(util.inspect(posts, { showHidden: false, depth: null, colors: true }));
-   return null;
+
+   return json({
+      posts,
+      userId: await authenticatedUser(request),
+   });
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -38,12 +43,11 @@ export const action: ActionFunction = async ({ request }) => {
    user = await createPost(user, text.toString());
    console.log(util.inspect(user, false, null, true));
 
-   // return redirect('/posts')
-
-   return null;
+   return redirect('/posts');
 };
 
 export default function PostsIndex() {
+   const { posts, userId } = useLoaderData();
    const actionData = useActionData();
 
    const [liked, setLiked] = useState(false);
@@ -81,122 +85,61 @@ export default function PostsIndex() {
                         </Form>
                      </div>
                   </div>
-                  <div className="flex w-full p-8 border-b border-gray-300">
-                     <div className="flex flex-col items-center ml-4 mr-5 mt-1">
-                        <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-gray-400 rounded-full"></div>
-                        <div className="font-semibold mt-4 text-right">Tom</div>
-                     </div>
-                     <div className="flex flex-col flex-grow ml-4">
-                        <p className="mt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                           tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet, consectetur
-                           adipiscing elit, sed do eiusmod
-                           tempor incididunt ut labore
-                        </p>
-                        <div className="flex mt-2">
-                           <div className="px-4 py-1 pb-0.5 bg-gray-200 rounded">
-                              <div>
-                                 <FontAwesomeIcon icon={faThumbsUp}
-                                                  className="cursor-pointer text-xl text-black w-6 h-5"/>
-                                 <span className="pl-0.5 text-center">4</span>
-                              </div>
+                  {posts.map((post: any) => (
+                     <div key={post.id} className="flex w-full p-4 border-b border-gray-300">
+                        <div className="flex flex-col items-center ml-1 mt-1">
+                           <div className="flex-shrink-0">
+                              <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
+                                   className="w-12 h-12 w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-full"/>
                            </div>
-                           <p className="ml-2 text font-semibold"></p>
-                           <div className="px-4 py-1 bg-gray-200 rounded">
-                              <div>
-                                 <FontAwesomeIcon icon={faThumbsDown}
-                                                  className="cursor-pointer text-xl text-black w-6 h-5 pt-0.5"/>
-                              </div>
-                           </div>
-                           <div className="px-4  bg-gray-50 text-right">
-                              <Link to="." type="submit"
-                                    className="inline-flex justify-center py-1.5 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGreen hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300"
-                              >Discussion <span
-                                 className="ml-1 bg-gray-200 rounded-xl px-1 pb-0.5 text-gray-600 text-xsm">7</span>
-                              </Link>
-                           </div>
-                           <div className="pr-3 bg-gray-50 text-right">
-                              <button type="submit"
-                                      className="inline-flex justify-center py-1.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none"
-                              >Delete
-                              </button>
+                        </div>
+                        <div className="flex flex-col flex-grow ml-4">
+                           <div className="flex text-sm pb-2">
+                              <div className="font-semibold">{post.user.name}</div>
+                              <span className="ml-4 font-semibold text-gray-500">
+                                 {moment(post.date).fromNow(true)}
+                              </span>
                            </div>
 
-                           <span className="ml-4 text-xsm font-semibold text-gray-500 pt-2">Just now</span>
+                           <p className="mt-1">
+                              {post.text}
+                           </p>
+                           <div className="flex mt-2">
+                              <div className="px-4 py-1 pb-0.5 bg-gray-200 rounded">
+                                 <div>
+                                    <FontAwesomeIcon icon={faThumbsUp}
+                                                     className="cursor-pointer text-xl text-black w-6 h-5"/>
+                                    <span className="pl-0.5 text-center">{post._count.likes}</span>
+                                 </div>
+                              </div>
+                              <p className="ml-2 text font-semibold"></p>
+                              <div className="px-4 py-1 bg-gray-200 rounded">
+                                 <div>
+                                    <FontAwesomeIcon icon={faThumbsDown}
+                                                     className="cursor-pointer text-xl text-black w-6 h-5 pt-0.5"/>
+                                 </div>
+                              </div>
+                              <div className="px-4  bg-gray-50 text-right">
+                                 <Link to="." type="submit"
+                                       className="inline-flex justify-center py-1.5 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGreen hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300"
+                                 >Discussion
+                                    <span className="ml-1 bg-gray-200 rounded-xl px-1 pb-0.5 text-gray-600 text-xsm">
+                                       {post._count.comments}
+                                    </span>
+                                 </Link>
+                              </div>
+                              {userId === post.user.id ? (
+                                 <div className="pr-3 bg-gray-50 text-right">
+                                    <button type="submit"
+                                            className="inline-flex justify-center py-1.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none"
+                                    >Delete
+                                    </button>
+                                 </div>
+                              ) : null}
+                           </div>
                         </div>
                      </div>
-                  </div>
-                  <div className="flex w-full p-8 border-b border-gray-300">
-                     <div className="flex flex-col items-center ml-4 mr-5 mt-1">
-                        <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-gray-400 rounded-full"></div>
-                        <div className="font-semibold mt-4 text-right">Tom</div>
-                     </div>
-                     <div className="flex flex-col flex-grow ml-4">
-                        <p className="mt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                           tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet, consectetur
-                           adipiscing elit, sed do eiusmod
-                           tempor incididunt ut labore
-                        </p>
-                        <div className="flex mt-2">
-                           <div className="px-4 py-1 bg-gray-200 rounded">
-                              <div>
-                                 <FontAwesomeIcon icon={faThumbsUp}
-                                                  className="cursor-pointer text-xl text-black w-6 h-5"/>
-                              </div>
-                           </div>
-                           <p className="ml-2 text font-semibold"></p>
-                           <div className="px-4 py-1 bg-gray-200 rounded">
-                              <div>
-                                 <FontAwesomeIcon icon={faThumbsDown}
-                                                  className="cursor-pointer text-xl text-black w-6 h-5 pt-0.5"/>
-                              </div>
-                           </div>
-                           <div className="px-4  bg-gray-50 text-right">
-                              <button type="submit"
-                                      className="inline-flex justify-center py-1.5 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGreen hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300"
-                              >Discussion
-                              </button>
-                           </div>
-
-                           <span className="ml-4 text-xsm font-semibold text-gray-500 pt-2">Just now</span>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="flex w-full p-8 border-b border-gray-300">
-                     <div className="flex flex-col items-center ml-4 mr-5 mt-1">
-                        <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-gray-400 rounded-full"></div>
-                        <div className="font-semibold mt-4 text-right">Tom</div>
-                     </div>
-                     <div className="flex flex-col flex-grow ml-4">
-                        <p className="mt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                           tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet, consectetur
-                           adipiscing elit, sed do eiusmod
-                           tempor incididunt ut labore
-                        </p>
-                        <div className="flex mt-2">
-                           <div className="px-4 py-1 bg-gray-200 rounded">
-                              <div>
-                                 <FontAwesomeIcon icon={faThumbsUp}
-                                                  className="cursor-pointer text-xl text-black w-6 h-5"/>
-                              </div>
-                           </div>
-                           <p className="ml-2 text font-semibold"></p>
-                           <div className="px-4 py-1 bg-gray-200 rounded">
-                              <div>
-                                 <FontAwesomeIcon icon={faThumbsDown}
-                                                  className="cursor-pointer text-xl text-black w-6 h-5 pt-0.5"/>
-                              </div>
-                           </div>
-                           <div className="px-4  bg-gray-50 text-right">
-                              <button type="submit"
-                                      className="inline-flex justify-center py-1.5 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGreen hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300"
-                              >Discussion
-                              </button>
-                           </div>
-
-                           <span className="ml-4 text-xsm font-semibold text-gray-500 pt-2">Just now</span>
-                        </div>
-                     </div>
-                  </div>
+                  ))}
                </div>
             </div>
          </div>
