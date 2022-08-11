@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useState } from "react";
 import { Form, Link, useActionData } from "@remix-run/react";
 
@@ -10,6 +10,11 @@ import util from "util";
 import { authenticatedUser } from "~/session.server";
 import { getUserById } from "~/models/user.server";
 
+export const loader: LoaderFunction = async ({ request, params }) => {
+   const postId = params.postId;
+
+
+};
 
 export const action: ActionFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);

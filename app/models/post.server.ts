@@ -29,6 +29,15 @@ export const createPost = async (user: User, text: string) => {
    });
 };
 
+export const getPosts = async () => {
+   return prisma.post.findMany({
+      include: {
+         comments: true,
+         likes: true,
+      }
+   });
+};
+
 export const getPostById = async (postId: Post["id"]) => {
    return prisma.post.findUnique({
       where: { id: postId }

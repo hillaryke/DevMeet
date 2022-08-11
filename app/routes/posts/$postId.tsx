@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Form, Link, useActionData } from "@remix-run/react";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";
 import { createComment } from "~/models/comment.server";
 import util from "util";
@@ -28,12 +28,10 @@ export const action: ActionFunction = async ({ request, params }) => {
       return json({ errors: { post: "Post must be at least 6 characters" } });
    }
 
-   user = await createComment(user, postId!, text.toString());
-   console.log(util.inspect(user, false, null, true));
+   const postUpdated = await createComment(user, postId!, text.toString());
+   console.log(util.inspect(postUpdated, false, null, true));
 
-   // return redirect('/posts')
-
-   return null;
+   return redirect(`/posts/${postId}`);
 };
 
 export default function Post() {
