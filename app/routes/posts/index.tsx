@@ -4,16 +4,17 @@ import { Form, Link, useActionData } from "@remix-run/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { json, redirect } from "@remix-run/node";
-import { createPost } from "~/models/post.server";
+import { json } from "@remix-run/node";
+import { createPost, getPostsWithCount } from "~/models/post.server";
 import util from "util";
 import { authenticatedUser } from "~/session.server";
 import { getUserById } from "~/models/user.server";
 
-export const loader: LoaderFunction = async ({ request, params }) => {
-   const postId = params.postId;
+export const loader: LoaderFunction = async ({ request }) => {
+   const posts = await getPostsWithCount();
 
-
+   console.log(util.inspect(posts, { showHidden: false, depth: null, colors: true }));
+   return null;
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -29,13 +30,12 @@ export const action: ActionFunction = async ({ request }) => {
 
    const formData = await request.formData();
    let text = formData.get("text");
-   text = text!.toString();
 
-   if (text.length < 6) {
+   if (!text || text.toString().length < 6) {
       return json({ errors: { post: "Post must be at least 6 characters" } });
    }
 
-   user = await createPost(user, text);
+   user = await createPost(user, text.toString());
    console.log(util.inspect(user, false, null, true));
 
    // return redirect('/posts')
