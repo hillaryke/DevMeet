@@ -1,3 +1,4 @@
+import type { Post } from "@prisma/client";
 import type { User } from "~/models/user.server";
 import { prisma } from "~/db.server";
 
@@ -26,6 +27,10 @@ export const createPost = async (user: User, text: string) => {
 
 export const getPostsWithCount = async () => {
    return prisma.post.findMany({
+      // @ts-ignore
+      orderBy: {
+         date: "desc"
+      },
       include: {
          user: {
             select: {
@@ -40,6 +45,14 @@ export const getPostsWithCount = async () => {
                likes: true
             }
          }
+      }
+   });
+};
+
+export const deletePostById = (postId: Post["id"]) => {
+   return prisma.post.delete({
+      where: {
+         id: postId
       }
    });
 };

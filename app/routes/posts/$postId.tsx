@@ -95,34 +95,42 @@ export default function Post() {
                      </div>
                   </div>
                   {/* Comments */}
-                  {post.comments.map((comment: any) => (
-                     <div key={comment.text} className="flex w-full p-4 border-b border-gray-300">
-                        <div className="flex flex-col items-center ml mr-5 mt-1">
-                           <div className="flex-shrink-0">
-                              <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
-                                   className="w-12 h-12 w-12 h-12 sm:w-14 sm:h-14 rounded-full"/>
-                           </div>
-                           <div className="font-semibold text-sm mt-4 text-right">{comment.user.name}</div>
-                        </div>
-                        <div className="flex flex-col flex-grow ml-4">
-                           <p className="mt-1">{comment.text}</p>
-                           <div className="flex mt-2">
-                              {post.user.id === userId ?
-                                 <div className="pr-3 bg-gray-50 text-right">
-                                    <button type="submit"
-                                            className="inline-flex justify-center py-1.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300"
-                                    >Delete
-                                    </button>
-                                 </div> : null
-                              }
+                  {post.comments.length > 0 ? (
+                        post.comments.map((comment: any) => (
+                           <div key={comment.text} className="flex w-full p-4 border-b border-gray-300">
+                              <div className="flex flex-col items-center ml mr-5 mt-1">
+                                 <div className="flex-shrink-0">
+                                    <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
+                                         className="w-12 h-12 w-12 h-12 sm:w-14 sm:h-14 rounded-full"/>
+                                 </div>
+                                 <div className="font-semibold text-sm mt-4 text-right">{comment.user.name}</div>
+                              </div>
+                              <div className="flex flex-col flex-grow ml-4">
+                                 <p className="mt-1">{comment.text}</p>
+                                 <div className="flex mt-2">
+                                    {post.user.id === userId ?
+                                       <div className="pr-3 bg-gray-50 text-right">
+                                          <button type="submit"
+                                                  className="inline-flex justify-center py-1.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300"
+                                          >Delete
+                                          </button>
+                                       </div> : null
+                                    }
 
-                              <span className="text-xsm font-semibold text-gray-500 pt-2">
+                                    <span className="text-xsm font-semibold text-gray-500 pt-2">
                                  {moment(new Date(comment.date)).fromNow(true)}
                               </span>
+                                 </div>
+                              </div>
                            </div>
-                        </div>
-                     </div>
-                  ))}
+                        ))
+                     )
+                     : (
+                        <h2 className="font-semibold text-lg p-6">
+                           No comments for this post!
+                        </h2>
+                     )
+                  }
                   {/* End of Comments*/}
                </div>
             </div>
