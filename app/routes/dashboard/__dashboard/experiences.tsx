@@ -66,7 +66,7 @@ export default function ExperienceList() {
                         </tr>
                         </thead>
                         <tbody className="bg-white">
-                        {experience.map((exp: Experience, expIndex: number) => (
+                        {experience && experience.map((exp: Experience, expIndex: number) => (
                            <tr key={exp.id} className={expIndex % 2 === 0 ? undefined : 'bg-gray-50'}>
                               <td
                                  className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
