@@ -3,11 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Form, Link, useActionData, useLoaderData, useTransition } from "@remix-run/react";
 import { json, redirect } from "@remix-run/node";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { createPost, getPostsWithCount } from "~/models/post.server";
-import util from "util";
 import { authenticatedUser } from "~/session.server";
 import { getUserById } from "~/models/user.server";
 import moment from "moment";
@@ -37,14 +33,12 @@ export const action: ActionFunction = async ({ request }) => {
    if (!text || text.toString().length < 6) {
       return json({ errors: { post: "Post must be at least 6 characters" } });
    }
-   user = await createPost(user, text.toString());
+   await createPost(user, text.toString());
 
    return redirect('/posts');
 };
 
 export default function PostsIndex() {
-   const [text, setText] = useState("");
-
    const { posts, userId } = useLoaderData();
    const actionData = useActionData();
    const transition = useTransition();
@@ -61,8 +55,6 @@ export default function PostsIndex() {
 
    };
    useEffect(() => {
-
-      console.log(transition.submission?.formData.get("_action"));
       if (!isAdding) {
          formRef.current?.reset();
       }
@@ -91,7 +83,6 @@ export default function PostsIndex() {
                         </div>
                         <Form ref={formRef} method="post">
                            <textarea name="text" rows={4}
-                                     defaultValue={text}
                                      className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blueGreen focus:border-blueGreen sm:text-sm"
                                      placeholder="Create a post"
                            />

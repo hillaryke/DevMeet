@@ -2,7 +2,6 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
 import { json, redirect } from "@remix-run/node";
 import { createComment, getComments } from "~/models/comment.server";
-import util from "util";
 import { authenticatedUser } from "~/session.server";
 import moment from "moment";
 
@@ -30,8 +29,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       return json({ errors: { post: "Post must be at least 6 characters" } });
    }
 
-   const postUpdated = await createComment(userId, postId!, text.toString());
-   console.log(util.inspect(postUpdated, false, null, true));
+   await createComment(userId, postId!, text.toString());
 
    return redirect(`/posts/${postId}`);
 };

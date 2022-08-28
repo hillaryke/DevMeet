@@ -5,7 +5,6 @@ import { createUserSession, getSession, sessionStorage } from "~/session.server"
 import { json, redirect } from "@remix-run/node";
 import { validateCredentials } from "~/models/user.server";
 import { processFormData } from "~/utils/util.server";
-import React from "react";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const session = await getSession(request);
