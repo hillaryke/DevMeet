@@ -82,3 +82,19 @@ export const getProfiles = () => {
       },
    });
 };
+
+export const getProfileById = async (profileId: string) => {
+   return prisma.profile.findUnique({
+      where: { id: profileId },
+      include: {
+         user: {
+            select: {
+               id: true,
+               name: true,
+               avatar: true,
+               date: true
+            }
+         }
+      },
+   });
+};
