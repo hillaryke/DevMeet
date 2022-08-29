@@ -1,8 +1,24 @@
+import { json } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import util from "util";
+
+import { getProfileById } from "~/models/profile.server";
+import { format } from "date-fns";
+
+export const loader: LoaderFunction = async ({ request, params }) => {
+   const profileId = params.profileId;
+   const profile = await getProfileById(profileId!);
+   console.log(util.inspect(profile, { showHidden: false, depth: null, colors: true }));
+   return json({ profile });
+};
 
 export default function ProfileShow() {
+   const { profile } = useLoaderData();
+
    return (
       <div className="bg-gray-100">
          <div className="container mx-auto my-5 p-5">
@@ -17,9 +33,12 @@ export default function ProfileShow() {
                              alt=""
                         />
                      </div>
-                     <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">Jane Doe</h1>
-                     <h3 className="text-gray-600 font-lg text-semibold leading-6 text-center">Owner at Her Company
-                        Inc.</h3>
+                     <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">
+                        {profile.user.name}
+                     </h1>
+                     <h3 className="text-gray-600 font-lg text-semibold leading-6 text-center">
+                        {profile.status} at {profile.company}
+                     </h3>
                      <div className="text-center mt-2 space-x-3 text-xl">
                         <FontAwesomeIcon icon={faGlobe} className="text-blue-700"/>
                         <FontAwesomeIcon icon={faFacebookF} className="text-blue-700"/>
@@ -34,12 +53,15 @@ export default function ProfileShow() {
                         className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                         <li className="flex items-center py-3">
                            <span>Status</span>
-                           <span className="ml-auto"><span
-                              className="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                           <span className="ml-auto">
+                              <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span>
+                           </span>
                         </li>
                         <li className="flex items-center py-3">
                            <span>Member since</span>
-                           <span className="ml-auto">Nov 07, 2016</span>
+                           <span className="ml-auto">
+                              {format(new Date(profile.user.date), "MMM dd, yyyy")}
+                           </span>
                         </li>
                      </ul>
                   </div>
@@ -63,9 +85,8 @@ export default function ProfileShow() {
                      <div className="text-gray-700">
                         <div className="text-sm px-4 py-2">
                            <div className="font-semibold">Bio</div>
-                           <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
-                              consectetur adipisicing elit.
-                              Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
+                           <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
+                              {profile.bio}
                            </p>
                         </div>
                      </div>
