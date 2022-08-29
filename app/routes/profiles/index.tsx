@@ -19,7 +19,7 @@ export default function IndexProfiles() {
 
    return (
       <div className="flex justify-center w-screen">
-         <div className="mx-8 lg:mx-14 sm:w-3/4 lg:w-2/3">
+         <div className="md:mx-8 lg:mx-14 sm:w-3/4 lg:w-2/3">
             <div>
                <div className="md:flex md:items-center md:justify-between my-4">
                   <div className="flex-1 min-w-0">
@@ -45,7 +45,7 @@ export default function IndexProfiles() {
                            </Link>
                         </div>
 
-                        <div className="flex flex-col flex-grow ml-4">
+                        <div className="sm:w-6/12 lg:w-7/12 flex flex-col ml-4">
                            <Link to={`/profiles/${profile.id}`}>
                               <div className="text-lg font-semibold mt-4 text-left">{profile.user.name}</div>
                            </Link>
@@ -58,7 +58,7 @@ export default function IndexProfiles() {
                         </div>
 
                         <div
-                           className="flex flex-col justify-center mr-4 sm:mr-12 py-2 text-teal-600 font-semibold text-sm">
+                           className="flex flex-col justify-center lg:mr-12 py-2 text-teal-600 font-semibold text-sm">
                            <ul className="flex flex-col justify-center">
                               {profile.skills.map((skill: any) => (
                                  <li className="flex items-center">
