@@ -1,8 +1,7 @@
 import { Form, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
-import { authenticatedUser, isAuthenticated } from "~/session.server";
+import { isAuthenticated } from "~/session.server";
 import { json, redirect } from "@remix-run/node";
-import { getUserById } from "~/models/user.server";
 import util from "util";
 import { getProfile } from "~/models/profile.server";
 
@@ -15,6 +14,8 @@ export const loader: LoaderFunction = async ({ request }) => {
    console.log(util.inspect(profile, { showHidden: false, depth: null, colors: true }));
    return json({ profile });
 };
+
+// TODO - save modified profile to database
 
 export default function Experience() {
    const { profile } = useLoaderData();
