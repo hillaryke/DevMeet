@@ -22,6 +22,11 @@ export async function getSession(request: Request) {
    return sessionStorage.getSession(cookie);
 }
 
+export async function destroySession(request: Request) {
+   const session = await getSession(request);
+   return sessionStorage.destroySession(session);
+}
+
 export async function createUserSession(userId: string, request: Request, redirectTo: string) {
    const session = await getSession(request);
    const token = generateToken(userId);
