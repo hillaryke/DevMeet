@@ -38,7 +38,7 @@ export default () => {
       });
 
    return (
-      <div className="bg-gray-800 flex justify-center fixed w-full">
+      <div className="bg-gray-800 flex justify-center fixed w-full z-50">
          <nav className="flex items-center justify-between px-6 py-3 max-w-screen-2xl w-screen">
             <Link to="/">
                <div className="flex items-center flex-shrink-0 text-white mr-6 pl-1.5 hover:cursor-pointer">
