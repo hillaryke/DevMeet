@@ -8,7 +8,7 @@ export const loader: LoaderFunction = async ({ request }) => {
    const isAuth = await isAuthenticated(request);
    console.log("isAuth: ", isAuth);
 
-   return json({ isAuth });
+   return json({ user: isAuth });
 };
 
 // export default function Index() {
@@ -41,8 +41,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 // }
 
 export default function Index() {
-   const { isAuth } = useLoaderData();
-   const user = isAuth;
+   const { user } = useLoaderData();
    return (
       <>
          <Headerr/>
@@ -69,20 +68,28 @@ export default function Index() {
                            </h1>
 
                            <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
-                              <div className="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5">
+                              {user ? (
                                  <Link
                                     to="login"
                                     className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8"
                                  >
-                                    Login
+                                    Dashboard
                                  </Link>
-                                 <Link
+                              ) : (
+                                 <>
+                                    <Link
+                                       to="login"
+                                       className="mr-5 flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8"
+                                    >
+                                       Login
+                                    </Link><Link
                                     to="/register"
                                     className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8"
                                  >
                                     Register
                                  </Link>
-                              </div>
+                                 </>)
+                              }
                            </div>
                         </div>
                      </div>
