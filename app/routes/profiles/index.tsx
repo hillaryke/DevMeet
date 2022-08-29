@@ -1,16 +1,22 @@
 import { CheckIcon } from '@heroicons/react/outline';
 import type { LoaderFunction } from "@remix-run/node";
-import { getProfiles } from "~/models/profile.server";
 import { json } from "@remix-run/node";
 import util from "util";
+import { useLoaderData } from "@remix-run/react";
+
+import { getProfiles } from "~/models/profile.server";
 
 export const loader: LoaderFunction = async () => {
    const profiles = await getProfiles();
+
+   console.log(util.inspect(profiles, { showHidden: false, depth: null, colors: true }));
 
    return json({ profiles, });
 };
 
 export default function IndexProfiles() {
+   const { profiles } = useLoaderData();
+
    return (
       <div className="flex justify-center w-screen">
          <div className="mx-8 lg:mx-14 sm:w-3/4 lg:w-2/3">
@@ -28,190 +34,40 @@ export default function IndexProfiles() {
                </div>
 
                {/* Developers */}
+
                <div className="">
-                  <div className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
-                     <div className="ml-2 mr-4 sm:mr-7">
-                        <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
-                             className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"/>
-                     </div>
-
-                     <div className="flex flex-col flex-grow ml-4">
-                        <div className="text-lg font-semibold mt-4 text-left">Tom</div>
-
-                        <div className="flex mt-2">
-                           <span className="text-sm font-semibold text-gray-500 pt-2">Developer at Microsoft Inc.</span>
+                  {profiles.map((profile: any) => (
+                     <div className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
+                        <div className="ml-2 mr-4 sm:mr-7">
+                           <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
+                                className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"/>
                         </div>
-                     </div>
 
-                     <div
-                        className="flex flex-col justify-center mr-4 sm:mr-12 py-2 text-teal-600 font-semibold text-sm">
-                        <ul className="flex flex-col justify-center">
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              HTML
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              CSS
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              Javascript
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              C++
-                           </li>
-                        </ul>
-                     </div>
+                        <div className="flex flex-col flex-grow ml-4">
+                           <div className="text-lg font-semibold mt-4 text-left">{profile.user.name}</div>
 
-
-                  </div>
-                  <div className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
-                     <div className="ml-2 mr-4 sm:mr-7">
-                        <div className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"></div>
-                     </div>
-
-                     <div className="flex flex-col flex-grow ml-4">
-                        <div className="text-lg font-semibold mt-4 text-left">Tom</div>
-
-                        <div className="flex mt-2">
-                           <span className="text-sm font-semibold text-gray-500 pt-2">Developer at Microsoft Inc.</span>
+                           <div className="flex mt-2">
+                           <span className="text-sm font-semibold text-gray-500 pt-2">
+                              {profile.status} at {profile.company}
+                           </span>
+                           </div>
                         </div>
-                     </div>
 
-                     <div className="flex flex-col justify-center mr-12 py-2 text-teal-600 font-semibold text-sm">
-                        <ul className="flex flex-col justify-center">
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              HTML
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              CSS
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              Javascript
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              C++
-                           </li>
-                        </ul>
-                     </div>
-
-
-                  </div>
-
-                  <div className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
-                     <div className="ml-2 mr-4 sm:mr-7">
-                        <div className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"></div>
-                     </div>
-
-                     <div className="flex flex-col flex-grow ml-4">
-                        <div className="text-lg font-semibold mt-4 text-left">Tom</div>
-
-                        <div className="flex mt-2">
-                           <span className="text-sm font-semibold text-gray-500 pt-2">Developer at Microsoft Inc.</span>
+                        <div
+                           className="flex flex-col justify-center mr-4 sm:mr-12 py-2 text-teal-600 font-semibold text-sm">
+                           <ul className="flex flex-col justify-center">
+                              {profile.skills.map((skill: any) => (
+                                 <li className="flex items-center">
+                                    <CheckIcon className="w-5 h-5 mr-1"/>
+                                    {skill}
+                                 </li>
+                              ))}
+                           </ul>
                         </div>
+
+
                      </div>
-
-                     <div className="flex flex-col justify-center mr-12 py-2 text-teal-600 font-semibold text-sm">
-                        <ul className="flex flex-col justify-center">
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              HTML
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              CSS
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              Javascript
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              C++
-                           </li>
-                        </ul>
-                     </div>
-
-
-                  </div>
-                  <div className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
-                     <div className="ml-2 mr-4 sm:mr-7">
-                        <div className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"></div>
-                     </div>
-
-                     <div className="flex flex-col flex-grow ml-4">
-                        <div className="text-lg font-semibold mt-4 text-left">Tom</div>
-
-                        <div className="flex mt-2">
-                           <span className="text-sm font-semibold text-gray-500 pt-2">Developer at Microsoft Inc.</span>
-                        </div>
-                     </div>
-
-                     <div className="flex flex-col justify-center mr-12 py-2 text-teal-600 font-semibold text-sm">
-                        <ul className="flex flex-col justify-center">
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              HTML
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              CSS
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              Javascript
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              C++
-                           </li>
-                        </ul>
-                     </div>
-
-
-                  </div>
-                  <div className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
-                     <div className="ml-2 mr-4 sm:mr-7">
-                        <div className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"></div>
-                     </div>
-
-                     <div className="flex flex-col flex-grow ml-4">
-                        <div className="text-lg font-semibold mt-4 text-left">Tom</div>
-
-                        <div className="flex mt-2">
-                           <span className="text-sm font-semibold text-gray-500 pt-2">Developer at Microsoft Inc.</span>
-                        </div>
-                     </div>
-
-                     <div className="flex flex-col justify-center mr-12 py-2 text-teal-600 font-semibold text-sm">
-                        <ul className="flex flex-col justify-center">
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              HTML
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              CSS
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              Javascript
-                           </li>
-                           <li className="flex items-center">
-                              <CheckIcon className="w-5 h-5 mr-1"/>
-                              C++
-                           </li>
-                        </ul>
-                     </div>
-
-
-                  </div>
+                  ))}
                </div>
                {/* End of Developers */}
             </div>
