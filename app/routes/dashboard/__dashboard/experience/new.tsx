@@ -30,7 +30,6 @@ export const action: ActionFunction = async ({ request }) => {
    if (errors) return json({ errors });
 
    const experience = await createExperience(request, data);
-   console.log(experience);
 
    return redirect('/dashboard/experiences');
 };

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faTwitter, faYoutube, faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLoaderData } from "@remix-run/react";
-import * as util from "util";
 
 import { getUserWithProfile } from "~/models/user.server";
 import { authenticatedUser } from "~/session.server";
@@ -12,10 +11,7 @@ import { authenticatedUser } from "~/session.server";
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);
    if (!userId) return redirect("/");
-
    const user = await getUserWithProfile(userId);
-   console.log(util.inspect(user, false, null, true));
-
    return json({ user });
 };
 

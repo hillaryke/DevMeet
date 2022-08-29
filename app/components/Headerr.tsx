@@ -2,7 +2,6 @@ import { Link, useLoaderData } from "@remix-run/react";
 
 export default () => {
    const { user } = useLoaderData();
-   console.log(user);
 
    const links = [
       !user && { label: 'Register', to: '/register', isActionRoute: false },

@@ -31,7 +31,6 @@ export const action: ActionFunction = async ({ request }) => {
    if (errors) return json({ errors });
 
    const education = await createEducation(request, data);
-   console.log(education);
 
    return redirect('/dashboard/education');
 };

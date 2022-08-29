@@ -12,7 +12,6 @@ export const loader: LoaderFunction = async ({ request }) => {
    if (!isAuth) return redirect("/");
 
    const education = await getEducation(request);
-   console.log(util.inspect(education, false, null, true));
 
    return { education };
 };

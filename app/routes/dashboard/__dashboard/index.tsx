@@ -14,10 +14,7 @@ import util from "util";
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);
    if (!userId) return redirect("/");
-
    const user = await getUserALl(userId);
-   console.log(util.inspect(user, false, null, true));
-
    return json({ user });
 };
 

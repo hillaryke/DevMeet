@@ -9,9 +9,7 @@ import Headerr from "~/components/Headerr";
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);
    if (!userId) return redirect('/');
-
    const user = await getUserById(userId);
-
    return json({ user });
 };
 

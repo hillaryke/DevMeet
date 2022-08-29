@@ -15,7 +15,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
    if (!eduId) throw new Error("Experience not found");
 
    const education = await getEducationById(eduId);
-   console.log(util.inspect(education, false, null, true));
 
    return { education };
 };

@@ -52,7 +52,6 @@ export const action: ActionFunction = async ({ request }) => {
 export default function Login() {
    const { error } = useLoaderData();
    const actionData = useActionData();
-   console.log("actionData: ", error);
 
    const transition = useTransition();
 

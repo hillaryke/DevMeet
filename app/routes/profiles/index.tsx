@@ -4,10 +4,9 @@ import { getProfiles } from "~/models/profile.server";
 import { json } from "@remix-run/node";
 import util from "util";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async () => {
    const profiles = await getProfiles();
 
-   console.log(util.inspect(profiles, { showHidden: false, depth: null, colors: true }));
    return json({ profiles, });
 };
 

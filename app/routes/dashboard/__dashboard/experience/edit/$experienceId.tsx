@@ -16,7 +16,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
    if (!expId) throw new Error("Experience not found");
 
    const experience = await getExperienceById(expId);
-   console.log(util.inspect(experience, false, null, true));
 
    return { experience };
 };

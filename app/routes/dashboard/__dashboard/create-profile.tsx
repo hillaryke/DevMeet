@@ -22,7 +22,6 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function CreateProfile() {
    const actionData = useActionData();
-   console.log(actionData);
 
    return (
       <div>

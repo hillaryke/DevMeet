@@ -13,7 +13,6 @@ export const loader: LoaderFunction = async ({ request }) => {
    if (!isAuth) return redirect("/");
 
    const experience = await getExperience(request);
-   console.log(util.inspect(experience, false, null, true));
 
    return { experience };
 };

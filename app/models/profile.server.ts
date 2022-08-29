@@ -24,7 +24,6 @@ export const createProfile = async (formData: FormData, userId: User["id"]) => {
    }
    // @ts-ignore
    profileFields["skills"] = skills.split(",").map((skill: string) => skill.trim());
-   console.log(profileFields);
 
    if (Object.keys(errors).length > 0) {
       return { errors };
