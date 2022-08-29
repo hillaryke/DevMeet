@@ -19,6 +19,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
    return { education };
 };
 
+// TODO save modified education credentials
 
 export default function Experience() {
    const { education } = useLoaderData();
@@ -30,7 +31,7 @@ export default function Experience() {
       <div>
          <div className="md:flex md:items-center md:justify-between mx-9">
             <div className="flex-1 min-w-0">
-               <h2 className="text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Add Education</h2>
+               <h2 className="text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Edit Education</h2>
             </div>
          </div>
          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -115,7 +116,7 @@ export default function Experience() {
                      <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                         <button type="submit"
                                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >Add Education
+                        >Save Education
                         </button>
                      </div>
                   </div>

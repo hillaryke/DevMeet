@@ -1,6 +1,24 @@
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@remix-run/node";
+import { authenticatedUser, isAuthenticated } from "~/session.server";
+import { json, redirect } from "@remix-run/node";
+import { getUserById } from "~/models/user.server";
+import util from "util";
+import { getProfile } from "~/models/profile.server";
+
+export const loader: LoaderFunction = async ({ request }) => {
+   const isAuth = await isAuthenticated(request);
+   if (!isAuth) return redirect("/");
+
+   const profile = await getProfile(request);
+
+   console.log(util.inspect(profile, { showHidden: false, depth: null, colors: true }));
+   return json({ profile });
+};
 
 export default function Experience() {
+   const { profile } = useLoaderData();
+
    return (
       <div>
          <div className="md:flex md:items-center md:justify-between mx-9">
@@ -15,7 +33,8 @@ export default function Experience() {
                   <div className="shadow overflow-hidden sm:rounded-md">
                      <div className="px-4 py-5 bg-white sm:p-6 space-y-5">
                         <div className="col-span-6 sm:col-span-3">
-                           <select id="country" name="country" autoComplete="country-name"
+                           <select id="status" name="status" autoComplete="status"
+                                   defaultValue={profile.status}
                                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                               <option value="0">* Select Professional Status</option>
                               <option value="Developer">Developer</option>
@@ -34,16 +53,19 @@ export default function Experience() {
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="company"
                                   placeholder="Company"
+                                  defaultValue={profile.company}
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
                            <small className="text-gray-600 ml-2"
                            >Could be your own company or one you work for</small>
                         </div>
 
+
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="website"
                                   placeholder="Website"
-                                  className="font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                  defaultValue={profile.website}
+                                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
                            <small className="text-gray-600 ml-2">Could be your own or a company website</small>
                         </div>
@@ -51,6 +73,7 @@ export default function Experience() {
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="location"
                                   placeholder="Location"
+                                  defaultValue={profile.location}
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
                            <small className="text-gray-600 ml-2"
@@ -59,17 +82,22 @@ export default function Experience() {
 
                         <div className="col-span-6 sm:col-span-4">
                            <input type="text" name="skills"
-                                  placeholder="Skills"
+                                  placeholder="* Skills"
+                                  defaultValue={profile.skills.join(', ')}
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
+                           <p className="mt-2 text-sm text-red-600" id="email-error">
+                              Please add at least one skill
+                           </p>
                            <small className="text-gray-600 ml-2"
                            >Please use comma separated values (eg.
                               HTML,CSS,JavaScript,PHP)</small>
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
-                           <input type="text" name="githubusername"
-                                  placeholder="githubusername"
+                           <input type="text" name="githubUsername"
+                                  placeholder="Github username"
+                                  defaultValue={profile.githubUsername}
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                            />
                            <small className="text-gray-600 ml-2"
@@ -78,7 +106,8 @@ export default function Experience() {
                         </div>
 
                         <div className="col-span-6 sm:col-span-4">
-                           <textarea id="bio" name="bio" rows={3}
+                           <textarea name="bio" rows={3}
+                                     defaultValue={profile.bio}
                                      className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                      placeholder="A short bio of yourself"
                            ></textarea>
@@ -90,7 +119,7 @@ export default function Experience() {
                      <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                         <button type="submit"
                                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >Save Changes
+                        >Save Profile
                         </button>
                      </div>
                   </div>
