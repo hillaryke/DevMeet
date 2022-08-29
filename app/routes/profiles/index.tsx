@@ -1,4 +1,15 @@
 import { CheckIcon } from '@heroicons/react/outline';
+import type { LoaderFunction } from "@remix-run/node";
+import { getProfiles } from "~/models/profile.server";
+import { json } from "@remix-run/node";
+import util from "util";
+
+export const loader: LoaderFunction = async ({ request }) => {
+   const profiles = await getProfiles();
+
+   console.log(util.inspect(profiles, { showHidden: false, depth: null, colors: true }));
+   return json({ profiles, });
+};
 
 export default function IndexProfiles() {
    return (
@@ -17,10 +28,12 @@ export default function IndexProfiles() {
                   </h2>
                </div>
 
+               {/* Developers */}
                <div className="">
                   <div className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
                      <div className="ml-2 mr-4 sm:mr-7">
-                        <div className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"></div>
+                        <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
+                             className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"/>
                      </div>
 
                      <div className="flex flex-col flex-grow ml-4">
@@ -201,6 +214,7 @@ export default function IndexProfiles() {
 
                   </div>
                </div>
+               {/* End of Developers */}
             </div>
 
          </div>

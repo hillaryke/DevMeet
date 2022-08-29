@@ -61,3 +61,7 @@ export const getProfile = async (request: Request) => {
 
    return user?.profile;
 };
+
+export const getProfiles = () => {
+   return prisma.profile.findMany();
+};
