@@ -32,7 +32,7 @@ export const action: ActionFunction = async ({ request }) => {
 
    const education = await createEducation(request, data);
 
-   return redirect('/dashboard/education');
+   return redirect('/dashboard/educations');
 };
 
 
