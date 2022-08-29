@@ -4,10 +4,10 @@ export default () => {
    const { user } = useLoaderData();
 
    const links = [
+      { label: 'Developers', to: '/profiles', isActionRoute: false },
+      { label: 'Posts', to: '/posts', isActionRoute: false },
       !user && { label: 'Register', to: '/register', isActionRoute: false },
       !user && { label: 'Login', to: '/login', isActionRoute: false },
-      user && { label: 'Developers', to: '/profiles', isActionRoute: false },
-      user && { label: 'Posts', to: '/posts', isActionRoute: false },
       user && { label: 'Dashboard', to: '/dashboard', isActionRoute: false },
       user && { label: 'Logout', to: '/logout', isActionRoute: true }
    ];

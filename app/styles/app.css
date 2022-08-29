@@ -1130,7 +1130,7 @@ video {
 .space-x-6 > :not([hidden]) ~ :not([hidden]) {
    --tw-space-x-reverse: 0;
    margin-right: calc(1.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
+   margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
@@ -1146,7 +1146,7 @@ video {
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
+   --tw-space-x-reverse: 0;
    margin-right: calc(0.5rem * var(--tw-space-x-reverse));
    margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
@@ -2034,11 +2034,11 @@ video {
 .shadow-md {
    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .shadow-lg {
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
    --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
@@ -2094,7 +2094,7 @@ video {
    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+   transition-duration: 150ms;
 }
 
 .transition {
@@ -2429,13 +2429,13 @@ video {
     margin-right: 1.75rem;
   }
 
-  .sm\:mr-12 {
-    margin-right: 3rem;
-  }
+   .sm\:mr-12 {
+      margin-right: 3rem;
+   }
 
-  .sm\:ml-16 {
-    margin-left: 4rem;
-  }
+   .sm\:ml-16 {
+      margin-left: 4rem;
+   }
 
    .sm\:inline-block {
       display: inline-block;
@@ -2458,24 +2458,24 @@ video {
    }
 
    .sm\:w-auto {
-    width: auto;
-  }
+      width: auto;
+   }
 
-  .sm\:w-full {
-    width: 100%;
-  }
+   .sm\:w-full {
+      width: 100%;
+   }
 
-  .sm\:w-14 {
+   .sm\:w-14 {
     width: 3.5rem;
-  }
+   }
 
-  .sm\:w-3\/4 {
-    width: 75%;
-  }
+   .sm\:w-3\/4 {
+      width: 75%;
+   }
 
-  .sm\:w-28 {
-    width: 7rem;
-  }
+   .sm\:w-28 {
+      width: 7rem;
+   }
 
    .sm\:max-w-md {
       max-width: 28rem;
@@ -2660,15 +2660,15 @@ video {
       margin-right: 0.5rem;
    }
 
-  .md\:block {
-    display: block;
-  }
+   .md\:block {
+      display: block;
+   }
 
-  .md\:flex {
-    display: flex;
-  }
+   .md\:flex {
+      display: flex;
+   }
 
-  .md\:h-10 {
+   .md\:h-10 {
     height: 2.5rem;
   }
 
@@ -2680,13 +2680,13 @@ video {
     width: 16rem;
   }
 
-  .md\:w-10 {
-    width: 2.5rem;
-  }
+   .md\:w-10 {
+      width: 2.5rem;
+   }
 
-  .md\:w-20 {
-    width: 5rem;
-  }
+   .md\:w-20 {
+      width: 5rem;
+   }
 
    .md\:w-3\/12 {
       width: 25%;
@@ -2713,14 +2713,14 @@ video {
    }
 
    .md\:justify-center {
-    justify-content: center;
-  }
+      justify-content: center;
+   }
 
-  .md\:justify-between {
-    justify-content: space-between;
-  }
+   .md\:justify-between {
+      justify-content: space-between;
+   }
 
-  .md\:rounded-lg {
+   .md\:rounded-lg {
     border-radius: 0.5rem;
   }
 
@@ -2754,25 +2754,25 @@ video {
       margin-right: -2rem;
    }
 
-  .lg\:h-20 {
-    height: 5rem;
-  }
+   .lg\:h-20 {
+      height: 5rem;
+   }
 
-  .lg\:h-32 {
-    height: 8rem;
-  }
+   .lg\:h-32 {
+      height: 8rem;
+   }
 
-  .lg\:w-20 {
+   .lg\:w-20 {
     width: 5rem;
-  }
+   }
 
-  .lg\:w-2\/3 {
-    width: 66.666667%;
-  }
+   .lg\:w-2\/3 {
+      width: 66.666667%;
+   }
 
-  .lg\:w-32 {
-    width: 8rem;
-  }
+   .lg\:w-32 {
+      width: 8rem;
+   }
 
    .lg\:w-10\/12 {
       width: 83.333333%;
