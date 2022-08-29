@@ -67,17 +67,18 @@ export const getProfiles = () => {
          date: "desc"
       },
       select: {
+         id: true,
+         company: true,
+         skills: true,
+         location: true,
+         status: true,
          user: {
             select: {
                id: true,
                name: true,
                avatar: true
             }
-         },
-         company: true,
-         skills: true,
-         location: true,
-         status: true,
+         }
       },
    });
 };

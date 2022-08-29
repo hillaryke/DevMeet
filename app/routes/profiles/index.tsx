@@ -2,7 +2,7 @@ import { CheckIcon } from '@heroicons/react/outline';
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import util from "util";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 
 import { getProfiles } from "~/models/profile.server";
 
@@ -39,12 +39,16 @@ export default function IndexProfiles() {
                   {profiles.map((profile: any) => (
                      <div className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
                         <div className="ml-2 mr-4 sm:mr-7">
-                           <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
-                                className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"/>
+                           <Link to={`/profiles/${profile.id}`}>
+                              <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
+                                   className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"/>
+                           </Link>
                         </div>
 
                         <div className="flex flex-col flex-grow ml-4">
-                           <div className="text-lg font-semibold mt-4 text-left">{profile.user.name}</div>
+                           <Link to={`/profiles/${profile.id}`}>
+                              <div className="text-lg font-semibold mt-4 text-left">{profile.user.name}</div>
+                           </Link>
 
                            <div className="flex mt-2">
                            <span className="text-sm font-semibold text-gray-500 pt-2">
