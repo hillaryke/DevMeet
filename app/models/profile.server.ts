@@ -62,5 +62,22 @@ export const getProfile = async (request: Request) => {
 };
 
 export const getProfiles = () => {
-   return prisma.profile.findMany();
+   return prisma.profile.findMany({
+      orderBy: {
+         date: "desc"
+      },
+      select: {
+         user: {
+            select: {
+               id: true,
+               name: true,
+               avatar: true
+            }
+         },
+         company: true,
+         skills: true,
+         location: true,
+         status: true,
+      },
+   });
 };
