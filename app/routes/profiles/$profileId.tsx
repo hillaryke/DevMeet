@@ -1,13 +1,15 @@
+import { Experience } from "~/models/experience.server";
+import { Education } from "~/models/education.server";
 import { json } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import util from "util";
 
-import { getProfileById, getProfileWithAll } from "~/models/profile.server";
-import { format } from "date-fns";
+import { getProfileWithAll } from "~/models/profile.server";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
    const profileId = params.profileId;
@@ -18,6 +20,48 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function ProfileShow() {
    const { profile } = useLoaderData();
+
+   const renderExperience = (exp: Experience) => (
+      <div className="list-inside space-y-1 mb-4">
+         <div className="text-teal-600 font-semibold">{exp.company}</div>
+         <div className="text-gray-700 font-semibold text-sm">
+            Duration: {" "}
+            <span className="text-gray-800 font-normal text-sm">
+               {format(new Date(exp.from), "MMMM yyyy")} - {exp.to === null ? "Present" :
+               format(new Date(exp.to), "MMMM yyyy")
+            }
+            </span>
+
+         </div>
+         <div className="text-sm font-semibold text-gray-700">Position:
+            <span className="text-sm text-gray-600 font-normal">{"  "}
+               {exp.title}
+            </span>
+         </div>
+         <div className="text-sm font-semibold text-gray-700">Description:{"  "}
+            <span className="font-normal">
+               {exp.description}
+            </span>
+         </div>
+      </div>
+   );
+
+   const renderEducation = (edu: Education) => (
+      <div className="list-inside space-y-1 mb-4">
+         <div className="text-teal-600 font-semibold">{edu.degree} in {edu.fieldofstudy}</div>
+         <div className="text-sm font-semibold text-gray-700">{edu.school}</div>
+         <div className="text-gray-700 text-sm">
+            {format(new Date(edu.from), "MM/dd/yy")} - {edu.to === null ? "Present" :
+            format(new Date(edu.to), "MM/dd/yy")
+         }
+         </div>
+         <div className="text-sm font-semibold text-gray-700">Description:{"  "}
+            <span className="font-normal">
+                                    {edu.description}
+                                 </span>
+         </div>
+      </div>
+   );
 
    return (
       <div className="bg-gray-100">
@@ -112,7 +156,13 @@ export default function ProfileShow() {
                            <span className="tracking-wide">Experience</span>
                         </div>
 
-                        {}
+                        {profile.experience.length > 0 ? profile.experience.map((exp: Experience) => (
+                           renderExperience(exp)
+                        )) : (
+                           <div className="text-gray-700 text-sm">
+                              <div className="font-semibold">No experience added</div>
+                           </div>
+                        )}
                      </div>
                      {/* Education */}
                      <div className="w-6/12 p-3 shadow-sm rounded-sm bg-white">
@@ -131,23 +181,13 @@ export default function ProfileShow() {
                            <span className="tracking-wide">Education</span>
                         </div>
 
-                        {/* TODO remove any type*/}
-                        {profile.education.map((edu: any) => (
-                           <div className="list-inside space-y-1 mb-4">
-                              <div className="text-teal-600 font-semibold">{edu.degree} in {edu.fieldofstudy}</div>
-                              <div className="text-sm font-semibold text-gray-700">{edu.school}</div>
-                              <div className="text-gray-700 text-sm">
-                                 {format(new Date(edu.from), "MM/dd/yy")} - {edu.to === null ? "Present" :
-                                 format(new Date(edu.from), "MM/dd/yy")
-                              }
-                              </div>
-                              <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                                 <span className="font-normal">
-                                    {edu.description}
-                                 </span>
-                              </div>
+                        {profile.education.length > 0 ? profile.education.map((edu: Education) => (
+                           renderEducation(edu)
+                        )) : (
+                           <div className="text-gray-700 text-sm">
+                              <div className="font-semibold">No education added</div>
                            </div>
-                        ))}
+                        )}
                      </div>
                   </div>
                   {/* End of Experience and education grid */}

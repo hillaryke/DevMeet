@@ -5,7 +5,7 @@ import { prisma } from "~/db.server";
 
 import { authenticatedUser } from "~/session.server";
 
-export type { Profile, Education, Experience } from "@prisma/client";
+export type { Profile } from "@prisma/client";
 
 export const createProfile = async (formData: FormData, userId: User["id"]) => {
    const errors: IErrors = {};
