@@ -18,7 +18,7 @@ export default function IndexProfiles() {
       <div className="flex justify-center w-screen">
          <div className="md:mx-8 lg:mx-14 sm:w-3/4 lg:w-2/3">
             <div>
-               <div className="md:flex md:items-center md:justify-between my-4">
+               <div className="md:flex md:items-center md:justify-between mb-4">
                   <div className="flex-1 min-w-0">
                      <h2 className="text-3xl font-bold leading-7 text-blueGreen sm:text-3xl sm:truncate">Developers</h2>
                   </div>

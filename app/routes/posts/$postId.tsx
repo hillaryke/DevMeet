@@ -40,7 +40,7 @@ export default function Post() {
 
    return (
       <div className="flex justify-center w-screen h-screen px-4 text-gray-700">
-         <div className="flex flex-col w-full max-w-screen-lg mt-2">
+         <div className="flex flex-col w-full max-w-screen-lg -mt-1">
             <Link
                to="/posts"
                className="max-w-fit flex items-center text-gray-700 h-8 px-3 text-sm rounded bg-gray-300 hover:bg-gray-400"

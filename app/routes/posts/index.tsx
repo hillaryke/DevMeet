@@ -71,7 +71,7 @@ export default function PostsIndex() {
             <div className="flex flex-col flex-grow border-l border-r border-gray-300">
                <div className="md:flex md:items-center md:justify-between mx-9">
                   <div className="flex-1 min-w-0">
-                     <h2 className="text-3xl font-bold leading-7 text-blueGreen sm:text-4xl sm:truncate pt-5">Posts</h2>
+                     <h2 className="text-3xl font-bold leading-7 text-blueGreen sm:text-4xl sm:truncate">Posts</h2>
                   </div>
                </div>
                <div className="flex-grow h-0 overflow-auto">
