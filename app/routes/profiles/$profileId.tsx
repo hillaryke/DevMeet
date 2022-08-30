@@ -6,12 +6,12 @@ import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import util from "util";
 
-import { getProfileById } from "~/models/profile.server";
+import { getProfileById, getProfileWithAll } from "~/models/profile.server";
 import { format } from "date-fns";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
    const profileId = params.profileId;
-   const profile = await getProfileById(profileId!);
+   const profile = await getProfileWithAll(profileId!);
    console.log(util.inspect(profile, { showHidden: false, depth: null, colors: true }));
    return json({ profile });
 };
@@ -111,30 +111,8 @@ export default function ProfileShow() {
                                 </span>
                            <span className="tracking-wide">Experience</span>
                         </div>
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Apple Inc.</div>
-                           <div className="text-gray-700 text-sm">March 2020 - Now</div>
-                           <div className="text-sm font-semibold text-gray-700">Position:
-                              <span className="text-sm text-gray-600 font-normal">{"  "}Developer</span>
-                           </div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
-                           </div>
-                        </div>
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Apple Inc.</div>
-                           <div className="text-gray-700 text-sm">March 2020 - Now</div>
-                           <div className="text-sm font-semibold text-gray-700">Position:
-                              <span className="text-sm text-gray-600 font-normal">{"  "}Developer</span>
-                           </div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
-                           </div>
-                        </div>
+
+                        {}
                      </div>
                      {/* Education */}
                      <div className="w-6/12 p-3 shadow-sm rounded-sm bg-white">
@@ -153,41 +131,28 @@ export default function ProfileShow() {
                            <span className="tracking-wide">Education</span>
                         </div>
 
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Masters Degree in Computer Science</div>
-                           <div className="text-sm font-semibold text-gray-700">Stanford University</div>
-                           <div className="text-gray-700 text-sm">23/11/2002 - 12/4/2005</div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
+                        {/* TODO remove any type*/}
+                        {profile.education.map((edu: any) => (
+                           <div className="list-inside space-y-1 mb-4">
+                              <div className="text-teal-600 font-semibold">{edu.degree} in {edu.fieldofstudy}</div>
+                              <div className="text-sm font-semibold text-gray-700">{edu.school}</div>
+                              <div className="text-gray-700 text-sm">
+                                 {format(new Date(edu.from), "MM/dd/yy")} - {edu.to === null ? "Present" :
+                                 format(new Date(edu.from), "MM/dd/yy")
+                              }
+                              </div>
+                              <div className="text-sm font-semibold text-gray-700">Description:{"  "}
+                                 <span className="font-normal">
+                                    {edu.description}
+                                 </span>
+                              </div>
                            </div>
-                        </div>
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Masters Degree in Computer Science</div>
-                           <div className="text-sm font-semibold text-gray-700">Stanford University</div>
-                           <div className="text-gray-700 text-sm">23/11/2002 - 12/4/2005</div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
-                           </div>
-                        </div>
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Bachelor's Degree Information Systems</div>
-                           <div className="text-sm font-semibold text-gray-700">Havard University</div>
-                           <div className="text-gray-700 text-sm">23/11/2002 - 12/4/2005</div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
-                           </div>
-                        </div>
+                        ))}
                      </div>
                   </div>
                   {/* End of Experience and education grid */}
 
-                  {/* About Section */}
+                  {/* Github Section */}
                   <div className="bg-white p-3 shadow-sm rounded-sm mt-5">
                      <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                         <span className="text-green-500">

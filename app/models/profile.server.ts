@@ -1,11 +1,11 @@
 import { formDataToObject } from "~/utils/util.server";
 import type { IErrors } from "~/utils/util.server";
-import type { User } from "@prisma/client";
+import type { User, Profile } from "@prisma/client";
 import { prisma } from "~/db.server";
 
 import { authenticatedUser } from "~/session.server";
 
-export type { Profile } from "@prisma/client";
+export type { Profile, Education, Experience } from "@prisma/client";
 
 export const createProfile = async (formData: FormData, userId: User["id"]) => {
    const errors: IErrors = {};
@@ -59,6 +59,17 @@ export const getProfile = async (request: Request) => {
    });
 
    return user?.profile;
+};
+
+export const getProfileWithAll = (profileId: Profile["id"]) => {
+   return prisma.profile.findUnique({
+      where: { id: profileId },
+      include: {
+         user: true,
+         experience: true,
+         education: true
+      }
+   });
 };
 
 export const getProfiles = () => {

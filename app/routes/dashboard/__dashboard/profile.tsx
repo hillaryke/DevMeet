@@ -7,11 +7,18 @@ import { Link, useLoaderData } from "@remix-run/react";
 
 import { getUserWithProfile } from "~/models/user.server";
 import { authenticatedUser } from "~/session.server";
+import { getProfile, getProfileWithAll } from "~/models/profile.server";
+import util from "util";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);
    if (!userId) return redirect("/");
    const user = await getUserWithProfile(userId);
+
+   const profile = await getProfileWithAll(userId);
+
+   console.log(util.inspect(profile, { showHidden: false, depth: null, colors: true }));
+
    return json({ user });
 };
 
@@ -165,32 +172,11 @@ export default function ProfileShow() {
                            <span className="tracking-wide">Education</span>
                         </div>
 
+
                         <div className="list-inside space-y-1 mb-4">
                            <div className="text-teal-600 font-semibold">Masters Degree in Computer Science</div>
                            <div className="text-sm font-semibold text-gray-700">Stanford University</div>
                            <div className="text-gray-700 text-sm">23/11/2002 - present</div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
-                           </div>
-                        </div>
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Masters Degree in Mathematics and Computer
-                              Science
-                           </div>
-                           <div className="text-sm font-semibold text-gray-700">Stanford University</div>
-                           <div className="text-gray-700 text-sm">23/11/2002 - 12/4/2005</div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
-                           </div>
-                        </div>
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Bachelor's Degree Information Systems</div>
-                           <div className="text-sm font-semibold text-gray-700">Havard University</div>
-                           <div className="text-gray-700 text-sm">23/11/2002 - 12/4/2005</div>
                            <div className="text-sm font-semibold text-gray-700">Description:{"  "}
                               <span className="font-normal">
                                        Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt

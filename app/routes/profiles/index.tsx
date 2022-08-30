@@ -1,15 +1,12 @@
 import { CheckIcon } from '@heroicons/react/outline';
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import util from "util";
 import { Link, useLoaderData } from "@remix-run/react";
 
 import { getProfiles } from "~/models/profile.server";
 
 export const loader: LoaderFunction = async () => {
    const profiles = await getProfiles();
-
-   console.log(util.inspect(profiles, { showHidden: false, depth: null, colors: true }));
 
    return json({ profiles, });
 };
