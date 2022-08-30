@@ -19,17 +19,13 @@ export default function Dashboard() {
 
    return (
       <>
-         <Headerr/>
-
          <div>
             {/*@ts-ignore*/}
 
             <Sidebarr user={user}/>
             <div className="md:pl-64 flex flex-col flex-1">
                <main className="flex-1">
-                  <div className="pt-20">
-                     <Outlet/>
-                  </div>
+                  <Outlet/>
                </main>
             </div>
          </div>

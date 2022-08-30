@@ -38,20 +38,22 @@ export default () => {
       });
 
    return (
-      <div className="bg-gray-800 flex justify-center fixed w-full z-50">
-         <nav className="flex items-center justify-between px-6 py-3 max-w-screen-2xl w-screen">
-            <Link to="/">
-               <div className="flex items-center flex-shrink-0 text-white mr-6 pl-1.5 hover:cursor-pointer">
-                  <span className="font-bold text-2xl">{"</> DevMeet"}</span>
-               </div>
-            </Link>
+      <div className="pb-20">
+         <div className="bg-gray-800 flex justify-center fixed w-full z-50">
+            <nav className="flex items-center justify-between px-6 py-3 max-w-screen-2xl w-screen">
+               <Link to="/">
+                  <div className="flex items-center flex-shrink-0 text-white mr-6 pl-1.5 hover:cursor-pointer">
+                     <span className="font-bold text-2xl">{"</> DevMeet"}</span>
+                  </div>
+               </Link>
 
-            <div className="w-full block sm:flex sm:items-center sm:w-auto">
-               <div className="text-sm sm:flex-grow -mr-5">
-                  {displayLinks}
+               <div className="w-full block sm:flex sm:items-center sm:w-auto">
+                  <div className="text-sm sm:flex-grow -mr-5">
+                     {displayLinks}
+                  </div>
                </div>
-            </div>
-         </nav>
+            </nav>
+         </div>
       </div>
    );
 }

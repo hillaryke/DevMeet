@@ -7,14 +7,12 @@ import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
-import util from "util";
 
 import { getProfileWithAll } from "~/models/profile.server";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
    const profileId = params.profileId;
    const profile = await getProfileWithAll(profileId!);
-   console.log(util.inspect(profile, { showHidden: false, depth: null, colors: true }));
    return json({ profile });
 };
 
@@ -22,7 +20,7 @@ export default function ProfileShow() {
    const { profile } = useLoaderData();
 
    const renderExperience = (exp: Experience) => (
-      <div className="list-inside space-y-1 mb-4">
+      <div key={exp.id} className="list-inside space-y-1 mb-4">
          <div className="text-teal-600 font-semibold">{exp.company}</div>
          <div className="text-gray-700 font-semibold text-sm">
             Duration: {" "}
@@ -47,7 +45,7 @@ export default function ProfileShow() {
    );
 
    const renderEducation = (edu: Education) => (
-      <div className="list-inside space-y-1 mb-4">
+      <div key={edu.id} className="list-inside space-y-1 mb-4">
          <div className="text-teal-600 font-semibold">{edu.degree} in {edu.fieldofstudy}</div>
          <div className="text-sm font-semibold text-gray-700">{edu.school}</div>
          <div className="text-gray-700 text-sm">
@@ -120,7 +118,7 @@ export default function ProfileShow() {
                         <span className="text-green-500">
                             <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
                         </span>
@@ -149,7 +147,7 @@ export default function ProfileShow() {
                                     <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                                          viewBox="0 0 24 24"
                                          stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                     </svg>
                                 </span>
@@ -174,7 +172,7 @@ export default function ProfileShow() {
                                         <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z"/>
                                         <path fill="#fff"
                                               d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                               d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
                                     </svg>
                                 </span>
@@ -198,7 +196,7 @@ export default function ProfileShow() {
                         <span className="text-green-500">
                             <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
                         </span>

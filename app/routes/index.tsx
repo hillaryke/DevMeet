@@ -44,8 +44,6 @@ export default function Index() {
    const { user } = useLoaderData();
    return (
       <>
-         <Headerr/>
-
          <main className="pt-20 h-5/6">
             <div>
                {/* Hero card */}

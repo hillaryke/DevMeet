@@ -817,6 +817,10 @@ video {
   margin-bottom: 1.75rem;
 }
 
+.mb-20 {
+  margin-bottom: 5rem;
+}
+
 .block {
   display: block;
 }
@@ -1652,6 +1656,14 @@ video {
 
 .pl-4 {
   padding-left: 1rem;
+}
+
+.pb-20 {
+  padding-bottom: 5rem;
+}
+
+.pt-18 {
+  padding-top: 4.5rem;
 }
 
 .text-left {

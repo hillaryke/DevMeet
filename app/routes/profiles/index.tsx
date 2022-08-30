@@ -34,7 +34,8 @@ export default function IndexProfiles() {
 
                <div className="">
                   {profiles.map((profile: any) => (
-                     <div className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
+                     <div key={profile.id}
+                          className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
                         <div className="ml-2 mr-4 sm:mr-7">
                            <Link to={`/profiles/${profile.id}`}>
                               <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
@@ -58,7 +59,7 @@ export default function IndexProfiles() {
                            className="flex flex-col justify-center lg:mr-12 py-2 text-teal-600 font-semibold text-sm">
                            <ul className="flex flex-col justify-center">
                               {profile.skills.map((skill: any) => (
-                                 <li className="flex items-center">
+                                 <li key={skill} className="flex items-center">
                                     <CheckIcon className="w-5 h-5 mr-1"/>
                                     {skill}
                                  </li>
