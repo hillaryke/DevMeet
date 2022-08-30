@@ -63,7 +63,7 @@ export default function ProfileShow() {
 
    return (
       <div className="bg-gray-100">
-         <div className="container mx-auto mb-5 p-5">
+         <div className="container mx-auto mb-5">
             <div className="md:flex no-wrap md:-mx-2 ">
                {/* Left Side */}
                <div className="w-full md:w-3/12 md:mx-2">
