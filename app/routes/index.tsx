@@ -78,7 +78,7 @@ export default function Index() {
                                        Login
                                     </Link><Link
                                     to="/register"
-                                    className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8"
+                                    className="font-semibold flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8"
                                  >
                                     Register
                                  </Link>
