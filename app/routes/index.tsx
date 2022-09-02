@@ -2,13 +2,9 @@ import type { LoaderFunction } from "@remix-run/node";
 import { isAuthenticated } from "~/session.server";
 import { Link, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import Headerr from "~/components/Headerr";
 
 export const loader: LoaderFunction = async ({ request }) => {
-   const isAuth = await isAuthenticated(request);
-   console.log("isAuth: ", isAuth);
-
-   return json({ user: isAuth });
+   return json({ user: await isAuthenticated(request) });
 };
 
 // export default function Index() {
