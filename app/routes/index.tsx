@@ -73,7 +73,7 @@ export default function Index() {
                                  <>
                                     <Link
                                        to="login"
-                                       className="mr-5 flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8"
+                                       className="font-semibold mr-5 flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8"
                                     >
                                        Login
                                     </Link><Link
