@@ -242,7 +242,6 @@ export default function ProfileShow() {
                            <div className="font-semibold">No Github Profile Found</div>
                         </div>
                      }
-
                      {/*   End of list of repos */}
                   </div>
                   {/* End of about section */}

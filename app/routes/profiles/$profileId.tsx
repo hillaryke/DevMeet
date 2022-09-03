@@ -9,15 +9,20 @@ import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 import { getProfileWithAllById } from "~/models/profile.server";
+import { getUserRepos } from "~/models/github.server";
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
    const profileId = params.profileId;
    const profile = await getProfileWithAllById(profileId!);
-   return json({ profile });
+
+   // Fix repos forks and watchers count
+   const { repos } = await getUserRepos(profile!.githubUsername as string);
+
+   return json({ profile, repos });
 };
 
 export default function ProfileShow() {
-   const { profile } = useLoaderData();
+   const { profile, repos } = useLoaderData();
 
    const renderExperience = (exp: Experience) => (
       <div key={exp.id} className="list-inside space-y-1 mb-4">
@@ -190,7 +195,7 @@ export default function ProfileShow() {
                   </div>
                   {/* End of Experience and education grid */}
 
-                  {/* Github Section */}
+                  {/* GitHub Section */}
                   <div className="bg-white p-3 shadow-sm rounded-sm mt-5">
                      <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                         <span className="text-green-500">
@@ -203,39 +208,24 @@ export default function ProfileShow() {
                         <span className="tracking-wide">Github repos</span>
                      </div>
                      {/* List of repos */}
-                     <div className="flex justify-between border">
-                        <div className="flex flex-col m-3 ml-4 text-sm">
-                           <p className="text-blueGreen font-semibold">testing</p>
-                           <p className="mt-4">Testing</p>
+                     {repos && repos.length > 0 ? repos.map((repo: any) => (
+                           <div key={repo.id} className="flex justify-between border">
+                              <div className="flex flex-col m-3 ml-4 text-sm">
+                                 <a href={repo.html_url} className="text-blueGreen font-semibold">{repo.name}</a>
+                                 <p className="mt-4">{repo.description}</p>
+                              </div>
+                              <div className="flex flex-col space-y-1 text-xs text-center m-3">
+                                 <div className="bg-blueGreen text-gray-200 p-1">Stars: {repo.stargazers_count}</div>
+                                 <div className="bg-darkColor text-gray-200 p-1">Watchers: {repo.watchers_count}</div>
+                                 <div className="bg-gray-200 p-1">Forks: {repo.forks}</div>
+                              </div>
+                           </div>
+                        )) :
+                        <div className="text-gray-700 py-4">
+                           <div className="font-semibold">No Github Profile Found</div>
                         </div>
-                        <div className="flex flex-col space-y-1 text-xs text-center m-3">
-                           <div className="bg-blueGreen text-gray-200 p-1">Stars: 2</div>
-                           <div className="bg-darkColor text-gray-200 p-1">Watchers: 2</div>
-                           <div className="bg-gray-200 p-1">Forks: 23</div>
-                        </div>
-                     </div>
-                     <div className="flex justify-between border">
-                        <div className="flex flex-col m-3 ml-4 text-sm">
-                           <p className="text-blueGreen font-semibold">testing</p>
-                           <p className="mt-4">Testing</p>
-                        </div>
-                        <div className="flex flex-col space-y-1 text-xs text-center m-3">
-                           <div className="bg-blueGreen text-gray-200 p-1">Stars: 2</div>
-                           <div className="bg-darkColor text-gray-200 p-1">Watchers: 2</div>
-                           <div className="bg-gray-200 p-1">Forks: 23</div>
-                        </div>
-                     </div>
-                     <div className="flex justify-between border">
-                        <div className="flex flex-col m-3 ml-4 text-sm">
-                           <p className="text-blueGreen font-semibold">testing</p>
-                           <p className="mt-4">Testing</p>
-                        </div>
-                        <div className="flex flex-col space-y-1 text-xs text-center m-3">
-                           <div className="bg-blueGreen text-gray-200 p-1">Stars: 2</div>
-                           <div className="bg-darkColor text-gray-200 p-1">Watchers: 2</div>
-                           <div className="bg-gray-200 p-1">Forks: 23</div>
-                        </div>
-                     </div>
+                     }
+
                      {/*   End of list of repos */}
                   </div>
                   {/* End of about section */}
