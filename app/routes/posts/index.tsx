@@ -140,7 +140,7 @@ export default function PostsIndex() {
                                  </div>
                               </Link>
                               {userId === post.user.id ? (
-                                 <Form ref={formRef} action="/posts/delete" method="post">
+                                 <Form ref={formRef} action="/posts/delete-post" method="post">
                                     <input type="hidden" name="postId" value={post.id}/>
                                     <div className="pr-3 bg-gray-50 text-right">
                                        <button type="submit"
