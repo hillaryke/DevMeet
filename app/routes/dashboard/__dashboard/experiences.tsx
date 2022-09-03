@@ -6,7 +6,6 @@ import { format } from 'date-fns';
 import { isAuthenticated } from "~/session.server";
 import { getExperience } from "~/models/experience.server";
 import type { Experience } from "~/models/experience.server";
-import util from "util";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const isAuth = await isAuthenticated(request);

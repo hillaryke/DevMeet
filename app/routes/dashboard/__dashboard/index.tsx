@@ -9,7 +9,6 @@ import { authenticatedUser } from "~/session.server";
 import { getUserALl } from "~/models/user.server";
 import type { Experience } from "~/models/experience.server";
 import type { Education } from "~/models/education.server";
-import util from "util";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);

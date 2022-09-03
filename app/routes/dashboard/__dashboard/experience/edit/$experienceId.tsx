@@ -20,6 +20,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 // TODO save modified experience credentials
+export const action: ActionFunction = async ({ request }) => {
+   const formData = await request.formData();
+
+   return null;
+};
 
 export default function EditExperience() {
    const { experience } = useLoaderData();

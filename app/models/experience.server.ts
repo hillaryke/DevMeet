@@ -44,3 +44,16 @@ export const getExperienceById = async (expId: Experience["id"]) => {
    });
    return data;
 };
+
+export const deleteExperience = (expId: Experience["id"]) => {
+   return prisma.experience.delete({
+      where: { id: expId }
+   });
+};
+
+export const updateExperience = (expId: Experience["id"], data: any) => {
+   return prisma.experience.update({
+      where: { id: expId },
+      data
+   });
+};

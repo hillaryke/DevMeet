@@ -3,33 +3,20 @@ import type { ActionFunction } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { json, redirect } from "@remix-run/node";
 
-import { processFormData } from "~/utils/util.server";
+import { processEduExp, processFormData } from "~/utils/util.server";
 import { createEducation } from "~/models/education.server";
 
 export const action: ActionFunction = async ({ request }) => {
-   const fieldNames = ["school", "degree", "fieldofstudy", "from", "to", "current", "description"];
-   const fieldsToValidate = ["school", "degree", "from"];
-   const dateFields = ["from", "to"];
+   const fieldNames = ["title", "company", "location", "from", "to", "current", "description"];
+   const fieldsToValidate = ["title", "company", "from"];
    const errorMessages = {
-      school: "School or bootcamp is required",
-      degree: "Degree is required",
+      title: "Job Title is required",
+      company: "Company is required",
       from: "From date is required",
    };
-   let { errors, data } = await processFormData(
-      request,
-      fieldNames,
-      errorMessages,
-      fieldsToValidate,
-      dateFields
-   );
-   // To date is required if the user is not currently working
-   if (!data["current"] && !data["to"]) {
-      if (!errors) errors = {};
-      errors["to"] = "To date is required";
-   }
-
+   const { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
    if (errors) return json({ errors });
-
+   
    const education = await createEducation(request, data);
 
    return redirect('/dashboard/educations');

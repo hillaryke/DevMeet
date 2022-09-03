@@ -38,7 +38,7 @@ export default function IndexProfiles() {
                           className="flex w-full p-4 mb-3 bg-gray-200 border-2 border-gray-300 rounded-lg">
                         <div className="ml-2 mr-4 sm:mr-7">
                            <Link to={`/profiles/${profile.id}`}>
-                              <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
+                              <img src={profile.user.avatar} alt="Avatar"
                                    className=" w-14 h-14 sm:w-28 sm:h-28 lg:w-32 lg:h-32 bg-gray-400 rounded-full"/>
                            </Link>
                         </div>

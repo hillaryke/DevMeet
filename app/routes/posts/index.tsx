@@ -104,7 +104,7 @@ export default function PostsIndex() {
                   {posts.map((post: any) => (
                      <div key={post.id} className="flex w-full p-4 border-b border-gray-300">
                         <div className="flex-shrink-0">
-                           <img src="https://avatars0.githubusercontent.com/u/130138?s=460&v=4" alt="Avatar"
+                           <img src={post.user.avatar} alt="Avatar"
                                 className="w-12 h-12 w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-full"
                            />
                         </div>

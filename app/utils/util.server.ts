@@ -1,3 +1,5 @@
+import { json } from "@remix-run/node";
+
 export interface IErrors {
    [key: string]: string;
 }
@@ -86,4 +88,23 @@ export const processFormData = async (
    const errors = validateFields(formated, errorMessages, fieldsTovalidate);
 
    return { errors, data: formated };
+};
+
+export const processEduExp = async (request: Request, fieldNames: any, fieldsToValidate: any, errorMessages: any) => {
+   const dateFields = ["from", "to"];
+
+   let { errors, data } = await processFormData(
+      request,
+      fieldNames,
+      errorMessages,
+      fieldsToValidate,
+      dateFields
+   );
+   // To date is required if the user is not currently working
+   if (!data["current"] && !data["to"]) {
+      if (!errors) errors = {};
+      errors["to"] = "To date is required";
+   }
+
+   return { errors, data };
 };
