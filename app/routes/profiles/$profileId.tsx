@@ -15,7 +15,7 @@ export const loader: LoaderFunction = async ({ params }) => {
    const profileId = params.profileId;
    const profile = await getProfileWithAllById(profileId!);
 
-   // Fix repos forks and watchers count
+   // TODO Fix repos forks and watchers count
    const { repos } = await getUserRepos(profile!.githubUsername as string);
 
    return json({ profile, repos });
