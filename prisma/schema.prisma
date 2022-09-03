@@ -45,7 +45,7 @@ model Comment {
     id          String   @id @default(auto()) @map("_id") @db.ObjectId
     postId      String   @db.ObjectId
     post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-    userId       String   @db.ObjectId
+    userId      String   @db.ObjectId
     user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     text        String
     date        DateTime @default(now())
@@ -72,7 +72,7 @@ model Profile {
 model Experience {
     id              String @id @default(auto()) @map("_id") @db.ObjectId
     profileId       String
-    profile         Profile @relation(fields: [profileId], references: [id])
+    profile         Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
     title           String
     company         String
     location        String?
@@ -85,7 +85,7 @@ model Experience {
 model Education {
     id              String @id @default(auto()) @map("_id") @db.ObjectId
     profileId       String
-    profile         Profile @relation(fields: [profileId], references: [id])
+    profile         Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
     school          String
     degree          String
     fieldofstudy    String?
@@ -98,7 +98,7 @@ model Education {
 model Social {
     id              String @id @default(auto()) @map("_id") @db.ObjectId
     profileId       String @db.ObjectId @unique
-    profile         Profile @relation(fields: [profileId], references: [id])
+    profile         Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
     youtube         String?
     twitter         String?
     facebook        String?
