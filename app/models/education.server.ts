@@ -40,9 +40,15 @@ export const getEducation = async (request: Request) => {
    return data!.education;
 };
 
-export const getEducationById = async (expId: Experience["id"]) => {
+export const getEducationById = async (eduId: Education["id"]) => {
    const data = await prisma.education.findUnique({
-      where: { id: expId },
+      where: { id: eduId },
    });
    return data;
+};
+
+export const deleteEducation = async (eduId: Education["id"]) => {
+   const data = await prisma.education.delete({
+      where: { id: eduId }
+   });
 };

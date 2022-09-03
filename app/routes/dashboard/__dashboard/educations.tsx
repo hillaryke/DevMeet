@@ -83,8 +83,10 @@ export default function EducationList() {
                               </td>
                               <td
                                  className="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
-                                 <Form>
-                                    <button className="bg-red-600 text-gray-100 py-2 px-5 rounded-md">
+                                 <Form action="/dashboard/education/delete" method="post">
+                                    <input type="hidden" name="eduId" value={edu.id}/>
+                                    <button type="submit" value="deleteEducation"
+                                            className="bg-red-600 text-gray-100 py-2 px-5 rounded-md">
                                        Delete
                                     </button>
                                  </Form>
