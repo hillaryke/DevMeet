@@ -8,11 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedin, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 
-import { getProfileWithAll } from "~/models/profile.server";
+import { getProfileWithAllById } from "~/models/profile.server";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
    const profileId = params.profileId;
-   const profile = await getProfileWithAll(profileId!);
+   const profile = await getProfileWithAllById(profileId!);
    return json({ profile });
 };
 
@@ -71,7 +71,7 @@ export default function ProfileShow() {
                   <div className="bg-white p-3 border-t-4 border-green-400">
                      <div className="image overflow-hidden">
                         <img className="h-auto w-full mx-auto"
-                             src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
+                             src={profile.user.avatar}
                              alt=""
                         />
                      </div>

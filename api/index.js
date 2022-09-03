@@ -219,10 +219,8 @@ async function createUser(name, email, password) {
 var validateCredentials = async (email, password) => {
   let existingUser = await getUserByEmail(email);
   return !existingUser || !await import_bcryptjs.default.compare(password, existingUser.password) ? null : existingUser.id;
-}, getUserWithProfile = (userId) => prisma.user.findUnique({
-  where: { id: userId },
-  include: { profile: !0 }
-}), getUserALl = async (userId) => prisma.user.findUnique({
+};
+var getUserALl = async (userId) => prisma.user.findUnique({
   where: { id: userId },
   include: {
     profile: {
@@ -675,8 +673,15 @@ var createProfile = async (formData, userId) => {
     select: { profile: !0 }
   });
   return user == null ? void 0 : user.profile;
-}, getProfileWithAll = (profileId) => prisma.profile.findUnique({
+}, getProfileWithAllById = (profileId) => prisma.profile.findUnique({
   where: { id: profileId },
+  include: {
+    user: !0,
+    experience: !0,
+    education: !0
+  }
+}), getProfileWIthAll = (userId) => prisma.profile.findUnique({
+  where: { userId },
   include: {
     user: !0,
     experience: !0,
@@ -3216,16 +3221,154 @@ __export(profile_exports, {
   loader: () => loader8
 });
 var import_node12 = require("@remix-run/node"), import_react_fontawesome = require("@fortawesome/react-fontawesome"), import_free_brands_svg_icons = require("@fortawesome/free-brands-svg-icons"), import_free_solid_svg_icons = require("@fortawesome/free-solid-svg-icons"), import_react19 = require("@remix-run/react");
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader8 = async ({ request }) => {
+var import_date_fns5 = require("date-fns"), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader8 = async ({ request }) => {
   let userId = await authenticatedUser(request);
   if (!userId)
     return (0, import_node12.redirect)("/");
-  let user = await getUserWithProfile(userId);
-  return (0, import_node12.json)({ user });
+  let profile = await getProfileWIthAll(userId);
+  return (0, import_node12.json)({ profile });
 };
 function ProfileShow() {
-  let { user } = (0, import_react19.useLoaderData)();
-  return user.profile ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+  let { profile } = (0, import_react19.useLoaderData)(), renderExperience = (exp) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+    className: "list-inside space-y-1 mb-4",
+    children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+        className: "text-teal-600 font-semibold",
+        children: exp.company
+      }, void 0, !1, {
+        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+        lineNumber: 27,
+        columnNumber: 10
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+        className: "text-gray-700 font-semibold text-sm",
+        children: [
+          "Duration: ",
+          " ",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
+            className: "text-gray-800 font-normal text-sm",
+            children: [
+              (0, import_date_fns5.format)(new Date(exp.from), "MMMM yyyy"),
+              " - ",
+              exp.to === null ? "Present" : (0, import_date_fns5.format)(new Date(exp.to), "MMMM yyyy")
+            ]
+          }, void 0, !0, {
+            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+            lineNumber: 30,
+            columnNumber: 13
+          }, this)
+        ]
+      }, void 0, !0, {
+        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+        lineNumber: 28,
+        columnNumber: 10
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+        className: "text-sm font-semibold text-gray-700",
+        children: [
+          "Position:",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
+            className: "text-sm text-gray-600 font-normal",
+            children: [
+              "  ",
+              exp.title
+            ]
+          }, void 0, !0, {
+            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+            lineNumber: 38,
+            columnNumber: 13
+          }, this)
+        ]
+      }, void 0, !0, {
+        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+        lineNumber: 37,
+        columnNumber: 10
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+        className: "text-sm font-semibold text-gray-700",
+        children: [
+          "Description:",
+          "  ",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
+            className: "font-normal",
+            children: exp.description
+          }, void 0, !1, {
+            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+            lineNumber: 43,
+            columnNumber: 13
+          }, this)
+        ]
+      }, void 0, !0, {
+        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+        lineNumber: 42,
+        columnNumber: 10
+      }, this)
+    ]
+  }, exp.id, !0, {
+    fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+    lineNumber: 26,
+    columnNumber: 7
+  }, this), renderEducation = (edu) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+    className: "list-inside space-y-1 mb-4",
+    children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+        className: "text-teal-600 font-semibold",
+        children: [
+          edu.degree,
+          " in ",
+          edu.fieldofstudy
+        ]
+      }, void 0, !0, {
+        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+        lineNumber: 52,
+        columnNumber: 10
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+        className: "text-sm font-semibold text-gray-700",
+        children: edu.school
+      }, void 0, !1, {
+        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+        lineNumber: 53,
+        columnNumber: 10
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+        className: "text-gray-700 text-sm",
+        children: [
+          (0, import_date_fns5.format)(new Date(edu.from), "MM/dd/yy"),
+          " - ",
+          edu.to === null ? "Present" : (0, import_date_fns5.format)(new Date(edu.to), "MM/dd/yy")
+        ]
+      }, void 0, !0, {
+        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+        lineNumber: 54,
+        columnNumber: 10
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+        className: "text-sm font-semibold text-gray-700",
+        children: [
+          "Description:",
+          "  ",
+          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
+            className: "font-normal",
+            children: edu.description
+          }, void 0, !1, {
+            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+            lineNumber: 60,
+            columnNumber: 13
+          }, this)
+        ]
+      }, void 0, !0, {
+        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+        lineNumber: 59,
+        columnNumber: 10
+      }, this)
+    ]
+  }, edu.id, !0, {
+    fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+    lineNumber: 51,
+    columnNumber: 7
+  }, this);
+  return profile ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
     className: "bg-gray-100",
     children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
       className: "container mx-auto mb-5 px-5",
@@ -3241,36 +3384,36 @@ function ProfileShow() {
                   className: "image overflow-hidden",
                   children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("img", {
                     className: "h-auto w-full mx-auto",
-                    src: user.avatar,
+                    src: profile.user.avatar,
                     alt: ""
                   }, void 0, !1, {
                     fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                    lineNumber: 53,
+                    lineNumber: 98,
                     columnNumber: 25
                   }, this)
                 }, void 0, !1, {
                   fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                  lineNumber: 52,
+                  lineNumber: 97,
                   columnNumber: 22
                 }, this),
                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("h1", {
                   className: "text-gray-900 font-bold text-xl leading-8 my-1 text-center",
-                  children: user.name
+                  children: profile.user.name
                 }, void 0, !1, {
                   fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                  lineNumber: 58,
+                  lineNumber: 103,
                   columnNumber: 22
                 }, this),
                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("h3", {
                   className: "text-gray-600 font-lg text-semibold leading-6 text-center",
                   children: [
-                    user.profile.status,
+                    profile.status,
                     " at ",
-                    user.profile.company
+                    profile.company
                   ]
                 }, void 0, !0, {
                   fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                  lineNumber: 59,
+                  lineNumber: 104,
                   columnNumber: 22
                 }, this),
                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -3281,7 +3424,7 @@ function ProfileShow() {
                       className: "text-blue-500"
                     }, void 0, !1, {
                       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                      lineNumber: 63,
+                      lineNumber: 108,
                       columnNumber: 25
                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react_fontawesome.FontAwesomeIcon, {
@@ -3289,7 +3432,7 @@ function ProfileShow() {
                       className: "text-blue-700"
                     }, void 0, !1, {
                       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                      lineNumber: 64,
+                      lineNumber: 109,
                       columnNumber: 25
                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react_fontawesome.FontAwesomeIcon, {
@@ -3297,7 +3440,7 @@ function ProfileShow() {
                       className: "text-red-700"
                     }, void 0, !1, {
                       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                      lineNumber: 65,
+                      lineNumber: 110,
                       columnNumber: 25
                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react_fontawesome.FontAwesomeIcon, {
@@ -3305,7 +3448,7 @@ function ProfileShow() {
                       className: "text-blue-500"
                     }, void 0, !1, {
                       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                      lineNumber: 66,
+                      lineNumber: 111,
                       columnNumber: 25
                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react_fontawesome.FontAwesomeIcon, {
@@ -3313,7 +3456,7 @@ function ProfileShow() {
                       className: "text-instagramColor"
                     }, void 0, !1, {
                       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                      lineNumber: 67,
+                      lineNumber: 112,
                       columnNumber: 25
                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react_fontawesome.FontAwesomeIcon, {
@@ -3321,13 +3464,13 @@ function ProfileShow() {
                       className: "text-blue-600"
                     }, void 0, !1, {
                       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                      lineNumber: 68,
+                      lineNumber: 113,
                       columnNumber: 25
                     }, this)
                   ]
                 }, void 0, !0, {
                   fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                  lineNumber: 62,
+                  lineNumber: 107,
                   columnNumber: 22
                 }, this),
                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("ul", {
@@ -3340,12 +3483,12 @@ function ProfileShow() {
                         children: "Edit Profile"
                       }, void 0, !1, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 75,
+                        lineNumber: 120,
                         columnNumber: 28
                       }, this)
                     }, void 0, !1, {
                       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                      lineNumber: 74,
+                      lineNumber: 119,
                       columnNumber: 25
                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("li", {
@@ -3355,38 +3498,38 @@ function ProfileShow() {
                           children: "Member since"
                         }, void 0, !1, {
                           fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                          lineNumber: 78,
+                          lineNumber: 123,
                           columnNumber: 28
                         }, this),
                         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
                           className: "ml-auto",
-                          children: "Nov 07, 2016"
+                          children: (0, import_date_fns5.format)(new Date(profile.user.date), "MMM dd, yyyy")
                         }, void 0, !1, {
                           fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                          lineNumber: 79,
+                          lineNumber: 124,
                           columnNumber: 28
                         }, this)
                       ]
                     }, void 0, !0, {
                       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                      lineNumber: 77,
+                      lineNumber: 122,
                       columnNumber: 25
                     }, this)
                   ]
                 }, void 0, !0, {
                   fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                  lineNumber: 72,
+                  lineNumber: 117,
                   columnNumber: 22
                 }, this)
               ]
             }, void 0, !0, {
               fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-              lineNumber: 51,
+              lineNumber: 96,
               columnNumber: 19
             }, this)
           }, void 0, !1, {
             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-            lineNumber: 49,
+            lineNumber: 94,
             columnNumber: 16
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -3412,17 +3555,17 @@ function ProfileShow() {
                             d: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                           }, void 0, !1, {
                             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 94,
+                            lineNumber: 141,
                             columnNumber: 33
                           }, this)
                         }, void 0, !1, {
                           fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                          lineNumber: 92,
+                          lineNumber: 139,
                           columnNumber: 29
                         }, this)
                       }, void 0, !1, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 91,
+                        lineNumber: 138,
                         columnNumber: 25
                       }, this),
                       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
@@ -3430,13 +3573,13 @@ function ProfileShow() {
                         children: "About"
                       }, void 0, !1, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 98,
+                        lineNumber: 145,
                         columnNumber: 25
                       }, this)
                     ]
                   }, void 0, !0, {
                     fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                    lineNumber: 90,
+                    lineNumber: 137,
                     columnNumber: 22
                   }, this),
                   /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -3449,39 +3592,39 @@ function ProfileShow() {
                           children: "Bio"
                         }, void 0, !1, {
                           fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                          lineNumber: 102,
+                          lineNumber: 149,
                           columnNumber: 28
                         }, this),
                         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
                           className: "text-sm text-gray-500 hover:text-gray-600 leading-6",
-                          children: user.profile.bio
+                          children: profile.bio
                         }, void 0, !1, {
                           fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                          lineNumber: 103,
+                          lineNumber: 150,
                           columnNumber: 28
                         }, this)
                       ]
                     }, void 0, !0, {
                       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                      lineNumber: 101,
+                      lineNumber: 148,
                       columnNumber: 25
                     }, this)
                   }, void 0, !1, {
                     fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                    lineNumber: 100,
+                    lineNumber: 147,
                     columnNumber: 22
                   }, this)
                 ]
               }, void 0, !0, {
                 fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                lineNumber: 89,
+                lineNumber: 136,
                 columnNumber: 19
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                 className: "my-4"
               }, void 0, !1, {
                 fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                lineNumber: 109,
+                lineNumber: 156,
                 columnNumber: 19
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -3508,17 +3651,17 @@ function ProfileShow() {
                                 d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                               }, void 0, !1, {
                                 fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                                lineNumber: 121,
+                                lineNumber: 168,
                                 columnNumber: 41
                               }, this)
                             }, void 0, !1, {
                               fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                              lineNumber: 118,
+                              lineNumber: 165,
                               columnNumber: 37
                             }, this)
                           }, void 0, !1, {
                             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 117,
+                            lineNumber: 164,
                             columnNumber: 33
                           }, this),
                           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
@@ -3526,149 +3669,34 @@ function ProfileShow() {
                             children: "Experience"
                           }, void 0, !1, {
                             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 125,
+                            lineNumber: 172,
                             columnNumber: 28
                           }, this)
                         ]
                       }, void 0, !0, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 116,
+                        lineNumber: 163,
                         columnNumber: 25
                       }, this),
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                        className: "list-inside space-y-1 mb-4",
-                        children: [
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-teal-600 font-semibold",
-                            children: "Apple Inc."
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 128,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-gray-700 text-sm",
-                            children: "March 2020 - Now"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 129,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-sm font-semibold text-gray-700",
-                            children: [
-                              "Position:",
-                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
-                                className: "text-sm text-gray-600 font-normal",
-                                children: [
-                                  "  ",
-                                  "Developer"
-                                ]
-                              }, void 0, !0, {
-                                fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                                lineNumber: 131,
-                                columnNumber: 31
-                              }, this)
-                            ]
-                          }, void 0, !0, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 130,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-sm font-semibold text-gray-700",
-                            children: [
-                              "Description:",
-                              "  ",
-                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
-                                className: "font-normal",
-                                children: "Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt"
-                              }, void 0, !1, {
-                                fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                                lineNumber: 134,
-                                columnNumber: 31
-                              }, this)
-                            ]
-                          }, void 0, !0, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 133,
-                            columnNumber: 28
-                          }, this)
-                        ]
-                      }, void 0, !0, {
+                      profile.experience.length > 0 ? profile.experience.map((exp) => renderExperience(exp)) : /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                        className: "text-gray-700 text-sm",
+                        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                          className: "font-semibold",
+                          children: "No experience added"
+                        }, void 0, !1, {
+                          fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                          lineNumber: 179,
+                          columnNumber: 31
+                        }, this)
+                      }, void 0, !1, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 127,
-                        columnNumber: 25
-                      }, this),
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                        className: "list-inside space-y-1 mb-4",
-                        children: [
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-teal-600 font-semibold",
-                            children: "Apple Inc."
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 140,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-gray-700 text-sm",
-                            children: "March 2020 - Now"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 141,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-sm font-semibold text-gray-700",
-                            children: [
-                              "Position:",
-                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
-                                className: "text-sm text-gray-600 font-normal",
-                                children: [
-                                  "  ",
-                                  "Developer"
-                                ]
-                              }, void 0, !0, {
-                                fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                                lineNumber: 143,
-                                columnNumber: 31
-                              }, this)
-                            ]
-                          }, void 0, !0, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 142,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-sm font-semibold text-gray-700",
-                            children: [
-                              "Description:",
-                              "  ",
-                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
-                                className: "font-normal",
-                                children: "Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt"
-                              }, void 0, !1, {
-                                fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                                lineNumber: 146,
-                                columnNumber: 31
-                              }, this)
-                            ]
-                          }, void 0, !0, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 145,
-                            columnNumber: 28
-                          }, this)
-                        ]
-                      }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 139,
-                        columnNumber: 25
+                        lineNumber: 178,
+                        columnNumber: 28
                       }, this)
                     ]
                   }, void 0, !0, {
                     fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                    lineNumber: 115,
+                    lineNumber: 162,
                     columnNumber: 22
                   }, this),
                   /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -3691,7 +3719,7 @@ function ProfileShow() {
                                   d: "M12 14l9-5-9-5-9 5 9 5z"
                                 }, void 0, !1, {
                                   fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                                  lineNumber: 159,
+                                  lineNumber: 190,
                                   columnNumber: 41
                                 }, this),
                                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("path", {
@@ -3699,7 +3727,7 @@ function ProfileShow() {
                                   d: "M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
                                 }, void 0, !1, {
                                   fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                                  lineNumber: 160,
+                                  lineNumber: 191,
                                   columnNumber: 41
                                 }, this),
                                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("path", {
@@ -3709,18 +3737,18 @@ function ProfileShow() {
                                   d: "M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
                                 }, void 0, !1, {
                                   fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                                  lineNumber: 162,
+                                  lineNumber: 193,
                                   columnNumber: 41
                                 }, this)
                               ]
                             }, void 0, !0, {
                               fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                              lineNumber: 156,
+                              lineNumber: 187,
                               columnNumber: 37
                             }, this)
                           }, void 0, !1, {
                             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 155,
+                            lineNumber: 186,
                             columnNumber: 33
                           }, this),
                           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
@@ -3728,77 +3756,40 @@ function ProfileShow() {
                             children: "Education"
                           }, void 0, !1, {
                             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 166,
+                            lineNumber: 197,
                             columnNumber: 28
                           }, this)
                         ]
                       }, void 0, !0, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 154,
+                        lineNumber: 185,
                         columnNumber: 25
                       }, this),
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                        className: "list-inside space-y-1 mb-4",
-                        children: [
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-teal-600 font-semibold",
-                            children: "Masters Degree in Computer Science"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 171,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-sm font-semibold text-gray-700",
-                            children: "Stanford University"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 172,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-gray-700 text-sm",
-                            children: "23/11/2002 - present"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 173,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "text-sm font-semibold text-gray-700",
-                            children: [
-                              "Description:",
-                              "  ",
-                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
-                                className: "font-normal",
-                                children: "Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt"
-                              }, void 0, !1, {
-                                fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                                lineNumber: 175,
-                                columnNumber: 31
-                              }, this)
-                            ]
-                          }, void 0, !0, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 174,
-                            columnNumber: 28
-                          }, this)
-                        ]
-                      }, void 0, !0, {
+                      profile.education.length > 0 ? profile.education.map((edu) => renderEducation(edu)) : /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                        className: "text-gray-700 text-sm",
+                        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                          className: "font-semibold",
+                          children: "No education added"
+                        }, void 0, !1, {
+                          fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                          lineNumber: 204,
+                          columnNumber: 31
+                        }, this)
+                      }, void 0, !1, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 170,
-                        columnNumber: 25
+                        lineNumber: 203,
+                        columnNumber: 28
                       }, this)
                     ]
                   }, void 0, !0, {
                     fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                    lineNumber: 153,
+                    lineNumber: 184,
                     columnNumber: 22
                   }, this)
                 ]
               }, void 0, !0, {
                 fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                lineNumber: 113,
+                lineNumber: 160,
                 columnNumber: 19
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -3822,17 +3813,17 @@ function ProfileShow() {
                             d: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                           }, void 0, !1, {
                             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 190,
+                            lineNumber: 217,
                             columnNumber: 33
                           }, this)
                         }, void 0, !1, {
                           fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                          lineNumber: 188,
+                          lineNumber: 215,
                           columnNumber: 29
                         }, this)
                       }, void 0, !1, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 187,
+                        lineNumber: 214,
                         columnNumber: 25
                       }, this),
                       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
@@ -3840,13 +3831,13 @@ function ProfileShow() {
                         children: "Github repos"
                       }, void 0, !1, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 194,
+                        lineNumber: 221,
                         columnNumber: 25
                       }, this)
                     ]
                   }, void 0, !0, {
                     fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                    lineNumber: 186,
+                    lineNumber: 213,
                     columnNumber: 22
                   }, this),
                   /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -3858,181 +3849,14 @@ function ProfileShow() {
                           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
                             className: "text-blueGreen font-semibold",
                             children: "testing"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 199,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
-                            className: "mt-4",
-                            children: "Testing"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 200,
-                            columnNumber: 28
-                          }, this)
-                        ]
-                      }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 198,
-                        columnNumber: 25
-                      }, this),
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                        className: "flex flex-col space-y-1 text-xs text-center m-3",
-                        children: [
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "bg-blueGreen text-gray-200 p-1",
-                            children: "Stars: 2"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 203,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "bg-darkColor text-gray-200 p-1",
-                            children: "Watchers: 2"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 204,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "bg-gray-200 p-1",
-                            children: "Forks: 23"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 205,
-                            columnNumber: 28
-                          }, this)
-                        ]
-                      }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 202,
-                        columnNumber: 25
-                      }, this)
-                    ]
-                  }, void 0, !0, {
-                    fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                    lineNumber: 197,
-                    columnNumber: 22
-                  }, this),
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                    className: "flex justify-between border",
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                        className: "flex flex-col m-3 ml-4 text-sm",
-                        children: [
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
-                            className: "text-blueGreen font-semibold",
-                            children: "testing"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 210,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
-                            className: "mt-4",
-                            children: "Testing"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 211,
-                            columnNumber: 28
-                          }, this)
-                        ]
-                      }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 209,
-                        columnNumber: 25
-                      }, this),
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                        className: "flex flex-col space-y-1 text-xs text-center m-3",
-                        children: [
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "bg-blueGreen text-gray-200 p-1",
-                            children: "Stars: 2"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 214,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "bg-darkColor text-gray-200 p-1",
-                            children: "Watchers: 2"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 215,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "bg-gray-200 p-1",
-                            children: "Forks: 23"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 216,
-                            columnNumber: 28
-                          }, this)
-                        ]
-                      }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 213,
-                        columnNumber: 25
-                      }, this)
-                    ]
-                  }, void 0, !0, {
-                    fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                    lineNumber: 208,
-                    columnNumber: 22
-                  }, this),
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                    className: "flex justify-between border",
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                        className: "flex flex-col m-3 ml-4 text-sm",
-                        children: [
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
-                            className: "text-blueGreen font-semibold",
-                            children: "testing"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 221,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
-                            className: "mt-4",
-                            children: "Testing"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 222,
-                            columnNumber: 28
-                          }, this)
-                        ]
-                      }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 220,
-                        columnNumber: 25
-                      }, this),
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                        className: "flex flex-col space-y-1 text-xs text-center m-3",
-                        children: [
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "bg-blueGreen text-gray-200 p-1",
-                            children: "Stars: 2"
-                          }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                            lineNumber: 225,
-                            columnNumber: 28
-                          }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "bg-darkColor text-gray-200 p-1",
-                            children: "Watchers: 2"
                           }, void 0, !1, {
                             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
                             lineNumber: 226,
                             columnNumber: 28
                           }, this),
-                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "bg-gray-200 p-1",
-                            children: "Forks: 23"
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
+                            className: "mt-4",
+                            children: "Testing"
                           }, void 0, !1, {
                             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
                             lineNumber: 227,
@@ -4041,41 +3865,208 @@ function ProfileShow() {
                         ]
                       }, void 0, !0, {
                         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                        lineNumber: 224,
+                        lineNumber: 225,
+                        columnNumber: 25
+                      }, this),
+                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                        className: "flex flex-col space-y-1 text-xs text-center m-3",
+                        children: [
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                            className: "bg-blueGreen text-gray-200 p-1",
+                            children: "Stars: 2"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 230,
+                            columnNumber: 28
+                          }, this),
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                            className: "bg-darkColor text-gray-200 p-1",
+                            children: "Watchers: 2"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 231,
+                            columnNumber: 28
+                          }, this),
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                            className: "bg-gray-200 p-1",
+                            children: "Forks: 23"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 232,
+                            columnNumber: 28
+                          }, this)
+                        ]
+                      }, void 0, !0, {
+                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                        lineNumber: 229,
                         columnNumber: 25
                       }, this)
                     ]
                   }, void 0, !0, {
                     fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                    lineNumber: 219,
+                    lineNumber: 224,
+                    columnNumber: 22
+                  }, this),
+                  /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                    className: "flex justify-between border",
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                        className: "flex flex-col m-3 ml-4 text-sm",
+                        children: [
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
+                            className: "text-blueGreen font-semibold",
+                            children: "testing"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 237,
+                            columnNumber: 28
+                          }, this),
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
+                            className: "mt-4",
+                            children: "Testing"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 238,
+                            columnNumber: 28
+                          }, this)
+                        ]
+                      }, void 0, !0, {
+                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                        lineNumber: 236,
+                        columnNumber: 25
+                      }, this),
+                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                        className: "flex flex-col space-y-1 text-xs text-center m-3",
+                        children: [
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                            className: "bg-blueGreen text-gray-200 p-1",
+                            children: "Stars: 2"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 241,
+                            columnNumber: 28
+                          }, this),
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                            className: "bg-darkColor text-gray-200 p-1",
+                            children: "Watchers: 2"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 242,
+                            columnNumber: 28
+                          }, this),
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                            className: "bg-gray-200 p-1",
+                            children: "Forks: 23"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 243,
+                            columnNumber: 28
+                          }, this)
+                        ]
+                      }, void 0, !0, {
+                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                        lineNumber: 240,
+                        columnNumber: 25
+                      }, this)
+                    ]
+                  }, void 0, !0, {
+                    fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                    lineNumber: 235,
+                    columnNumber: 22
+                  }, this),
+                  /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                    className: "flex justify-between border",
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                        className: "flex flex-col m-3 ml-4 text-sm",
+                        children: [
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
+                            className: "text-blueGreen font-semibold",
+                            children: "testing"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 248,
+                            columnNumber: 28
+                          }, this),
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
+                            className: "mt-4",
+                            children: "Testing"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 249,
+                            columnNumber: 28
+                          }, this)
+                        ]
+                      }, void 0, !0, {
+                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                        lineNumber: 247,
+                        columnNumber: 25
+                      }, this),
+                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                        className: "flex flex-col space-y-1 text-xs text-center m-3",
+                        children: [
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                            className: "bg-blueGreen text-gray-200 p-1",
+                            children: "Stars: 2"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 252,
+                            columnNumber: 28
+                          }, this),
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                            className: "bg-darkColor text-gray-200 p-1",
+                            children: "Watchers: 2"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 253,
+                            columnNumber: 28
+                          }, this),
+                          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                            className: "bg-gray-200 p-1",
+                            children: "Forks: 23"
+                          }, void 0, !1, {
+                            fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                            lineNumber: 254,
+                            columnNumber: 28
+                          }, this)
+                        ]
+                      }, void 0, !0, {
+                        fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                        lineNumber: 251,
+                        columnNumber: 25
+                      }, this)
+                    ]
+                  }, void 0, !0, {
+                    fileName: "app/routes/dashboard/__dashboard/profile.tsx",
+                    lineNumber: 246,
                     columnNumber: 22
                   }, this)
                 ]
               }, void 0, !0, {
                 fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-                lineNumber: 185,
+                lineNumber: 212,
                 columnNumber: 19
               }, this)
             ]
           }, void 0, !0, {
             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-            lineNumber: 86,
+            lineNumber: 133,
             columnNumber: 16
           }, this)
         ]
       }, void 0, !0, {
         fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-        lineNumber: 47,
+        lineNumber: 92,
         columnNumber: 13
       }, this)
     }, void 0, !1, {
       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-      lineNumber: 46,
+      lineNumber: 91,
       columnNumber: 10
     }, this)
   }, void 0, !1, {
     fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-    lineNumber: 45,
+    lineNumber: 90,
     columnNumber: 7
   }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
     className: "px-4 sm:px-6 lg:px-8 mb-7 lg:w-10/12",
@@ -4090,7 +4081,7 @@ function ProfileShow() {
               className: "text-lg"
             }, void 0, !1, {
               fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-              lineNumber: 27,
+              lineNumber: 72,
               columnNumber: 19
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("h1", {
@@ -4098,13 +4089,13 @@ function ProfileShow() {
               children: "Create Your Profile"
             }, void 0, !1, {
               fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-              lineNumber: 28,
+              lineNumber: 73,
               columnNumber: 19
             }, this)
           ]
         }, void 0, !0, {
           fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-          lineNumber: 26,
+          lineNumber: 71,
           columnNumber: 16
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -4115,23 +4106,23 @@ function ProfileShow() {
             children: "Create Profile"
           }, void 0, !1, {
             fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-            lineNumber: 32,
+            lineNumber: 77,
             columnNumber: 19
           }, this)
         }, void 0, !1, {
           fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-          lineNumber: 31,
+          lineNumber: 76,
           columnNumber: 16
         }, this)
       ]
     }, void 0, !0, {
       fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-      lineNumber: 25,
+      lineNumber: 70,
       columnNumber: 13
     }, this)
   }, void 0, !1, {
     fileName: "app/routes/dashboard/__dashboard/profile.tsx",
-    lineNumber: 24,
+    lineNumber: 69,
     columnNumber: 10
   }, this);
 }
@@ -4142,7 +4133,7 @@ __export(dashboard_exports2, {
   default: () => DashboardIndex,
   loader: () => loader9
 });
-var import_react20 = require("@remix-run/react"), import_node13 = require("@remix-run/node"), import_date_fns5 = require("date-fns"), import_react_fontawesome2 = require("@fortawesome/react-fontawesome"), import_free_solid_svg_icons2 = require("@fortawesome/free-solid-svg-icons");
+var import_react20 = require("@remix-run/react"), import_node13 = require("@remix-run/node"), import_date_fns6 = require("date-fns"), import_react_fontawesome2 = require("@fortawesome/react-fontawesome"), import_free_solid_svg_icons2 = require("@fortawesome/free-solid-svg-icons");
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader9 = async ({ request }) => {
   let userId = await authenticatedUser(request);
   if (!userId)
@@ -4322,10 +4313,10 @@ function DashboardIndex() {
                             /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("td", {
                               className: "whitespace-nowrap px-3 py-4 text-sm text-gray-500",
                               children: [
-                                (0, import_date_fns5.format)(new Date(exp.from), "MM/dd/yyyy"),
+                                (0, import_date_fns6.format)(new Date(exp.from), "MM/dd/yyyy"),
                                 " - ",
                                 " ",
-                                exp.to ? (0, import_date_fns5.format)(new Date(exp.to), "MM/dd/yyyy") : "Present"
+                                exp.to ? (0, import_date_fns6.format)(new Date(exp.to), "MM/dd/yyyy") : "Present"
                               ]
                             }, void 0, !0, {
                               fileName: "app/routes/dashboard/__dashboard/index.tsx",
@@ -4477,10 +4468,10 @@ function DashboardIndex() {
                             /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("td", {
                               className: "whitespace-nowrap px-3 py-4 text-sm text-gray-500",
                               children: [
-                                (0, import_date_fns5.format)(new Date(edu.from), "MM/dd/yyyy"),
+                                (0, import_date_fns6.format)(new Date(edu.from), "MM/dd/yyyy"),
                                 " - ",
                                 " ",
-                                edu.to ? (0, import_date_fns5.format)(new Date(edu.to), "MM/dd/yyyy") : "Present"
+                                edu.to ? (0, import_date_fns6.format)(new Date(edu.to), "MM/dd/yyyy") : "Present"
                               ]
                             }, void 0, !0, {
                               fileName: "app/routes/dashboard/__dashboard/index.tsx",
@@ -4544,9 +4535,9 @@ __export(profileId_exports, {
   default: () => ProfileShow2,
   loader: () => loader10
 });
-var import_node14 = require("@remix-run/node"), import_react21 = require("@remix-run/react"), import_date_fns6 = require("date-fns"), import_react_fontawesome3 = require("@fortawesome/react-fontawesome"), import_free_solid_svg_icons3 = require("@fortawesome/free-solid-svg-icons"), import_free_brands_svg_icons2 = require("@fortawesome/free-brands-svg-icons");
+var import_node14 = require("@remix-run/node"), import_react21 = require("@remix-run/react"), import_date_fns7 = require("date-fns"), import_react_fontawesome3 = require("@fortawesome/react-fontawesome"), import_free_solid_svg_icons3 = require("@fortawesome/free-solid-svg-icons"), import_free_brands_svg_icons2 = require("@fortawesome/free-brands-svg-icons");
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader10 = async ({ request, params }) => {
-  let profileId = params.profileId, profile = await getProfileWithAll(profileId);
+  let profileId = params.profileId, profile = await getProfileWithAllById(profileId);
   return (0, import_node14.json)({ profile });
 };
 function ProfileShow2() {
@@ -4569,9 +4560,9 @@ function ProfileShow2() {
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
             className: "text-gray-800 font-normal text-sm",
             children: [
-              (0, import_date_fns6.format)(new Date(exp.from), "MMMM yyyy"),
+              (0, import_date_fns7.format)(new Date(exp.from), "MMMM yyyy"),
               " - ",
-              exp.to === null ? "Present" : (0, import_date_fns6.format)(new Date(exp.to), "MMMM yyyy")
+              exp.to === null ? "Present" : (0, import_date_fns7.format)(new Date(exp.to), "MMMM yyyy")
             ]
           }, void 0, !0, {
             fileName: "app/routes/profiles/$profileId.tsx",
@@ -4655,9 +4646,9 @@ function ProfileShow2() {
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         className: "text-gray-700 text-sm",
         children: [
-          (0, import_date_fns6.format)(new Date(edu.from), "MM/dd/yy"),
+          (0, import_date_fns7.format)(new Date(edu.from), "MM/dd/yy"),
           " - ",
-          edu.to === null ? "Present" : (0, import_date_fns6.format)(new Date(edu.to), "MM/dd/yy")
+          edu.to === null ? "Present" : (0, import_date_fns7.format)(new Date(edu.to), "MM/dd/yy")
         ]
       }, void 0, !0, {
         fileName: "app/routes/profiles/$profileId.tsx",
@@ -4705,7 +4696,7 @@ function ProfileShow2() {
                   className: "image overflow-hidden",
                   children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("img", {
                     className: "h-auto w-full mx-auto",
-                    src: "https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg",
+                    src: profile.user.avatar,
                     alt: ""
                   }, void 0, !1, {
                     fileName: "app/routes/profiles/$profileId.tsx",
@@ -4840,7 +4831,7 @@ function ProfileShow2() {
                         }, this),
                         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
                           className: "ml-auto",
-                          children: (0, import_date_fns6.format)(new Date(profile.user.date), "MMM dd, yyyy")
+                          children: (0, import_date_fns7.format)(new Date(profile.user.date), "MMM dd, yyyy")
                         }, void 0, !1, {
                           fileName: "app/routes/profiles/$profileId.tsx",
                           lineNumber: 104,
@@ -6903,7 +6894,7 @@ function Index() {
                           children: [
                             /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react28.Link, {
                               to: "login",
-                              className: "mr-5 flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8",
+                              className: "font-semibold mr-5 flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8",
                               children: "Login"
                             }, void 0, !1, {
                               fileName: "app/routes/index.tsx",
@@ -6912,7 +6903,7 @@ function Index() {
                             }, this),
                             /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react28.Link, {
                               to: "/register",
-                              className: "flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8",
+                              className: "font-semibold flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8",
                               children: "Register"
                             }, void 0, !1, {
                               fileName: "app/routes/index.tsx",
@@ -6971,7 +6962,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "02d90b1c", entry: { module: "/build/entry.client-FJVRV73T.js", imports: ["/build/_shared/chunk-KZ663W32.js", "/build/_shared/chunk-SMWPKSDY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-IOZFLRTE.js", imports: ["/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/__auth/login": { id: "routes/__auth/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/login-SUSIYFCY.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/logout": { id: "routes/__auth/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/logout-GZBFO4HC.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/register": { id: "routes/__auth/register", parentId: "root", path: "register", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/register-VO3PUAFN.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard": { id: "routes/dashboard/__dashboard", parentId: "root", path: "dashboard/", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard-A6JY47OG.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-QBKUEEND.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/create-profile": { id: "routes/dashboard/__dashboard/create-profile", parentId: "routes/dashboard/__dashboard", path: "create-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/create-profile-67NG3XCN.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/edit-profile": { id: "routes/dashboard/__dashboard/edit-profile", parentId: "routes/dashboard/__dashboard", path: "edit-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/edit-profile-WC77XCWU.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/edit/$educationId": { id: "routes/dashboard/__dashboard/education/edit/$educationId", parentId: "routes/dashboard/__dashboard", path: "education/edit/:educationId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/edit/$educationId-O7OGSDCQ.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-LCID5XWU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/new": { id: "routes/dashboard/__dashboard/education/new", parentId: "routes/dashboard/__dashboard", path: "education/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/new-QQ6PE6YZ.js", imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/educations": { id: "routes/dashboard/__dashboard/educations", parentId: "routes/dashboard/__dashboard", path: "educations", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/educations-2MWFBUOS.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-LCID5XWU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/edit/$experienceId": { id: "routes/dashboard/__dashboard/experience/edit/$experienceId", parentId: "routes/dashboard/__dashboard", path: "experience/edit/:experienceId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/edit/$experienceId-DRL53BB3.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/new": { id: "routes/dashboard/__dashboard/experience/new", parentId: "routes/dashboard/__dashboard", path: "experience/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/new-CWQ3AKKI.js", imports: ["/build/_shared/chunk-AVEI5MXU.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experiences": { id: "routes/dashboard/__dashboard/experiences", parentId: "routes/dashboard/__dashboard", path: "experiences", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experiences-35GVC4JP.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/index": { id: "routes/dashboard/__dashboard/index", parentId: "routes/dashboard/__dashboard", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/index-2TGRGTCF.js", imports: ["/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/profile": { id: "routes/dashboard/__dashboard/profile", parentId: "routes/dashboard/__dashboard", path: "profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/profile-B6RPQPIC.js", imports: ["/build/_shared/chunk-ZC2XG6UJ.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-AXNRLDU7.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$postId": { id: "routes/posts/$postId", parentId: "root", path: "posts/:postId", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$postId-YNJE7RFP.js", imports: ["/build/_shared/chunk-BAE6T5G7.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/delete": { id: "routes/posts/delete", parentId: "root", path: "posts/delete", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/delete-FZTSKZYB.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/index": { id: "routes/posts/index", parentId: "root", path: "posts", index: !0, caseSensitive: void 0, module: "/build/routes/posts/index-H72BJUMA.js", imports: ["/build/_shared/chunk-BAE6T5G7.js", "/build/_shared/chunk-ENKIADX3.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/$profileId": { id: "routes/profiles/$profileId", parentId: "root", path: "profiles/:profileId", index: void 0, caseSensitive: void 0, module: "/build/routes/profiles/$profileId-VQ4NXAKR.js", imports: ["/build/_shared/chunk-ZC2XG6UJ.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/index": { id: "routes/profiles/index", parentId: "root", path: "profiles", index: !0, caseSensitive: void 0, module: "/build/routes/profiles/index-XSTRPDO4.js", imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-02D90B1C.js" };
+var assets_manifest_default = { version: "bf89a294", entry: { module: "/build/entry.client-FJVRV73T.js", imports: ["/build/_shared/chunk-KZ663W32.js", "/build/_shared/chunk-SMWPKSDY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-IOZFLRTE.js", imports: ["/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/__auth/login": { id: "routes/__auth/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/login-SUSIYFCY.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/logout": { id: "routes/__auth/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/logout-GZBFO4HC.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/register": { id: "routes/__auth/register", parentId: "root", path: "register", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/register-VO3PUAFN.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard": { id: "routes/dashboard/__dashboard", parentId: "root", path: "dashboard/", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard-A6JY47OG.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-QBKUEEND.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/create-profile": { id: "routes/dashboard/__dashboard/create-profile", parentId: "routes/dashboard/__dashboard", path: "create-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/create-profile-67NG3XCN.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/edit-profile": { id: "routes/dashboard/__dashboard/edit-profile", parentId: "routes/dashboard/__dashboard", path: "edit-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/edit-profile-WC77XCWU.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/edit/$educationId": { id: "routes/dashboard/__dashboard/education/edit/$educationId", parentId: "routes/dashboard/__dashboard", path: "education/edit/:educationId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/edit/$educationId-O7OGSDCQ.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-LCID5XWU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/new": { id: "routes/dashboard/__dashboard/education/new", parentId: "routes/dashboard/__dashboard", path: "education/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/new-QQ6PE6YZ.js", imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/educations": { id: "routes/dashboard/__dashboard/educations", parentId: "routes/dashboard/__dashboard", path: "educations", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/educations-2MWFBUOS.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-LCID5XWU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/edit/$experienceId": { id: "routes/dashboard/__dashboard/experience/edit/$experienceId", parentId: "routes/dashboard/__dashboard", path: "experience/edit/:experienceId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/edit/$experienceId-DRL53BB3.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/new": { id: "routes/dashboard/__dashboard/experience/new", parentId: "routes/dashboard/__dashboard", path: "experience/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/new-CWQ3AKKI.js", imports: ["/build/_shared/chunk-AVEI5MXU.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experiences": { id: "routes/dashboard/__dashboard/experiences", parentId: "routes/dashboard/__dashboard", path: "experiences", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experiences-35GVC4JP.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/index": { id: "routes/dashboard/__dashboard/index", parentId: "routes/dashboard/__dashboard", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/index-2TGRGTCF.js", imports: ["/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/profile": { id: "routes/dashboard/__dashboard/profile", parentId: "routes/dashboard/__dashboard", path: "profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/profile-T7725QGX.js", imports: ["/build/_shared/chunk-ZC2XG6UJ.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-OIODPH4E.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$postId": { id: "routes/posts/$postId", parentId: "root", path: "posts/:postId", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$postId-YNJE7RFP.js", imports: ["/build/_shared/chunk-BAE6T5G7.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/delete": { id: "routes/posts/delete", parentId: "root", path: "posts/delete", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/delete-FZTSKZYB.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/index": { id: "routes/posts/index", parentId: "root", path: "posts", index: !0, caseSensitive: void 0, module: "/build/routes/posts/index-H72BJUMA.js", imports: ["/build/_shared/chunk-BAE6T5G7.js", "/build/_shared/chunk-ENKIADX3.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/$profileId": { id: "routes/profiles/$profileId", parentId: "root", path: "profiles/:profileId", index: void 0, caseSensitive: void 0, module: "/build/routes/profiles/$profileId-B2EJD3RH.js", imports: ["/build/_shared/chunk-ZC2XG6UJ.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/index": { id: "routes/profiles/index", parentId: "root", path: "profiles", index: !0, caseSensitive: void 0, module: "/build/routes/profiles/index-XSTRPDO4.js", imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-BF89A294.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

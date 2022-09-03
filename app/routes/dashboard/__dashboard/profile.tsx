@@ -5,21 +5,66 @@ import { faFacebookF, faTwitter, faYoutube, faInstagram, faLinkedin } from "@for
 import { faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLoaderData } from "@remix-run/react";
 
-import { getUserWithProfile } from "~/models/user.server";
 import { authenticatedUser } from "~/session.server";
+import { Experience } from "~/models/experience.server";
+import { Education } from "~/models/education.server";
+import { getProfileWIthAll } from "~/models/profile.server";
+import { format } from "date-fns";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);
    if (!userId) return redirect("/");
-   const user = await getUserWithProfile(userId);
+   const profile = await getProfileWIthAll(userId);
 
-   return json({ user });
+   return json({ profile });
 };
 
 export default function ProfileShow() {
-   const { user } = useLoaderData();
+   const { profile } = useLoaderData();
 
-   if (!user.profile) {
+   const renderExperience = (exp: Experience) => (
+      <div key={exp.id} className="list-inside space-y-1 mb-4">
+         <div className="text-teal-600 font-semibold">{exp.company}</div>
+         <div className="text-gray-700 font-semibold text-sm">
+            Duration: {" "}
+            <span className="text-gray-800 font-normal text-sm">
+               {format(new Date(exp.from), "MMMM yyyy")} - {exp.to === null ? "Present" :
+               format(new Date(exp.to), "MMMM yyyy")
+            }
+            </span>
+
+         </div>
+         <div className="text-sm font-semibold text-gray-700">Position:
+            <span className="text-sm text-gray-600 font-normal">{"  "}
+               {exp.title}
+            </span>
+         </div>
+         <div className="text-sm font-semibold text-gray-700">Description:{"  "}
+            <span className="font-normal">
+               {exp.description}
+            </span>
+         </div>
+      </div>
+   );
+
+   const renderEducation = (edu: Education) => (
+      <div key={edu.id} className="list-inside space-y-1 mb-4">
+         <div className="text-teal-600 font-semibold">{edu.degree} in {edu.fieldofstudy}</div>
+         <div className="text-sm font-semibold text-gray-700">{edu.school}</div>
+         <div className="text-gray-700 text-sm">
+            {format(new Date(edu.from), "MM/dd/yy")} - {edu.to === null ? "Present" :
+            format(new Date(edu.to), "MM/dd/yy")
+         }
+         </div>
+         <div className="text-sm font-semibold text-gray-700">Description:{"  "}
+            <span className="font-normal">
+                                    {edu.description}
+                                 </span>
+         </div>
+      </div>
+   );
+
+   if (!profile) {
       return (
          <div className="px-4 sm:px-6 lg:px-8 mb-7 lg:w-10/12">
             <div className="sm:flex flex-col">
@@ -51,13 +96,13 @@ export default function ProfileShow() {
                   <div className="bg-white p-3 border-t-4 border-green-400">
                      <div className="image overflow-hidden">
                         <img className="h-auto w-full mx-auto"
-                             src={user.avatar}
+                             src={profile.user.avatar}
                              alt=""
                         />
                      </div>
-                     <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">{user.name}</h1>
+                     <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">{profile.user.name}</h1>
                      <h3 className="text-gray-600 font-lg text-semibold leading-6 text-center">
-                        {user.profile.status} at {user.profile.company}
+                        {profile.status} at {profile.company}
                      </h3>
                      <div className="text-center mt-2 space-x-3 text-xl">
                         <FontAwesomeIcon icon={faGlobe} className="text-blue-500"/>
@@ -76,7 +121,9 @@ export default function ProfileShow() {
                         </li>
                         <li className="flex items-center py-3">
                            <span>Member since</span>
-                           <span className="ml-auto">Nov 07, 2016</span>
+                           <span className="ml-auto">
+                              {format(new Date(profile.user.date), "MMM dd, yyyy")}
+                           </span>
                         </li>
                      </ul>
                   </div>
@@ -100,7 +147,7 @@ export default function ProfileShow() {
                      <div className="text-gray-700">
                         <div className="text-sm px-4 py-2">
                            <div className="font-semibold">Bio</div>
-                           <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">{user.profile.bio}</p>
+                           <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">{profile.bio}</p>
                         </div>
                      </div>
                   </div>
@@ -124,30 +171,14 @@ export default function ProfileShow() {
                                 </span>
                            <span className="tracking-wide">Experience</span>
                         </div>
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Apple Inc.</div>
-                           <div className="text-gray-700 text-sm">March 2020 - Now</div>
-                           <div className="text-sm font-semibold text-gray-700">Position:
-                              <span className="text-sm text-gray-600 font-normal">{"  "}Developer</span>
+
+                        {profile.experience.length > 0 ? profile.experience.map((exp: Experience) => (
+                           renderExperience(exp)
+                        )) : (
+                           <div className="text-gray-700 text-sm">
+                              <div className="font-semibold">No experience added</div>
                            </div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
-                           </div>
-                        </div>
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Apple Inc.</div>
-                           <div className="text-gray-700 text-sm">March 2020 - Now</div>
-                           <div className="text-sm font-semibold text-gray-700">Position:
-                              <span className="text-sm text-gray-600 font-normal">{"  "}Developer</span>
-                           </div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
-                           </div>
-                        </div>
+                        )}
                      </div>
                      {/* Education */}
                      <div className="w-6/12 p-3 shadow-sm rounded-sm bg-white">
@@ -166,17 +197,13 @@ export default function ProfileShow() {
                            <span className="tracking-wide">Education</span>
                         </div>
 
-
-                        <div className="list-inside space-y-1 mb-4">
-                           <div className="text-teal-600 font-semibold">Masters Degree in Computer Science</div>
-                           <div className="text-sm font-semibold text-gray-700">Stanford University</div>
-                           <div className="text-gray-700 text-sm">23/11/2002 - present</div>
-                           <div className="text-sm font-semibold text-gray-700">Description:{"  "}
-                              <span className="font-normal">
-                                       Dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt
-                                    </span>
+                        {profile.education.length > 0 ? profile.education.map((edu: Education) => (
+                           renderEducation(edu)
+                        )) : (
+                           <div className="text-gray-700 text-sm">
+                              <div className="font-semibold">No education added</div>
                            </div>
-                        </div>
+                        )}
                      </div>
                   </div>
                   {/* End of Experience and education grid */}

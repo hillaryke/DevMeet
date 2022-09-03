@@ -61,9 +61,20 @@ export const getProfile = async (request: Request) => {
    return user?.profile;
 };
 
-export const getProfileWithAll = (profileId: Profile["id"]) => {
+export const getProfileWithAllById = (profileId: Profile["id"]) => {
    return prisma.profile.findUnique({
       where: { id: profileId },
+      include: {
+         user: true,
+         experience: true,
+         education: true
+      }
+   });
+};
+
+export const getProfileWIthAll = (userId: User["id"]) => {
+   return prisma.profile.findUnique({
+      where: { userId },
       include: {
          user: true,
          experience: true,
