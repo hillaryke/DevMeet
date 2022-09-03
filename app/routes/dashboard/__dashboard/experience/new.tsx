@@ -1,21 +1,13 @@
 import React, { useState } from "react";
 import type { ActionFunction } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
-import { processEduExp } from "~/utils/util.server";
+import { processEdu } from "~/utils/util.server";
 import { createExperience } from "~/models/experience.server";
 
 export const action: ActionFunction = async ({ request }) => {
-   const fieldNames = ["title", "company", "location", "from", "to", "current", "description"];
-   const fieldsToValidate = ["title", "company", "from"];
-   const errorMessages = {
-      title: "Job Title is required",
-      company: "Company is required",
-      from: "From date is required",
-   };
-
-   const { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
-   if (errors) return json({ errors });
+   const { errors, data } = await processEdu(request);
+   if (errors) return ({ errors });
 
    const experience = await createExperience(request, data);
 

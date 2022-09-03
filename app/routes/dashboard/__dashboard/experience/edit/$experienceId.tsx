@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { isAuthenticated } from "~/session.server";
-import { getExperienceById } from "~/models/experience.server";
+import { getExperienceById, updateExperience } from "~/models/experience.server";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { format } from "date-fns";
-
+import { processExp } from "~/utils/util.server";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
    const isAuth = await isAuthenticated(request);
@@ -19,11 +19,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
    return { experience };
 };
 
-// TODO save modified experience credentials
-export const action: ActionFunction = async ({ request }) => {
-   const formData = await request.formData();
+export const action: ActionFunction = async ({ request, params }) => {
+   const expId = params.experienceId;
+   if (!expId) return redirect('/dashboard/experiences');
 
-   return null;
+   const { errors, data } = await processExp(request);
+   console.log(errors, data);
+   if (errors) return json({ errors });
+
+   const experience = await updateExperience(expId.toString(), data);
+
+   return redirect('/dashboard/experiences');
 };
 
 export default function EditExperience() {
@@ -36,8 +42,9 @@ export default function EditExperience() {
       <div>
          <div className="md:flex md:items-center md:justify-between mx-9">
             <div className="flex-1 min-w-0">
-               <h2 className="text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Edit Experience
-                  Credential</h2>
+               <h2 className="text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+                  Edit Experience Credential
+               </h2>
             </div>
          </div>
          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">

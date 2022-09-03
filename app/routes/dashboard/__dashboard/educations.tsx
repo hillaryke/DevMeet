@@ -1,7 +1,6 @@
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import { LoaderFunction, redirect } from "@remix-run/node";
 import { format } from "date-fns";
-import util from "util";
 
 import { isAuthenticated } from "~/session.server";
 import { getEducation } from "~/models/education.server";

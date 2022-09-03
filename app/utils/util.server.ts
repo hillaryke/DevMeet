@@ -108,3 +108,29 @@ export const processEduExp = async (request: Request, fieldNames: any, fieldsToV
 
    return { errors, data };
 };
+
+export const processEdu = async (request: Request) => {
+   const fieldNames = ["school", "degree", "fieldofstudy", "from", "to", "current", "description"];
+   const fieldsToValidate = ["school", "degree", "from"];
+   const errorMessages = {
+      school: "School or bootcamp is required",
+      degree: "Degree is required",
+      from: "From date is required",
+   };
+
+   const { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
+   return { errors, data };
+};
+
+export const processExp = async (request: Request) => {
+   const fieldNames = ["title", "company", "location", "from", "to", "current", "description"];
+   const fieldsToValidate = ["title", "company", "from"];
+   const errorMessages = {
+      title: "Job Title is required",
+      company: "Company is required",
+      from: "From date is required",
+   };
+
+   const { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
+   return { errors, data };
+};

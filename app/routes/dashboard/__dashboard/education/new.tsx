@@ -3,23 +3,14 @@ import type { ActionFunction } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { json, redirect } from "@remix-run/node";
 
-import { processEduExp } from "~/utils/util.server";
+import { processExp } from "~/utils/util.server";
 import { createEducation } from "~/models/education.server";
 
 export const action: ActionFunction = async ({ request }) => {
-   const fieldNames = ["school", "degree", "fieldofstudy", "from", "to", "current", "description"];
-   const fieldsToValidate = ["school", "degree", "from"];
-   const errorMessages = {
-      school: "School or bootcamp is required",
-      degree: "Degree is required",
-      from: "From date is required",
-   };
-
-   const { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
+   const { errors, data } = await processExp(request);
    if (errors) return json({ errors });
 
    const education = await createEducation(request, data);
-
 
    return redirect('/dashboard/educations');
 };
