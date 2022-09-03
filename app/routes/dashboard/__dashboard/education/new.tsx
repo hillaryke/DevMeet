@@ -3,11 +3,11 @@ import type { ActionFunction } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { json, redirect } from "@remix-run/node";
 
-import { processExp } from "~/utils/util.server";
+import { processEdu, processExp } from "~/utils/util.server";
 import { createEducation } from "~/models/education.server";
 
 export const action: ActionFunction = async ({ request }) => {
-   const { errors, data } = await processExp(request);
+   const { errors, data } = await processEdu(request);
    if (errors) return json({ errors });
 
    const education = await createEducation(request, data);

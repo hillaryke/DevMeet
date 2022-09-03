@@ -779,8 +779,8 @@ var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader3 = async (
   if (!expId)
     return (0, import_node4.redirect)("/dashboard/experiences");
   let { errors, data } = await processExp(request);
-  if (console.log(errors, data), errors)
-    return (0, import_node4.json)({ errors });
+  if (errors)
+     return (0, import_node4.json)({ errors });
   let experience = await updateExperience(expId.toString(), data);
   return (0, import_node4.redirect)("/dashboard/experiences");
 };
@@ -797,20 +797,20 @@ function EditExperience() {
             className: "text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate",
             children: "Edit Experience Credential"
           }, void 0, !1, {
-            fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-            lineNumber: 45,
-            columnNumber: 16
+             fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+             lineNumber: 44,
+             columnNumber: 16
           }, this)
         }, void 0, !1, {
-          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-          lineNumber: 44,
-          columnNumber: 13
+           fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+           lineNumber: 43,
+           columnNumber: 13
         }, this)
       }, void 0, !1, {
-        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-        lineNumber: 43,
-        columnNumber: 10
-      }, this),
+          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+          lineNumber: 42,
+          columnNumber: 10
+       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         className: "max-w-7xl mx-auto px-4 sm:px-6 md:px-8",
         children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -833,24 +833,24 @@ function EditExperience() {
                           placeholder: "* Job Title",
                           className: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 56,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                            lineNumber: 55,
+                            columnNumber: 28
+                         }, this),
                         (_a = actionData == null ? void 0 : actionData.errors) != null && _a.title ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.title
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 62,
-                          columnNumber: 31
+                           fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                           lineNumber: 61,
+                           columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                      lineNumber: 55,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                        lineNumber: 54,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -861,24 +861,24 @@ function EditExperience() {
                           placeholder: "* Company",
                           className: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 67,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                            lineNumber: 66,
+                            columnNumber: 28
+                         }, this),
                         (_b = actionData == null ? void 0 : actionData.errors) != null && _b.company ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.company
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 73,
-                          columnNumber: 31
+                           fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                           lineNumber: 72,
+                           columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                      lineNumber: 66,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                        lineNumber: 65,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
@@ -888,15 +888,15 @@ function EditExperience() {
                         placeholder: "Location",
                         className: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       }, void 0, !1, {
-                        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                        lineNumber: 78,
-                        columnNumber: 28
+                         fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                         lineNumber: 77,
+                         columnNumber: 28
                       }, this)
                     }, void 0, !1, {
-                      fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                      lineNumber: 77,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                        lineNumber: 76,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -906,24 +906,24 @@ function EditExperience() {
                           defaultValue: (0, import_date_fns.format)(new Date(experience.from), "yyyy-MM-dd"),
                           className: "appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 86,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                            lineNumber: 85,
+                            columnNumber: 28
+                         }, this),
                         (_c = actionData == null ? void 0 : actionData.errors) != null && _c.from ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.from
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 91,
-                          columnNumber: 31
+                           fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                           lineNumber: 90,
+                           columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                      lineNumber: 85,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                        lineNumber: 84,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "flex items-center",
                       children: [
@@ -935,25 +935,25 @@ function EditExperience() {
                           onChange: () => toggleCurrentJob(!isCurrentJob),
                           className: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 97,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                            lineNumber: 96,
+                            columnNumber: 28
+                         }, this),
                         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("label", {
                           htmlFor: "push-everything",
                           className: "ml-2 block text-sm font-medium text-gray-700",
                           children: "Current Job"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 101,
-                          columnNumber: 28
-                        }, this)
+                            fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                            lineNumber: 100,
+                            columnNumber: 28
+                         }, this)
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                      lineNumber: 95,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                        lineNumber: 94,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -964,24 +964,24 @@ function EditExperience() {
                           disabled: isCurrentJob,
                           className: "appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 105,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                            lineNumber: 104,
+                            columnNumber: 28
+                         }, this),
                         (_d = actionData == null ? void 0 : actionData.errors) != null && _d.to ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.to
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                          lineNumber: 111,
-                          columnNumber: 31
+                           fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                           lineNumber: 110,
+                           columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                      lineNumber: 104,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                        lineNumber: 103,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("textarea", {
@@ -991,21 +991,21 @@ function EditExperience() {
                         className: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm",
                         placeholder: "Job Description"
                       }, void 0, !1, {
-                        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                        lineNumber: 116,
-                        columnNumber: 31
+                         fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                         lineNumber: 115,
+                         columnNumber: 31
                       }, this)
                     }, void 0, !1, {
-                      fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                      lineNumber: 115,
-                      columnNumber: 25
-                    }, this)
+                        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                        lineNumber: 114,
+                        columnNumber: 25
+                     }, this)
                   ]
                 }, void 0, !0, {
-                  fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                  lineNumber: 54,
-                  columnNumber: 22
-                }, this),
+                    fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                    lineNumber: 53,
+                    columnNumber: 22
+                 }, this),
                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                   className: "px-4 py-3 bg-gray-50 text-right sm:px-6",
                   children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
@@ -1013,49 +1013,50 @@ function EditExperience() {
                     className: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
                     children: "Save Experience"
                   }, void 0, !1, {
-                    fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                    lineNumber: 125,
-                    columnNumber: 25
+                     fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                     lineNumber: 124,
+                     columnNumber: 25
                   }, this)
                 }, void 0, !1, {
-                  fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-                  lineNumber: 124,
-                  columnNumber: 22
-                }, this)
+                    fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+                    lineNumber: 123,
+                    columnNumber: 22
+                 }, this)
               ]
             }, void 0, !0, {
-              fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-              lineNumber: 53,
-              columnNumber: 19
+               fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+               lineNumber: 52,
+               columnNumber: 19
             }, this)
           }, void 0, !1, {
-            fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-            lineNumber: 52,
-            columnNumber: 16
+             fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+             lineNumber: 51,
+             columnNumber: 16
           }, this)
         }, void 0, !1, {
-          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-          lineNumber: 51,
-          columnNumber: 13
+           fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+           lineNumber: 50,
+           columnNumber: 13
         }, this)
       }, void 0, !1, {
-        fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-        lineNumber: 50,
-        columnNumber: 10
-      }, this)
+          fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+          lineNumber: 49,
+          columnNumber: 10
+       }, this)
     ]
   }, void 0, !0, {
-    fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
-    lineNumber: 42,
-    columnNumber: 7
+     fileName: "app/routes/dashboard/__dashboard/experience/edit/$experienceId.tsx",
+     lineNumber: 41,
+     columnNumber: 7
   }, this);
 }
 
 // app/routes/dashboard/__dashboard/education/edit/$educationId.tsx
 var educationId_exports = {};
 __export(educationId_exports, {
-  default: () => Experience,
-  loader: () => loader4
+   action: () => action2,
+   default: () => Experience,
+   loader: () => loader4
 });
 var import_react9 = require("react"), import_react10 = require("@remix-run/react"), import_node5 = require("@remix-run/node");
 
@@ -1079,27 +1080,40 @@ var createEducation = async (request, formData) => {
     }
   }) : null;
 }, getEducation = async (request) => {
-  let profile = await getProfile(request);
-  return profile ? (await prisma.profile.findUnique({
-    where: { id: profile.id },
-    select: { education: !0 }
-  })).education : null;
+   let profile = await getProfile(request);
+   return profile ? (await prisma.profile.findUnique({
+      where: { id: profile.id },
+      select: { education: !0 }
+   })).education : null;
 }, getEducationById = async (eduId) => await prisma.education.findUnique({
-  where: { id: eduId }
-}), deleteEducation = async (eduId) => {
-  let data = await prisma.education.delete({
-    where: { id: eduId }
-  });
-};
+   where: { id: eduId }
+}), deleteEducation = (eduId) => {
+   prisma.education.delete({
+      where: { id: eduId }
+   });
+}, updateEducation = (eduId, data) => prisma.education.update({
+   where: { id: eduId },
+   data
+});
 
 // app/routes/dashboard/__dashboard/education/edit/$educationId.tsx
-var import_date_fns2 = require("date-fns"), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader4 = async ({ request, params }) => {
-  if (!await isAuthenticated(request))
-    return (0, import_node5.redirect)("/");
-  let eduId = params.educationId;
-  if (!eduId)
-    throw new Error("Experience not found");
-  return { education: await getEducationById(eduId) };
+var import_date_fns2 = require("date-fns");
+var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader4 = async ({ request, params }) => {
+   if (!await isAuthenticated(request))
+      return (0, import_node5.redirect)("/");
+   let eduId = params.educationId;
+   if (!eduId)
+      throw new Error("Experience not found");
+   return { education: await getEducationById(eduId) };
+}, action2 = async ({ request, params }) => {
+   let eduId = params.educationId;
+   if (!eduId)
+      return (0, import_node5.redirect)("/dashboard/educations");
+   let { errors, data } = await processEdu(request);
+   if (errors)
+      return (0, import_node5.json)({ errors });
+   let education = await updateEducation(eduId.toString(), data);
+   return (0, import_node5.redirect)("/dashboard/educations");
 };
 function Experience() {
   var _a, _b, _c, _d;
@@ -1114,20 +1128,20 @@ function Experience() {
             className: "text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate",
             children: "Edit Education"
           }, void 0, !1, {
-            fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-            lineNumber: 34,
-            columnNumber: 16
+             fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+             lineNumber: 44,
+             columnNumber: 16
           }, this)
         }, void 0, !1, {
-          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-          lineNumber: 33,
-          columnNumber: 13
+           fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+           lineNumber: 43,
+           columnNumber: 13
         }, this)
       }, void 0, !1, {
-        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-        lineNumber: 32,
-        columnNumber: 10
-      }, this),
+          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+          lineNumber: 42,
+          columnNumber: 10
+       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         className: "max-w-7xl mx-auto px-4 sm:px-6 md:px-8",
         children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -1150,24 +1164,24 @@ function Experience() {
                           placeholder: "* School or Bootcamp",
                           className: "font-bold font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 43,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                            lineNumber: 53,
+                            columnNumber: 28
+                         }, this),
                         (_a = actionData == null ? void 0 : actionData.errors) != null && _a.school ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.school
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 49,
-                          columnNumber: 31
+                           fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                           lineNumber: 59,
+                           columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                      lineNumber: 42,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                        lineNumber: 52,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -1178,24 +1192,24 @@ function Experience() {
                           placeholder: "* Degree or Certificate",
                           className: "font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 54,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                            lineNumber: 64,
+                            columnNumber: 28
+                         }, this),
                         (_b = actionData == null ? void 0 : actionData.errors) != null && _b.degree ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.degree
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 60,
-                          columnNumber: 31
+                           fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                           lineNumber: 70,
+                           columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                      lineNumber: 53,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                        lineNumber: 63,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
@@ -1205,15 +1219,15 @@ function Experience() {
                         placeholder: "Field Of Study",
                         className: "font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       }, void 0, !1, {
-                        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                        lineNumber: 65,
-                        columnNumber: 28
+                         fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                         lineNumber: 75,
+                         columnNumber: 28
                       }, this)
                     }, void 0, !1, {
-                      fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                      lineNumber: 64,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                        lineNumber: 74,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -1223,24 +1237,24 @@ function Experience() {
                           defaultValue: (0, import_date_fns2.format)(new Date(education.from), "yyyy-MM-dd"),
                           className: "font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 72,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                            lineNumber: 82,
+                            columnNumber: 28
+                         }, this),
                         (_c = actionData == null ? void 0 : actionData.errors) != null && _c.from ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.from
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 77,
-                          columnNumber: 31
+                           fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                           lineNumber: 87,
+                           columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                      lineNumber: 71,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                        lineNumber: 81,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "flex items-center",
                       children: [
@@ -1252,25 +1266,25 @@ function Experience() {
                           onChange: () => toggleCurrentJob(!isCurrentJob),
                           className: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 83,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                            lineNumber: 93,
+                            columnNumber: 28
+                         }, this),
                         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("label", {
                           htmlFor: "push-everything",
                           className: "ml-2 block text-sm font-medium text-gray-700",
                           children: "Current School or Bootcamp"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 87,
-                          columnNumber: 28
-                        }, this)
+                            fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                            lineNumber: 97,
+                            columnNumber: 28
+                         }, this)
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                      lineNumber: 81,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                        lineNumber: 91,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -1281,24 +1295,24 @@ function Experience() {
                           disabled: isCurrentJob,
                           className: "font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 95,
-                          columnNumber: 28
-                        }, this),
+                            fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                            lineNumber: 105,
+                            columnNumber: 28
+                         }, this),
                         (_d = actionData == null ? void 0 : actionData.errors) != null && _d.to ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.to
                         }, void 0, !1, {
-                          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                          lineNumber: 103,
-                          columnNumber: 31
+                           fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                           lineNumber: 113,
+                           columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                      fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                      lineNumber: 93,
-                      columnNumber: 25
-                    }, this),
+                        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                        lineNumber: 103,
+                        columnNumber: 25
+                     }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("textarea", {
@@ -1308,21 +1322,21 @@ function Experience() {
                         className: "font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm",
                         placeholder: "Program Description"
                       }, void 0, !1, {
-                        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                        lineNumber: 108,
-                        columnNumber: 28
+                         fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                         lineNumber: 118,
+                         columnNumber: 28
                       }, this)
                     }, void 0, !1, {
-                      fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                      lineNumber: 107,
-                      columnNumber: 25
-                    }, this)
+                        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                        lineNumber: 117,
+                        columnNumber: 25
+                     }, this)
                   ]
                 }, void 0, !0, {
-                  fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                  lineNumber: 41,
-                  columnNumber: 22
-                }, this),
+                    fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                    lineNumber: 51,
+                    columnNumber: 22
+                 }, this),
                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                   className: "px-4 py-3 bg-gray-50 text-right sm:px-6",
                   children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
@@ -1330,73 +1344,73 @@ function Experience() {
                     className: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
                     children: "Save Education"
                   }, void 0, !1, {
-                    fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                    lineNumber: 117,
-                    columnNumber: 25
+                     fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                     lineNumber: 127,
+                     columnNumber: 25
                   }, this)
                 }, void 0, !1, {
-                  fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-                  lineNumber: 116,
-                  columnNumber: 22
-                }, this)
+                    fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+                    lineNumber: 126,
+                    columnNumber: 22
+                 }, this)
               ]
             }, void 0, !0, {
-              fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-              lineNumber: 40,
-              columnNumber: 19
+               fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+               lineNumber: 50,
+               columnNumber: 19
             }, this)
           }, void 0, !1, {
-            fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-            lineNumber: 39,
-            columnNumber: 16
+             fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+             lineNumber: 49,
+             columnNumber: 16
           }, this)
         }, void 0, !1, {
-          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-          lineNumber: 38,
-          columnNumber: 13
+           fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+           lineNumber: 48,
+           columnNumber: 13
         }, this)
       }, void 0, !1, {
-        fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-        lineNumber: 37,
-        columnNumber: 10
-      }, this)
+          fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+          lineNumber: 47,
+          columnNumber: 10
+       }, this)
     ]
   }, void 0, !0, {
-    fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
-    lineNumber: 31,
-    columnNumber: 7
+     fileName: "app/routes/dashboard/__dashboard/education/edit/$educationId.tsx",
+     lineNumber: 41,
+     columnNumber: 7
   }, this);
 }
 
 // app/routes/dashboard/__dashboard/experience/delete.tsx
 var delete_exports = {};
 __export(delete_exports, {
-  action: () => action2,
-  loader: () => loader5
+   action: () => action3,
+   loader: () => loader5
 });
 var import_node6 = require("@remix-run/node");
-var loader5 = () => (0, import_node6.redirect)("/dashboard/experiences"), action2 = async ({ request }) => {
-  let expId = (await request.formData()).get("expId");
-  return expId ? (await deleteExperience(expId.toString()), (0, import_node6.redirect)("/dashboard/experiences")) : (0, import_node6.redirect)("/dashboard/experiences");
+var loader5 = () => (0, import_node6.redirect)("/dashboard/experiences"), action3 = async ({ request }) => {
+   let expId = (await request.formData()).get("expId");
+   return expId ? (await deleteExperience(expId.toString()), (0, import_node6.redirect)("/dashboard/experiences")) : (0, import_node6.redirect)("/dashboard/experiences");
 };
 
 // app/routes/dashboard/__dashboard/education/delete.tsx
 var delete_exports2 = {};
 __export(delete_exports2, {
-  action: () => action3,
-  loader: () => loader6
+   action: () => action4,
+   loader: () => loader6
 });
 var import_node7 = require("@remix-run/node");
-var loader6 = () => (0, import_node7.redirect)("/dashboard/educations"), action3 = async ({ request }) => {
-  let eduId = (await request.formData()).get("eduId");
-  return eduId ? (await deleteEducation(eduId.toString()), (0, import_node7.redirect)("/dashboard/educations")) : (0, import_node7.redirect)("/dashboard/educations");
+var loader6 = () => (0, import_node7.redirect)("/dashboard/educations"), action4 = async ({ request }) => {
+   let eduId = (await request.formData()).get("eduId");
+   return eduId ? (await deleteEducation(eduId.toString()), (0, import_node7.redirect)("/dashboard/educations")) : (0, import_node7.redirect)("/dashboard/educations");
 };
 
 // app/routes/dashboard/__dashboard/create-profile.tsx
 var create_profile_exports = {};
 __export(create_profile_exports, {
-  action: () => action4,
-  default: () => CreateProfile
+   action: () => action5,
+   default: () => CreateProfile
 });
 var import_react11 = require("@remix-run/react");
 var import_node8 = require("@remix-run/node");
@@ -1412,12 +1426,12 @@ var CustomError = class extends Error {
 };
 
 // app/routes/dashboard/__dashboard/create-profile.tsx
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action4 = async ({ request }) => {
-  let formData = await request.formData(), userId = await authenticatedUser(request);
-  if (!userId)
-    throw new CustomError("Not Authorized!", 401);
-  let { errors } = await createProfile(formData, userId);
-  return errors ? (0, import_node8.json)({ errors }) : (0, import_node8.redirect)("/dashboard");
+var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action5 = async ({ request }) => {
+   let formData = await request.formData(), userId = await authenticatedUser(request);
+   if (!userId)
+      throw new CustomError("Not Authorized!", 401);
+   let { errors } = await createProfile(formData, userId);
+   return errors ? (0, import_node8.json)({ errors }) : (0, import_node8.redirect)("/dashboard");
 };
 function CreateProfile() {
   let actionData = (0, import_react11.useActionData)();
@@ -1783,16 +1797,17 @@ function CreateProfile() {
 // app/routes/dashboard/__dashboard/experience/new.tsx
 var new_exports = {};
 __export(new_exports, {
-  action: () => action5,
-  default: () => Experience2
+   action: () => action6,
+   default: () => Experience2
 });
-var import_react12 = require("react"), import_node9 = require("@remix-run/node"), import_react13 = require("@remix-run/react");
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action5 = async ({ request }) => {
-  let { errors, data } = await processEdu(request);
-  if (errors)
-    return { errors };
-  let experience = await createExperience(request, data);
-  return (0, import_node9.redirect)("/dashboard/experiences");
+var import_react12 = require("react"), import_node9 = require("@remix-run/node"),
+    import_react13 = require("@remix-run/react");
+var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action6 = async ({ request }) => {
+   let { errors, data } = await processEdu(request);
+   if (errors)
+      return { errors };
+   let experience = await createExperience(request, data);
+   return (0, import_node9.redirect)("/dashboard/experiences");
 };
 function Experience2() {
   var _a, _b, _c, _d;
@@ -2057,16 +2072,17 @@ function Experience2() {
 // app/routes/dashboard/__dashboard/education/new.tsx
 var new_exports2 = {};
 __export(new_exports2, {
-  action: () => action6,
-  default: () => Experience3
+   action: () => action7,
+   default: () => Experience3
 });
-var import_react14 = require("react"), import_react15 = require("@remix-run/react"), import_node10 = require("@remix-run/node");
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action6 = async ({ request }) => {
-  let { errors, data } = await processExp(request);
-  if (errors)
-    return (0, import_node10.json)({ errors });
-  let education = await createEducation(request, data);
-  return (0, import_node10.redirect)("/dashboard/educations");
+var import_react14 = require("react"), import_react15 = require("@remix-run/react"),
+    import_node10 = require("@remix-run/node");
+var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action7 = async ({ request }) => {
+   let { errors, data } = await processEdu(request);
+   if (errors)
+      return (0, import_node10.json)({ errors });
+   let education = await createEducation(request, data);
+   return (0, import_node10.redirect)("/dashboard/educations");
 };
 function Experience3() {
   var _a, _b, _c, _d;
@@ -4514,8 +4530,8 @@ function DashboardIndex() {
 // app/routes/posts/$postId.delete.tsx
 var postId_delete_exports = {};
 __export(postId_delete_exports, {
-  action: () => action7,
-  loader: () => loader12
+   action: () => action8,
+   loader: () => loader12
 });
 var import_node16 = require("@remix-run/node");
 
@@ -4576,10 +4592,11 @@ var createComment = async (userId, postId, text) => prisma.post.update({
 });
 
 // app/routes/posts/$postId.delete.tsx
-var loader12 = ({ params }) => (0, import_node16.redirect)(`/posts/${params.postId}`), action7 = async ({ request, params }) => {
-  let postId = params.postId, commentId = (await request.formData()).get("commentId");
-  return commentId ? (await deleteCommentById(commentId.toString()), (0, import_node16.redirect)(`/posts/${postId}`)) : (0, import_node16.redirect)(`/posts/${postId}`);
-};
+var loader12 = ({ params }) => (0, import_node16.redirect)(`/posts/${params.postId}`),
+    action8 = async ({ request, params }) => {
+       let postId = params.postId, commentId = (await request.formData()).get("commentId");
+       return commentId ? (await deleteCommentById(commentId.toString()), (0, import_node16.redirect)(`/posts/${postId}`)) : (0, import_node16.redirect)(`/posts/${postId}`);
+    };
 
 // app/routes/profiles/$profileId.tsx
 var profileId_exports = {};
@@ -5345,7 +5362,7 @@ function ProfileShow2() {
 // app/routes/posts/delete-post.tsx
 var delete_post_exports = {};
 __export(delete_post_exports, {
-  action: () => action8
+   action: () => action9
 });
 var import_node18 = require("@remix-run/node");
 
@@ -5393,37 +5410,44 @@ var createPost = async (user, text) => prisma.user.update({
 });
 
 // app/routes/posts/delete-post.tsx
-var action8 = async ({ request }) => {
-  let postId = (await request.formData()).get("postId");
-  if (!postId)
-    return (0, import_node18.redirect)("/posts");
-  try {
-    await deletePostById(postId.toString());
-  } catch (err) {
-    console.log(err);
-  }
-  return (0, import_node18.redirect)("/posts");
+var action9 = async ({ request }) => {
+   let postId = (await request.formData()).get("postId");
+   if (!postId)
+      return (0, import_node18.redirect)("/posts");
+   try {
+      await deletePostById(postId.toString());
+   } catch (err) {
+      console.log(err);
+   }
+   return (0, import_node18.redirect)("/posts");
 };
 
 // app/routes/__auth/register.tsx
 var register_exports = {};
 __export(register_exports, {
-  action: () => action9,
-  default: () => Register,
-  loader: () => loader14
+   action: () => action10,
+   default: () => Register,
+   loader: () => loader14
 });
 var import_react22 = require("@remix-run/react"), import_node19 = require("@remix-run/node");
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader14 = async ({ request }) => await isAuthenticated(request) ? (0, import_node19.redirect)("/dashboard") : null, action9 = async ({ request }) => {
-  let fieldNames = ["name", "email", "password", "password2"], errorMessages = {
-    name: "Name should not be empty",
-    email: "Email must not be empty",
-    password: "Password is required",
-    password2: "Password confirmation is required"
-  }, { errors, data } = await processFormData(request, fieldNames, errorMessages), { name, email, password, password2 } = data;
-  if (errors)
-    return (0, import_node19.json)({ errors });
-  if (password !== password2)
-    return (0, import_node19.json)({ errors: { password2: "Password does not match!" } });
+var import_jsx_dev_runtime = require("react/jsx-dev-runtime"),
+    loader14 = async ({ request }) => await isAuthenticated(request) ? (0, import_node19.redirect)("/dashboard") : null,
+    action10 = async ({ request }) => {
+       let fieldNames = ["name", "email", "password", "password2"], errorMessages = {
+          name: "Name should not be empty",
+          email: "Email must not be empty",
+          password: "Password is required",
+          password2: "Password confirmation is required"
+       }, { errors, data } = await processFormData(request, fieldNames, errorMessages), {
+          name,
+          email,
+          password,
+          password2
+       } = data;
+       if (errors)
+          return (0, import_node19.json)({ errors });
+       if (password !== password2)
+          return (0, import_node19.json)({ errors: { password2: "Password does not match!" } });
   let user = await createUser(name, email, password);
   return createUserSession(user.id, request, "/dashboard");
 };
@@ -5814,36 +5838,37 @@ function IndexProfiles() {
 // app/routes/__auth/logout.tsx
 var logout_exports = {};
 __export(logout_exports, {
-  action: () => action10
+   action: () => action11
 });
 var import_node21 = require("@remix-run/node");
-var action10 = async ({ request }) => (0, import_node21.redirect)("/", {
-  headers: {
-    "set-Cookie": await destroySession(request)
-  }
+var action11 = async ({ request }) => (0, import_node21.redirect)("/", {
+   headers: {
+      "set-Cookie": await destroySession(request)
+   }
 });
 
 // app/routes/posts/$postId.tsx
 var postId_exports = {};
 __export(postId_exports, {
-  action: () => action11,
-  default: () => Post,
-  loader: () => loader16
+   action: () => action12,
+   default: () => Post,
+   loader: () => loader16
 });
 var import_react24 = require("@remix-run/react"), import_node22 = require("@remix-run/node");
-var import_moment = __toESM(require("moment")), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader16 = async ({ request, params }) => {
-  let postId = params.postId, postWithComments = await getComments(postId);
-  return (0, import_node22.json)({
-    post: postWithComments,
-    userId: await authenticatedUser(request)
-  });
-}, action11 = async ({ request, params }) => {
-  let postId = params.postId, userId = await authenticatedUser(request);
-  if (!userId)
-    return (0, import_node22.json)({ errors: { post: "You must login or register to create a post" } });
-  let text = (await request.formData()).get("text");
-  return !text || text.toString().length < 6 ? (0, import_node22.json)({ errors: { post: "Post must be at least 6 characters" } }) : (await createComment(userId, postId, text.toString()), (0, import_node22.redirect)(`/posts/${postId}`));
-};
+var import_moment = __toESM(require("moment")), import_jsx_dev_runtime = require("react/jsx-dev-runtime"),
+    loader16 = async ({ request, params }) => {
+       let postId = params.postId, postWithComments = await getComments(postId);
+       return (0, import_node22.json)({
+          post: postWithComments,
+          userId: await authenticatedUser(request)
+       });
+    }, action12 = async ({ request, params }) => {
+       let postId = params.postId, userId = await authenticatedUser(request);
+       if (!userId)
+          return (0, import_node22.json)({ errors: { post: "You must login or register to create a post" } });
+       let text = (await request.formData()).get("text");
+       return !text || text.toString().length < 6 ? (0, import_node22.json)({ errors: { post: "Post must be at least 6 characters" } }) : (await createComment(userId, postId, text.toString()), (0, import_node22.redirect)(`/posts/${postId}`));
+    };
 function Post() {
   var _a;
   let { post, userId } = (0, import_react24.useLoaderData)(), actionData = (0, import_react24.useActionData)();
@@ -6150,33 +6175,33 @@ function Post() {
 // app/routes/__auth/login.tsx
 var login_exports = {};
 __export(login_exports, {
-  action: () => action12,
-  default: () => Login,
-  loader: () => loader17
+   action: () => action13,
+   default: () => Login,
+   loader: () => loader17
 });
 var import_react25 = require("@remix-run/react");
 var import_node23 = require("@remix-run/node");
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader17 = async ({ request }) => {
-  let session = await getSession(request);
-  if (session.has("token"))
-    return (0, import_node23.redirect)("/dashboard");
-  let data = { error: session.get("error") };
-  return (0, import_node23.json)(data, {
-    headers: {
-      "Set-Cookie": await sessionStorage.commitSession(session)
-    }
-  });
-}, action12 = async ({ request }) => {
-  let session = await getSession(request), fieldNames = ["email", "password"], errorMessages = {
-    email: "Email is required",
-    password: "Password is required"
-  }, { errors, data } = await processFormData(request, fieldNames, errorMessages), { email, password } = data;
-  if (errors)
-    return (0, import_node23.json)({ errors });
-  let userId = await validateCredentials(email, password);
-  return userId === null ? (session.flash("error", "Invalid username or password"), (0, import_node23.redirect)("/login", {
-    headers: { "Set-Cookie": await sessionStorage.commitSession(session) }
-  })) : createUserSession(userId, request, "/dashboard");
+   let session = await getSession(request);
+   if (session.has("token"))
+      return (0, import_node23.redirect)("/dashboard");
+   let data = { error: session.get("error") };
+   return (0, import_node23.json)(data, {
+      headers: {
+         "Set-Cookie": await sessionStorage.commitSession(session)
+      }
+   });
+}, action13 = async ({ request }) => {
+   let session = await getSession(request), fieldNames = ["email", "password"], errorMessages = {
+      email: "Email is required",
+      password: "Password is required"
+   }, { errors, data } = await processFormData(request, fieldNames, errorMessages), { email, password } = data;
+   if (errors)
+      return (0, import_node23.json)({ errors });
+   let userId = await validateCredentials(email, password);
+   return userId === null ? (session.flash("error", "Invalid username or password"), (0, import_node23.redirect)("/login", {
+      headers: { "Set-Cookie": await sessionStorage.commitSession(session) }
+   })) : createUserSession(userId, request, "/dashboard");
 };
 function Login() {
   var _a, _b;
@@ -6369,27 +6394,29 @@ function Login() {
 // app/routes/posts/index.tsx
 var posts_exports = {};
 __export(posts_exports, {
-  action: () => action13,
-  default: () => PostsIndex,
-  loader: () => loader18
+   action: () => action14,
+   default: () => PostsIndex,
+   loader: () => loader18
 });
-var import_react26 = require("react"), import_react27 = require("@remix-run/react"), import_node24 = require("@remix-run/node");
-var import_moment2 = __toESM(require("moment")), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader18 = async ({ request }) => {
-  let posts = await getPostsWithCount();
-  return (0, import_node24.json)({
-    posts,
-    userId: await authenticatedUser(request)
-  });
-}, action13 = async ({ request }) => {
-  let userId = await authenticatedUser(request);
-  if (!userId)
-    return (0, import_node24.json)({ errors: { post: "You must login or register to create a post" } });
-  let user = await getUserById(userId);
-  if (!user)
-    throw new Error("User not found");
-  let text = (await request.formData()).get("text");
-  return !text || text.toString().length < 6 ? (0, import_node24.json)({ errors: { post: "Post must be at least 6 characters" } }) : (await createPost(user, text.toString()), (0, import_node24.redirect)("/posts"));
-};
+var import_react26 = require("react"), import_react27 = require("@remix-run/react"),
+    import_node24 = require("@remix-run/node");
+var import_moment2 = __toESM(require("moment")), import_jsx_dev_runtime = require("react/jsx-dev-runtime"),
+    loader18 = async ({ request }) => {
+       let posts = await getPostsWithCount();
+       return (0, import_node24.json)({
+          posts,
+          userId: await authenticatedUser(request)
+       });
+    }, action14 = async ({ request }) => {
+       let userId = await authenticatedUser(request);
+       if (!userId)
+          return (0, import_node24.json)({ errors: { post: "You must login or register to create a post" } });
+       let user = await getUserById(userId);
+       if (!user)
+          throw new Error("User not found");
+       let text = (await request.formData()).get("text");
+       return !text || text.toString().length < 6 ? (0, import_node24.json)({ errors: { post: "Post must be at least 6 characters" } }) : (await createPost(user, text.toString()), (0, import_node24.redirect)("/posts"));
+    };
 function PostsIndex() {
   var _a;
   let { posts, userId } = (0, import_react27.useLoaderData)(), actionData = (0, import_react27.useActionData)(), isAdding = (0, import_react27.useTransition)().state === "submitting", ref = (0, import_react26.useRef)(null), formRef = (0, import_react26.useRef)(null), [liked, setLiked] = (0, import_react26.useState)(!1), handleClick = () => {
@@ -6868,7 +6895,328 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "1fa25b35", entry: { module: "/build/entry.client-FJVRV73T.js", imports: ["/build/_shared/chunk-KZ663W32.js", "/build/_shared/chunk-SMWPKSDY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-IOZFLRTE.js", imports: ["/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/__auth/login": { id: "routes/__auth/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/login-OECH4FZV.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/logout": { id: "routes/__auth/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/logout-GZBFO4HC.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/register": { id: "routes/__auth/register", parentId: "root", path: "register", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/register-USSEFJUT.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard": { id: "routes/dashboard/__dashboard", parentId: "root", path: "dashboard/", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard-PQCIFM6N.js", imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-ENKIADX3.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/create-profile": { id: "routes/dashboard/__dashboard/create-profile", parentId: "routes/dashboard/__dashboard", path: "create-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/create-profile-67NG3XCN.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/edit-profile": { id: "routes/dashboard/__dashboard/edit-profile", parentId: "routes/dashboard/__dashboard", path: "edit-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/edit-profile-WC77XCWU.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/delete": { id: "routes/dashboard/__dashboard/education/delete", parentId: "routes/dashboard/__dashboard", path: "education/delete", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/delete-LK7MQTOC.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/edit/$educationId": { id: "routes/dashboard/__dashboard/education/edit/$educationId", parentId: "routes/dashboard/__dashboard", path: "education/edit/:educationId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/edit/$educationId-UAQESMQ7.js", imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/new": { id: "routes/dashboard/__dashboard/education/new", parentId: "routes/dashboard/__dashboard", path: "education/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/new-GCQ2QDCM.js", imports: ["/build/_shared/chunk-O5SOJ3II.js", "/build/_shared/chunk-LCID5XWU.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/educations": { id: "routes/dashboard/__dashboard/educations", parentId: "routes/dashboard/__dashboard", path: "educations", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/educations-NACE63JH.js", imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/delete": { id: "routes/dashboard/__dashboard/experience/delete", parentId: "routes/dashboard/__dashboard", path: "experience/delete", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/delete-RGV3SVV7.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/edit/$experienceId": { id: "routes/dashboard/__dashboard/experience/edit/$experienceId", parentId: "routes/dashboard/__dashboard", path: "experience/edit/:experienceId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/edit/$experienceId-LSQDU35U.js", imports: ["/build/_shared/chunk-O5SOJ3II.js", "/build/_shared/chunk-AVEI5MXU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/new": { id: "routes/dashboard/__dashboard/experience/new", parentId: "routes/dashboard/__dashboard", path: "experience/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/new-Q7JYQ5AE.js", imports: ["/build/_shared/chunk-O5SOJ3II.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experiences": { id: "routes/dashboard/__dashboard/experiences", parentId: "routes/dashboard/__dashboard", path: "experiences", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experiences-NDQDGRFJ.js", imports: ["/build/_shared/chunk-AVEI5MXU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/index": { id: "routes/dashboard/__dashboard/index", parentId: "routes/dashboard/__dashboard", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/index-XYP3CA3D.js", imports: ["/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/profile": { id: "routes/dashboard/__dashboard/profile", parentId: "routes/dashboard/__dashboard", path: "profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/profile-VUZHKCTB.js", imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-OIODPH4E.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$postId": { id: "routes/posts/$postId", parentId: "root", path: "posts/:postId", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$postId-TE57AS7E.js", imports: ["/build/_shared/chunk-BAE6T5G7.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$postId.delete": { id: "routes/posts/$postId.delete", parentId: "root", path: "posts/:postId/delete", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$postId.delete-GQTMURJ6.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/delete-post": { id: "routes/posts/delete-post", parentId: "root", path: "posts/delete-post", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/delete-post-DRJVTCFF.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/index": { id: "routes/posts/index", parentId: "root", path: "posts", index: !0, caseSensitive: void 0, module: "/build/routes/posts/index-6NYQOW7M.js", imports: ["/build/_shared/chunk-BAE6T5G7.js", "/build/_shared/chunk-ENKIADX3.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/$profileId": { id: "routes/profiles/$profileId", parentId: "root", path: "profiles/:profileId", index: void 0, caseSensitive: void 0, module: "/build/routes/profiles/$profileId-7RPUATEO.js", imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/index": { id: "routes/profiles/index", parentId: "root", path: "profiles", index: !0, caseSensitive: void 0, module: "/build/routes/profiles/index-MC2QWMPH.js", imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-1FA25B35.js" };
+var assets_manifest_default = {
+   version: "7f36baa7",
+   entry: {
+      module: "/build/entry.client-FJVRV73T.js",
+      imports: ["/build/_shared/chunk-KZ663W32.js", "/build/_shared/chunk-SMWPKSDY.js"]
+   },
+   routes: {
+      root: {
+         id: "root",
+         parentId: void 0,
+         path: "",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/root-IOZFLRTE.js",
+         imports: ["/build/_shared/chunk-TF35UPAM.js"],
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !0
+      },
+      "routes/__auth/login": {
+         id: "routes/__auth/login",
+         parentId: "root",
+         path: "login",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/__auth/login-OECH4FZV.js",
+         imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"],
+         hasAction: !0,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/__auth/logout": {
+         id: "routes/__auth/logout",
+         parentId: "root",
+         path: "logout",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/__auth/logout-GZBFO4HC.js",
+         imports: void 0,
+         hasAction: !0,
+         hasLoader: !1,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/__auth/register": {
+         id: "routes/__auth/register",
+         parentId: "root",
+         path: "register",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/__auth/register-USSEFJUT.js",
+         imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"],
+         hasAction: !0,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard": {
+         id: "routes/dashboard/__dashboard",
+         parentId: "root",
+         path: "dashboard/",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard-PQCIFM6N.js",
+         imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-ENKIADX3.js"],
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/create-profile": {
+         id: "routes/dashboard/__dashboard/create-profile",
+         parentId: "routes/dashboard/__dashboard",
+         path: "create-profile",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/create-profile-67NG3XCN.js",
+         imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"],
+         hasAction: !0,
+         hasLoader: !1,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/edit-profile": {
+         id: "routes/dashboard/__dashboard/edit-profile",
+         parentId: "routes/dashboard/__dashboard",
+         path: "edit-profile",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/edit-profile-WC77XCWU.js",
+         imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"],
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/education/delete": {
+         id: "routes/dashboard/__dashboard/education/delete",
+         parentId: "routes/dashboard/__dashboard",
+         path: "education/delete",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/education/delete-LK7MQTOC.js",
+         imports: void 0,
+         hasAction: !0,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/education/edit/$educationId": {
+         id: "routes/dashboard/__dashboard/education/edit/$educationId",
+         parentId: "routes/dashboard/__dashboard",
+         path: "education/edit/:educationId",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/education/edit/$educationId-LBS3J27A.js",
+         imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-O5SOJ3II.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"],
+         hasAction: !0,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/education/new": {
+         id: "routes/dashboard/__dashboard/education/new",
+         parentId: "routes/dashboard/__dashboard",
+         path: "education/new",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/education/new-XPR33ZX2.js",
+         imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-O5SOJ3II.js"],
+         hasAction: !0,
+         hasLoader: !1,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/educations": {
+         id: "routes/dashboard/__dashboard/educations",
+         parentId: "routes/dashboard/__dashboard",
+         path: "educations",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/educations-NACE63JH.js",
+         imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"],
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/experience/delete": {
+         id: "routes/dashboard/__dashboard/experience/delete",
+         parentId: "routes/dashboard/__dashboard",
+         path: "experience/delete",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/experience/delete-RGV3SVV7.js",
+         imports: void 0,
+         hasAction: !0,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/experience/edit/$experienceId": {
+         id: "routes/dashboard/__dashboard/experience/edit/$experienceId",
+         parentId: "routes/dashboard/__dashboard",
+         path: "experience/edit/:experienceId",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/experience/edit/$experienceId-QKDXO2LM.js",
+         imports: ["/build/_shared/chunk-AVEI5MXU.js", "/build/_shared/chunk-O5SOJ3II.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"],
+         hasAction: !0,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/experience/new": {
+         id: "routes/dashboard/__dashboard/experience/new",
+         parentId: "routes/dashboard/__dashboard",
+         path: "experience/new",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/experience/new-YJOQ67QB.js",
+         imports: ["/build/_shared/chunk-AVEI5MXU.js", "/build/_shared/chunk-O5SOJ3II.js"],
+         hasAction: !0,
+         hasLoader: !1,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/experiences": {
+         id: "routes/dashboard/__dashboard/experiences",
+         parentId: "routes/dashboard/__dashboard",
+         path: "experiences",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/experiences-NDQDGRFJ.js",
+         imports: ["/build/_shared/chunk-AVEI5MXU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"],
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/index": {
+         id: "routes/dashboard/__dashboard/index",
+         parentId: "routes/dashboard/__dashboard",
+         path: void 0,
+         index: !0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/index-XYP3CA3D.js",
+         imports: ["/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"],
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/dashboard/__dashboard/profile": {
+         id: "routes/dashboard/__dashboard/profile",
+         parentId: "routes/dashboard/__dashboard",
+         path: "profile",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/dashboard/__dashboard/profile-VUZHKCTB.js",
+         imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"],
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/index": {
+         id: "routes/index",
+         parentId: "root",
+         path: void 0,
+         index: !0,
+         caseSensitive: void 0,
+         module: "/build/routes/index-OIODPH4E.js",
+         imports: void 0,
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/posts/$postId": {
+         id: "routes/posts/$postId",
+         parentId: "root",
+         path: "posts/:postId",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/posts/$postId-TE57AS7E.js",
+         imports: ["/build/_shared/chunk-BAE6T5G7.js"],
+         hasAction: !0,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/posts/$postId.delete": {
+         id: "routes/posts/$postId.delete",
+         parentId: "root",
+         path: "posts/:postId/delete",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/posts/$postId.delete-GQTMURJ6.js",
+         imports: void 0,
+         hasAction: !0,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/posts/delete-post": {
+         id: "routes/posts/delete-post",
+         parentId: "root",
+         path: "posts/delete-post",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/posts/delete-post-DRJVTCFF.js",
+         imports: void 0,
+         hasAction: !0,
+         hasLoader: !1,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/posts/index": {
+         id: "routes/posts/index",
+         parentId: "root",
+         path: "posts",
+         index: !0,
+         caseSensitive: void 0,
+         module: "/build/routes/posts/index-6NYQOW7M.js",
+         imports: ["/build/_shared/chunk-BAE6T5G7.js", "/build/_shared/chunk-ENKIADX3.js"],
+         hasAction: !0,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/profiles/$profileId": {
+         id: "routes/profiles/$profileId",
+         parentId: "root",
+         path: "profiles/:profileId",
+         index: void 0,
+         caseSensitive: void 0,
+         module: "/build/routes/profiles/$profileId-7RPUATEO.js",
+         imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js"],
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      },
+      "routes/profiles/index": {
+         id: "routes/profiles/index",
+         parentId: "root",
+         path: "profiles",
+         index: !0,
+         caseSensitive: void 0,
+         module: "/build/routes/profiles/index-MC2QWMPH.js",
+         imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-MQDMLQQO.js"],
+         hasAction: !1,
+         hasLoader: !0,
+         hasCatchBoundary: !1,
+         hasErrorBoundary: !1
+      }
+   },
+   url: "/build/manifest-7F36BAA7.js"
+};
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

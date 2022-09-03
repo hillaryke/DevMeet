@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { LoaderFunction, redirect } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { isAuthenticated } from "~/session.server";
-import { getExperienceById } from "~/models/experience.server";
-import util from "util";
-import { getEducation, getEducationById } from "~/models/education.server";
+import { getEducationById, updateEducation } from "~/models/education.server";
 import { format } from "date-fns";
+import { processEdu } from "~/utils/util.server";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
    const isAuth = await isAuthenticated(request);
@@ -19,7 +19,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
    return { education };
 };
 
-// TODO save modified education credentials
+export const action: ActionFunction = async ({ request, params }) => {
+   const eduId = params.educationId;
+   if (!eduId) return redirect('/dashboard/educations');
+
+   const { errors, data } = await processEdu(request);
+   if (errors) return json({ errors });
+
+   const education = await updateEducation(eduId.toString(), data);
+
+   return redirect('/dashboard/educations');
+};
 
 export default function Experience() {
    const { education } = useLoaderData();

@@ -24,7 +24,6 @@ export const action: ActionFunction = async ({ request, params }) => {
    if (!expId) return redirect('/dashboard/experiences');
 
    const { errors, data } = await processExp(request);
-   console.log(errors, data);
    if (errors) return json({ errors });
 
    const experience = await updateExperience(expId.toString(), data);

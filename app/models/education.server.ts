@@ -47,8 +47,15 @@ export const getEducationById = async (eduId: Education["id"]) => {
    return data;
 };
 
-export const deleteEducation = async (eduId: Education["id"]) => {
-   const data = await prisma.education.delete({
+export const deleteEducation = (eduId: Education["id"]) => {
+   prisma.education.delete({
       where: { id: eduId }
+   });
+};
+
+export const updateEducation = (eduId: Education["id"], data: any) => {
+   return prisma.education.update({
+      where: { id: eduId },
+      data
    });
 };
