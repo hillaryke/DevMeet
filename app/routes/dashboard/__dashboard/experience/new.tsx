@@ -6,16 +6,17 @@ import { processEduExp } from "~/utils/util.server";
 import { createExperience } from "~/models/experience.server";
 
 export const action: ActionFunction = async ({ request }) => {
-   const fieldNames = ["school", "degree", "fieldofstudy", "from", "to", "current", "description"];
-   const fieldsToValidate = ["school", "degree", "from"];
+   const fieldNames = ["title", "company", "location", "from", "to", "current", "description"];
+   const fieldsToValidate = ["title", "company", "from"];
    const errorMessages = {
-      school: "School or bootcamp is required",
-      degree: "Degree is required",
+      title: "Job Title is required",
+      company: "Company is required",
       from: "From date is required",
    };
 
    const { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
-   if (errors) return { errors };
+   if (errors) return json({ errors });
+
    const experience = await createExperience(request, data);
 
    return redirect('/dashboard/experiences');
@@ -76,7 +77,7 @@ export default function Experience() {
 
                         <div className="flex items-center">
                            {/* @ts-ignore */}
-                           <input name="current" type="checkbox" defaultValue={isCurrentJob} value={isCurrentJob}
+                           <input name="current" type="checkbox" value={isCurrentJob}
                                   onChange={() => toggleCurrentJob(!isCurrentJob)}
                                   className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                            />
