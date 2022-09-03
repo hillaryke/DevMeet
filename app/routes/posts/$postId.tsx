@@ -107,12 +107,17 @@ export default function Post() {
                                  <p className="mt-1">{comment.text}</p>
                                  <div className="flex mt-2">
                                     {post.user.id === userId ?
-                                       <div className="pr-3 bg-gray-50 text-right">
-                                          <button type="submit"
-                                                  className="inline-flex justify-center py-1.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300"
-                                          >Delete
-                                          </button>
-                                       </div> : null
+                                       <Form action={`/posts/${post.id}/delete`} method="post">
+                                          <input type="hidden" name="commentId" value={comment.id}/>
+                                          <div className="pr-3 bg-gray-50 text-right">
+                                             <button type="submit"
+                                                     value="deleteComment"
+                                                     className="inline-flex justify-center py-1.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300"
+                                             >Delete
+                                             </button>
+                                          </div>
+                                       </Form>
+                                       : null
                                     }
 
                                     <span className="text-xsm font-semibold text-gray-500 pt-2">

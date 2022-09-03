@@ -1,6 +1,7 @@
 import { prisma } from "~/db.server";
 import type { User } from "~/models/user.server";
 import { Post } from "~/models/post.server";
+import type { Comment } from "@prisma/client";
 
 export const createComment = async (userId: User["id"], postId: Post["id"], text: string) => {
    return prisma.post.update({
@@ -58,5 +59,11 @@ export const getComments = async (postId: Post["id"]) => {
             }
          },
       }
+   });
+};
+
+export const deleteCommentById = (commentId: Comment["id"]) => {
+   return prisma.comment.delete({
+      where: { id: commentId }
    });
 };

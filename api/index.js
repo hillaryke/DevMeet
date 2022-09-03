@@ -4435,16 +4435,86 @@ function DashboardIndex() {
   }, this);
 }
 
+// app/routes/posts/$postId.delete.tsx
+var postId_delete_exports = {};
+__export(postId_delete_exports, {
+  action: () => action4,
+  loader: () => loader10
+});
+var import_node14 = require("@remix-run/node");
+
+// app/models/comment.server.ts
+var createComment = async (userId, postId, text) => prisma.post.update({
+  where: { id: postId },
+  data: {
+    comments: {
+      create: {
+        text,
+        user: {
+          connect: { id: userId }
+        }
+      }
+    }
+  },
+  include: {
+    comments: {
+      select: {
+        id: !0,
+        text: !0,
+        date: !0,
+        user: {
+          select: {
+            name: !0,
+            avatar: !0
+          }
+        }
+      }
+    }
+  }
+}), getComments = async (postId) => prisma.post.findUnique({
+  where: { id: postId },
+  include: {
+    user: {
+      select: {
+        id: !0,
+        name: !0,
+        avatar: !0
+      }
+    },
+    comments: {
+      select: {
+        id: !0,
+        text: !0,
+        date: !0,
+        user: {
+          select: {
+            name: !0,
+            avatar: !0
+          }
+        }
+      }
+    }
+  }
+}), deleteCommentById = (commentId) => prisma.comment.delete({
+  where: { id: commentId }
+});
+
+// app/routes/posts/$postId.delete.tsx
+var loader10 = ({ params }) => (0, import_node14.redirect)(`/posts/${params.postId}`), action4 = async ({ request, params }) => {
+  let postId = params.postId, commentId = (await request.formData()).get("commentId");
+  return commentId ? (await deleteCommentById(commentId.toString()), (0, import_node14.redirect)(`/posts/${postId}`)) : (0, import_node14.redirect)(`/posts/${postId}`);
+};
+
 // app/routes/profiles/$profileId.tsx
 var profileId_exports = {};
 __export(profileId_exports, {
   default: () => ProfileShow2,
-  loader: () => loader10
+  loader: () => loader11
 });
-var import_node14 = require("@remix-run/node"), import_react21 = require("@remix-run/react"), import_date_fns7 = require("date-fns"), import_react_fontawesome3 = require("@fortawesome/react-fontawesome"), import_free_solid_svg_icons3 = require("@fortawesome/free-solid-svg-icons"), import_free_brands_svg_icons2 = require("@fortawesome/free-brands-svg-icons");
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader10 = async ({ params }) => {
+var import_node15 = require("@remix-run/node"), import_react21 = require("@remix-run/react"), import_date_fns7 = require("date-fns"), import_react_fontawesome3 = require("@fortawesome/react-fontawesome"), import_free_solid_svg_icons3 = require("@fortawesome/free-solid-svg-icons"), import_free_brands_svg_icons2 = require("@fortawesome/free-brands-svg-icons");
+var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader11 = async ({ params }) => {
   let profileId = params.profileId, profile = await getProfileWithAllById(profileId), { repos } = await getUserRepos(profile.githubUsername);
-  return (0, import_node14.json)({ profile, repos });
+  return (0, import_node15.json)({ profile, repos });
 };
 function ProfileShow2() {
   let { profile, repos } = (0, import_react21.useLoaderData)(), renderExperience = (exp) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -5186,105 +5256,98 @@ function ProfileShow2() {
       }, this)
     }, void 0, !1, {
       fileName: "app/routes/profiles/$profileId.tsx",
-       lineNumber: 71,
-       columnNumber: 10
+      lineNumber: 71,
+      columnNumber: 10
     }, this)
   }, void 0, !1, {
-     fileName: "app/routes/profiles/$profileId.tsx",
-     lineNumber: 70,
-     columnNumber: 7
+    fileName: "app/routes/profiles/$profileId.tsx",
+    lineNumber: 70,
+    columnNumber: 7
   }, this);
 }
 
 // app/routes/posts/delete-post.tsx
 var delete_post_exports = {};
 __export(delete_post_exports, {
-   action: () => action4
+  action: () => action5
 });
-var import_node15 = require("@remix-run/node");
+var import_node16 = require("@remix-run/node");
 
 // app/models/post.server.ts
 var createPost = async (user, text) => prisma.user.update({
-   where: { id: user.id },
-   data: {
-      posts: {
-         create: {
-            text
-         }
+  where: { id: user.id },
+  data: {
+    posts: {
+      create: {
+        text
       }
-   },
-   include: {
-      posts: {
-         include: {
-            comments: !0,
-            likes: !0
-         }
+    }
+  },
+  include: {
+    posts: {
+      include: {
+        comments: !0,
+        likes: !0
       }
-   }
+    }
+  }
 }), getPostsWithCount = async () => prisma.post.findMany({
-   orderBy: {
-      date: "desc"
-   },
-   include: {
-      user: {
-         select: {
-            id: !0,
-            name: !0,
-            avatar: !0
-         }
-      },
-      _count: {
-         select: {
-            comments: !0,
-            likes: !0
-         }
+  orderBy: {
+    date: "desc"
+  },
+  include: {
+    user: {
+      select: {
+        id: !0,
+        name: !0,
+        avatar: !0
       }
-   }
+    },
+    _count: {
+      select: {
+        comments: !0,
+        likes: !0
+      }
+    }
+  }
 }), deletePostById = (postId) => prisma.post.delete({
-   where: {
-      id: postId
-   }
+  where: {
+    id: postId
+  }
 });
 
 // app/routes/posts/delete-post.tsx
-var action4 = async ({ request }) => {
-   let postId = (await request.formData()).get("postId");
-   if (!postId)
-      return (0, import_node15.redirect)("/posts");
-   try {
-      await deletePostById(postId.toString());
-   } catch (err) {
-      console.log(err);
-   }
-   return (0, import_node15.redirect)("/posts");
+var action5 = async ({ request }) => {
+  let postId = (await request.formData()).get("postId");
+  if (!postId)
+    return (0, import_node16.redirect)("/posts");
+  try {
+    await deletePostById(postId.toString());
+  } catch (err) {
+    console.log(err);
+  }
+  return (0, import_node16.redirect)("/posts");
 };
 
 // app/routes/__auth/register.tsx
 var register_exports = {};
 __export(register_exports, {
-   action: () => action5,
-   default: () => Register,
-   loader: () => loader11
+  action: () => action6,
+  default: () => Register,
+  loader: () => loader12
 });
-var import_react22 = require("@remix-run/react"), import_node16 = require("@remix-run/node");
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime"),
-    loader11 = async ({ request }) => await isAuthenticated(request) ? (0, import_node16.redirect)("/dashboard") : null,
-    action5 = async ({ request }) => {
-       let fieldNames = ["name", "email", "password", "password2"], errorMessages = {
-          name: "Name should not be empty",
-          email: "Email must not be empty",
-          password: "Password is required",
-          password2: "Password confirmation is required"
-       }, { errors, data } = await processFormData(request, fieldNames, errorMessages), {
-          name,
-          email,
-          password,
-          password2
-       } = data;
-       if (errors)
-          return (0, import_node16.json)({ errors });
-       if (password !== password2)
-          return (0, import_node16.json)({ errors: { password2: "Password does not match!" } });
+var import_react22 = require("@remix-run/react"), import_node17 = require("@remix-run/node");
+var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader12 = async ({ request }) => await isAuthenticated(request) ? (0, import_node17.redirect)("/dashboard") : null, action6 = async ({ request }) => {
+  let fieldNames = ["name", "email", "password", "password2"], errorMessages = {
+    name: "Name should not be empty",
+    email: "Email must not be empty",
+    password: "Password is required",
+    password2: "Password confirmation is required"
+  }, { errors, data } = await processFormData(request, fieldNames, errorMessages), { name, email, password, password2 } = data;
+  if (errors)
+    return (0, import_node17.json)({ errors });
+  if (password !== password2)
+    return (0, import_node17.json)({ errors: { password2: "Password does not match!" } });
   let user = await createUser(name, email, password);
   return createUserSession(user.id, request, "/dashboard");
 };
@@ -5489,13 +5552,12 @@ function Register() {
 var profiles_exports = {};
 __export(profiles_exports, {
   default: () => IndexProfiles,
-  loader: () => loader12
+  loader: () => loader13
 });
-var import_outline2 = require("@heroicons/react/outline"), import_node17 = require("@remix-run/node"),
-    import_react23 = require("@remix-run/react");
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader12 = async () => {
-   let profiles = await getProfiles();
-   return (0, import_node17.json)({ profiles });
+var import_outline2 = require("@heroicons/react/outline"), import_node18 = require("@remix-run/node"), import_react23 = require("@remix-run/react");
+var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader13 = async () => {
+  let profiles = await getProfiles();
+  return (0, import_node18.json)({ profiles });
 };
 function IndexProfiles() {
   let { profiles } = (0, import_react23.useLoaderData)();
@@ -5668,101 +5730,44 @@ function IndexProfiles() {
     }, this)
   }, void 0, !1, {
     fileName: "app/routes/profiles/index.tsx",
-     lineNumber: 18,
-     columnNumber: 7
+    lineNumber: 18,
+    columnNumber: 7
   }, this);
 }
 
 // app/routes/__auth/logout.tsx
 var logout_exports = {};
 __export(logout_exports, {
-   action: () => action6
+  action: () => action7
 });
-var import_node18 = require("@remix-run/node");
-var action6 = async ({ request }) => (0, import_node18.redirect)("/", {
-   headers: {
-      "set-Cookie": await destroySession(request)
-   }
+var import_node19 = require("@remix-run/node");
+var action7 = async ({ request }) => (0, import_node19.redirect)("/", {
+  headers: {
+    "set-Cookie": await destroySession(request)
+  }
 });
 
 // app/routes/posts/$postId.tsx
 var postId_exports = {};
 __export(postId_exports, {
-   action: () => action7,
-   default: () => Post,
-   loader: () => loader13
+  action: () => action8,
+  default: () => Post,
+  loader: () => loader14
 });
-var import_react24 = require("@remix-run/react"), import_node19 = require("@remix-run/node");
-
-// app/models/comment.server.ts
-var createComment = async (userId, postId, text) => prisma.post.update({
-  where: { id: postId },
-  data: {
-    comments: {
-      create: {
-        text,
-        user: {
-          connect: { id: userId }
-        }
-      }
-    }
-  },
-  include: {
-    comments: {
-      select: {
-        id: !0,
-        text: !0,
-        date: !0,
-        user: {
-          select: {
-            name: !0,
-            avatar: !0
-          }
-        }
-      }
-    }
-  }
-}), getComments = async (postId) => prisma.post.findUnique({
-  where: { id: postId },
-  include: {
-    user: {
-      select: {
-        id: !0,
-        name: !0,
-        avatar: !0
-      }
-    },
-    comments: {
-      select: {
-        id: !0,
-        text: !0,
-        date: !0,
-        user: {
-          select: {
-            name: !0,
-            avatar: !0
-          }
-        }
-      }
-    }
-  }
-});
-
-// app/routes/posts/$postId.tsx
-var import_moment = __toESM(require("moment")), import_jsx_dev_runtime = require("react/jsx-dev-runtime"),
-    loader13 = async ({ request, params }) => {
-       let postId = params.postId, postWithComments = await getComments(postId);
-       return (0, import_node19.json)({
-          post: postWithComments,
-          userId: await authenticatedUser(request)
-       });
-    }, action7 = async ({ request, params }) => {
-       let postId = params.postId, userId = await authenticatedUser(request);
-       if (!userId)
-          return (0, import_node19.json)({ errors: { post: "You must login or register to create a post" } });
-       let text = (await request.formData()).get("text");
-       return !text || text.toString().length < 6 ? (0, import_node19.json)({ errors: { post: "Post must be at least 6 characters" } }) : (await createComment(userId, postId, text.toString()), (0, import_node19.redirect)(`/posts/${postId}`));
-    };
+var import_react24 = require("@remix-run/react"), import_node20 = require("@remix-run/node");
+var import_moment = __toESM(require("moment")), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader14 = async ({ request, params }) => {
+  let postId = params.postId, postWithComments = await getComments(postId);
+  return (0, import_node20.json)({
+    post: postWithComments,
+    userId: await authenticatedUser(request)
+  });
+}, action8 = async ({ request, params }) => {
+  let postId = params.postId, userId = await authenticatedUser(request);
+  if (!userId)
+    return (0, import_node20.json)({ errors: { post: "You must login or register to create a post" } });
+  let text = (await request.formData()).get("text");
+  return !text || text.toString().length < 6 ? (0, import_node20.json)({ errors: { post: "Post must be at least 6 characters" } }) : (await createComment(userId, postId, text.toString()), (0, import_node20.redirect)(`/posts/${postId}`));
+};
 function Post() {
   var _a;
   let { post, userId } = (0, import_react24.useLoaderData)(), actionData = (0, import_react24.useActionData)();
@@ -5973,18 +5978,38 @@ function Post() {
                       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                         className: "flex mt-2",
                         children: [
-                          post.user.id === userId ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-                            className: "pr-3 bg-gray-50 text-right",
-                            children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
-                              type: "submit",
-                              className: "inline-flex justify-center py-1.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300",
-                              children: "Delete"
-                            }, void 0, !1, {
-                              fileName: "app/routes/posts/$postId.tsx",
-                              lineNumber: 111,
-                              columnNumber: 43
-                            }, this)
-                          }, void 0, !1, {
+                          post.user.id === userId ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react24.Form, {
+                            action: `/posts/${post.id}/delete`,
+                            method: "post",
+                            children: [
+                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
+                                type: "hidden",
+                                name: "commentId",
+                                value: comment.id
+                              }, void 0, !1, {
+                                fileName: "app/routes/posts/$postId.tsx",
+                                lineNumber: 111,
+                                columnNumber: 43
+                              }, this),
+                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                                className: "pr-3 bg-gray-50 text-right",
+                                children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
+                                  type: "submit",
+                                  value: "deleteComment",
+                                  className: "inline-flex justify-center py-1.5 px-5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-300",
+                                  children: "Delete"
+                                }, void 0, !1, {
+                                  fileName: "app/routes/posts/$postId.tsx",
+                                  lineNumber: 113,
+                                  columnNumber: 46
+                                }, this)
+                              }, void 0, !1, {
+                                fileName: "app/routes/posts/$postId.tsx",
+                                lineNumber: 112,
+                                columnNumber: 43
+                              }, this)
+                            ]
+                          }, void 0, !0, {
                             fileName: "app/routes/posts/$postId.tsx",
                             lineNumber: 110,
                             columnNumber: 40
@@ -5994,7 +6019,7 @@ function Post() {
                             children: (0, import_moment.default)(new Date(comment.date)).fromNow(!0)
                           }, void 0, !1, {
                             fileName: "app/routes/posts/$postId.tsx",
-                            lineNumber: 118,
+                            lineNumber: 123,
                             columnNumber: 37
                           }, this)
                         ]
@@ -6019,7 +6044,7 @@ function Post() {
                 children: "No comments for this post!"
               }, void 0, !1, {
                 fileName: "app/routes/posts/$postId.tsx",
-                lineNumber: 127,
+                lineNumber: 132,
                 columnNumber: 25
               }, this)
             ]
@@ -6049,33 +6074,33 @@ function Post() {
 // app/routes/__auth/login.tsx
 var login_exports = {};
 __export(login_exports, {
-   action: () => action8,
-   default: () => Login,
-   loader: () => loader14
+  action: () => action9,
+  default: () => Login,
+  loader: () => loader15
 });
 var import_react25 = require("@remix-run/react");
-var import_node20 = require("@remix-run/node");
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader14 = async ({ request }) => {
-   let session = await getSession(request);
-   if (session.has("token"))
-      return (0, import_node20.redirect)("/dashboard");
-   let data = { error: session.get("error") };
-   return (0, import_node20.json)(data, {
-      headers: {
-         "Set-Cookie": await sessionStorage.commitSession(session)
-      }
-   });
-}, action8 = async ({ request }) => {
-   let session = await getSession(request), fieldNames = ["email", "password"], errorMessages = {
-      email: "Email is required",
-      password: "Password is required"
-   }, { errors, data } = await processFormData(request, fieldNames, errorMessages), { email, password } = data;
-   if (errors)
-      return (0, import_node20.json)({ errors });
-   let userId = await validateCredentials(email, password);
-   return userId === null ? (session.flash("error", "Invalid username or password"), (0, import_node20.redirect)("/login", {
-      headers: { "Set-Cookie": await sessionStorage.commitSession(session) }
-   })) : createUserSession(userId, request, "/dashboard");
+var import_node21 = require("@remix-run/node");
+var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader15 = async ({ request }) => {
+  let session = await getSession(request);
+  if (session.has("token"))
+    return (0, import_node21.redirect)("/dashboard");
+  let data = { error: session.get("error") };
+  return (0, import_node21.json)(data, {
+    headers: {
+      "Set-Cookie": await sessionStorage.commitSession(session)
+    }
+  });
+}, action9 = async ({ request }) => {
+  let session = await getSession(request), fieldNames = ["email", "password"], errorMessages = {
+    email: "Email is required",
+    password: "Password is required"
+  }, { errors, data } = await processFormData(request, fieldNames, errorMessages), { email, password } = data;
+  if (errors)
+    return (0, import_node21.json)({ errors });
+  let userId = await validateCredentials(email, password);
+  return userId === null ? (session.flash("error", "Invalid username or password"), (0, import_node21.redirect)("/login", {
+    headers: { "Set-Cookie": await sessionStorage.commitSession(session) }
+  })) : createUserSession(userId, request, "/dashboard");
 };
 function Login() {
   var _a, _b;
@@ -6268,26 +6293,26 @@ function Login() {
 // app/routes/posts/index.tsx
 var posts_exports = {};
 __export(posts_exports, {
-  action: () => action9,
+  action: () => action10,
   default: () => PostsIndex,
-  loader: () => loader15
+  loader: () => loader16
 });
-var import_react26 = require("react"), import_react27 = require("@remix-run/react"), import_node21 = require("@remix-run/node");
-var import_moment2 = __toESM(require("moment")), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader15 = async ({ request }) => {
+var import_react26 = require("react"), import_react27 = require("@remix-run/react"), import_node22 = require("@remix-run/node");
+var import_moment2 = __toESM(require("moment")), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader16 = async ({ request }) => {
   let posts = await getPostsWithCount();
-  return (0, import_node21.json)({
+  return (0, import_node22.json)({
     posts,
     userId: await authenticatedUser(request)
   });
-}, action9 = async ({ request }) => {
+}, action10 = async ({ request }) => {
   let userId = await authenticatedUser(request);
   if (!userId)
-    return (0, import_node21.json)({ errors: { post: "You must login or register to create a post" } });
+    return (0, import_node22.json)({ errors: { post: "You must login or register to create a post" } });
   let user = await getUserById(userId);
   if (!user)
     throw new Error("User not found");
   let text = (await request.formData()).get("text");
-  return !text || text.toString().length < 6 ? (0, import_node21.json)({ errors: { post: "Post must be at least 6 characters" } }) : (await createPost(user, text.toString()), (0, import_node21.redirect)("/posts"));
+  return !text || text.toString().length < 6 ? (0, import_node22.json)({ errors: { post: "Post must be at least 6 characters" } }) : (await createPost(user, text.toString()), (0, import_node22.redirect)("/posts"));
 };
 function PostsIndex() {
   var _a;
@@ -6524,18 +6549,18 @@ function PostsIndex() {
                             columnNumber: 31
                           }, this),
                           userId === post.user.id ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react27.Form, {
-                             ref: formRef,
-                             action: "/posts/delete-post",
-                             method: "post",
-                             children: [
-                                /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
-                                   type: "hidden",
-                                   name: "postId",
-                                   value: post.id
-                                }, void 0, !1, {
-                                   fileName: "app/routes/posts/index.tsx",
-                                   lineNumber: 144,
-                                   columnNumber: 37
+                            ref: formRef,
+                            action: "/posts/delete-post",
+                            method: "post",
+                            children: [
+                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
+                                type: "hidden",
+                                name: "postId",
+                                value: post.id
+                              }, void 0, !1, {
+                                fileName: "app/routes/posts/index.tsx",
+                                lineNumber: 144,
+                                columnNumber: 37
                               }, this),
                               /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                                 className: "pr-3 bg-gray-50 text-right",
@@ -6608,9 +6633,9 @@ function PostsIndex() {
 var routes_exports = {};
 __export(routes_exports, {
   default: () => Index,
-  loader: () => loader16
+  loader: () => loader17
 });
-var import_react28 = require("@remix-run/react"), import_node22 = require("@remix-run/node"), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader16 = async ({ request }) => (0, import_node22.json)({ user: await isAuthenticated(request) });
+var import_react28 = require("@remix-run/react"), import_node23 = require("@remix-run/node"), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), loader17 = async ({ request }) => (0, import_node23.json)({ user: await isAuthenticated(request) });
 function Index() {
   let { user } = (0, import_react28.useLoaderData)();
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_jsx_dev_runtime.Fragment, {
@@ -6767,289 +6792,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = {
-   version: "5d77710c",
-   entry: {
-      module: "/build/entry.client-FJVRV73T.js",
-      imports: ["/build/_shared/chunk-KZ663W32.js", "/build/_shared/chunk-SMWPKSDY.js"]
-   },
-   routes: {
-      root: {
-         id: "root",
-         parentId: void 0,
-         path: "",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/root-IOZFLRTE.js",
-         imports: ["/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !0
-      },
-      "routes/__auth/login": {
-         id: "routes/__auth/login",
-         parentId: "root",
-         path: "login",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/__auth/login-SUSIYFCY.js",
-         imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"],
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/__auth/logout": {
-         id: "routes/__auth/logout",
-         parentId: "root",
-         path: "logout",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/__auth/logout-GZBFO4HC.js",
-         imports: void 0,
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/__auth/register": {
-         id: "routes/__auth/register",
-         parentId: "root",
-         path: "register",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/__auth/register-VO3PUAFN.js",
-         imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"],
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard": {
-         id: "routes/dashboard/__dashboard",
-         parentId: "root",
-         path: "dashboard/",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard-PQCIFM6N.js",
-         imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-ENKIADX3.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/create-profile": {
-         id: "routes/dashboard/__dashboard/create-profile",
-         parentId: "routes/dashboard/__dashboard",
-         path: "create-profile",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/create-profile-67NG3XCN.js",
-         imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/edit-profile": {
-         id: "routes/dashboard/__dashboard/edit-profile",
-         parentId: "routes/dashboard/__dashboard",
-         path: "edit-profile",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/edit-profile-WC77XCWU.js",
-         imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/education/edit/$educationId": {
-         id: "routes/dashboard/__dashboard/education/edit/$educationId",
-         parentId: "routes/dashboard/__dashboard",
-         path: "education/edit/:educationId",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/education/edit/$educationId-O7OGSDCQ.js",
-         imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-LCID5XWU.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/education/new": {
-         id: "routes/dashboard/__dashboard/education/new",
-         parentId: "routes/dashboard/__dashboard",
-         path: "education/new",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/education/new-QQ6PE6YZ.js",
-         imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-O5SOJ3II.js"],
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/educations": {
-         id: "routes/dashboard/__dashboard/educations",
-         parentId: "routes/dashboard/__dashboard",
-         path: "educations",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/educations-2MWFBUOS.js",
-         imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-LCID5XWU.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/experience/edit/$experienceId": {
-         id: "routes/dashboard/__dashboard/experience/edit/$experienceId",
-         parentId: "routes/dashboard/__dashboard",
-         path: "experience/edit/:experienceId",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/experience/edit/$experienceId-DRL53BB3.js",
-         imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/experience/new": {
-         id: "routes/dashboard/__dashboard/experience/new",
-         parentId: "routes/dashboard/__dashboard",
-         path: "experience/new",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/experience/new-CWQ3AKKI.js",
-         imports: ["/build/_shared/chunk-AVEI5MXU.js", "/build/_shared/chunk-O5SOJ3II.js"],
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/experiences": {
-         id: "routes/dashboard/__dashboard/experiences",
-         parentId: "routes/dashboard/__dashboard",
-         path: "experiences",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/experiences-35GVC4JP.js",
-         imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/index": {
-         id: "routes/dashboard/__dashboard/index",
-         parentId: "routes/dashboard/__dashboard",
-         path: void 0,
-         index: !0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/index-2TGRGTCF.js",
-         imports: ["/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/profile": {
-         id: "routes/dashboard/__dashboard/profile",
-         parentId: "routes/dashboard/__dashboard",
-         path: "profile",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/profile-VUZHKCTB.js",
-         imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/index": {
-         id: "routes/index",
-         parentId: "root",
-         path: void 0,
-         index: !0,
-         caseSensitive: void 0,
-         module: "/build/routes/index-OIODPH4E.js",
-         imports: void 0,
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/posts/$postId": {
-         id: "routes/posts/$postId",
-         parentId: "root",
-         path: "posts/:postId",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/posts/$postId-YNJE7RFP.js",
-         imports: ["/build/_shared/chunk-BAE6T5G7.js"],
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/posts/delete-post": {
-         id: "routes/posts/delete-post",
-         parentId: "root",
-         path: "posts/delete-post",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/posts/delete-post-DRJVTCFF.js",
-         imports: void 0,
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/posts/index": {
-         id: "routes/posts/index",
-         parentId: "root",
-         path: "posts",
-         index: !0,
-         caseSensitive: void 0,
-         module: "/build/routes/posts/index-2K4GXOFO.js",
-         imports: ["/build/_shared/chunk-BAE6T5G7.js", "/build/_shared/chunk-ENKIADX3.js"],
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/profiles/$profileId": {
-         id: "routes/profiles/$profileId",
-         parentId: "root",
-         path: "profiles/:profileId",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/profiles/$profileId-7RPUATEO.js",
-         imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/profiles/index": {
-         id: "routes/profiles/index",
-         parentId: "root",
-         path: "profiles",
-         index: !0,
-         caseSensitive: void 0,
-         module: "/build/routes/profiles/index-XSTRPDO4.js",
-         imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-MQDMLQQO.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      }
-   },
-   url: "/build/manifest-5D77710C.js"
-};
+var assets_manifest_default = { version: "2112044e", entry: { module: "/build/entry.client-FJVRV73T.js", imports: ["/build/_shared/chunk-KZ663W32.js", "/build/_shared/chunk-SMWPKSDY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-IOZFLRTE.js", imports: ["/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/__auth/login": { id: "routes/__auth/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/login-SUSIYFCY.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/logout": { id: "routes/__auth/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/logout-GZBFO4HC.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/register": { id: "routes/__auth/register", parentId: "root", path: "register", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/register-VO3PUAFN.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard": { id: "routes/dashboard/__dashboard", parentId: "root", path: "dashboard/", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard-PQCIFM6N.js", imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-ENKIADX3.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/create-profile": { id: "routes/dashboard/__dashboard/create-profile", parentId: "routes/dashboard/__dashboard", path: "create-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/create-profile-67NG3XCN.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/edit-profile": { id: "routes/dashboard/__dashboard/edit-profile", parentId: "routes/dashboard/__dashboard", path: "edit-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/edit-profile-WC77XCWU.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/edit/$educationId": { id: "routes/dashboard/__dashboard/education/edit/$educationId", parentId: "routes/dashboard/__dashboard", path: "education/edit/:educationId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/edit/$educationId-O7OGSDCQ.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-LCID5XWU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/new": { id: "routes/dashboard/__dashboard/education/new", parentId: "routes/dashboard/__dashboard", path: "education/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/new-QQ6PE6YZ.js", imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/educations": { id: "routes/dashboard/__dashboard/educations", parentId: "routes/dashboard/__dashboard", path: "educations", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/educations-2MWFBUOS.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-LCID5XWU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/edit/$experienceId": { id: "routes/dashboard/__dashboard/experience/edit/$experienceId", parentId: "routes/dashboard/__dashboard", path: "experience/edit/:experienceId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/edit/$experienceId-DRL53BB3.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/new": { id: "routes/dashboard/__dashboard/experience/new", parentId: "routes/dashboard/__dashboard", path: "experience/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/new-CWQ3AKKI.js", imports: ["/build/_shared/chunk-AVEI5MXU.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experiences": { id: "routes/dashboard/__dashboard/experiences", parentId: "routes/dashboard/__dashboard", path: "experiences", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experiences-35GVC4JP.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/index": { id: "routes/dashboard/__dashboard/index", parentId: "routes/dashboard/__dashboard", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/index-2TGRGTCF.js", imports: ["/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/profile": { id: "routes/dashboard/__dashboard/profile", parentId: "routes/dashboard/__dashboard", path: "profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/profile-VUZHKCTB.js", imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-OIODPH4E.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$postId": { id: "routes/posts/$postId", parentId: "root", path: "posts/:postId", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$postId-EPNFQLH7.js", imports: ["/build/_shared/chunk-BAE6T5G7.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$postId.delete": { id: "routes/posts/$postId.delete", parentId: "root", path: "posts/:postId/delete", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$postId.delete-GQTMURJ6.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/delete-post": { id: "routes/posts/delete-post", parentId: "root", path: "posts/delete-post", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/delete-post-DRJVTCFF.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/index": { id: "routes/posts/index", parentId: "root", path: "posts", index: !0, caseSensitive: void 0, module: "/build/routes/posts/index-2K4GXOFO.js", imports: ["/build/_shared/chunk-BAE6T5G7.js", "/build/_shared/chunk-ENKIADX3.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/$profileId": { id: "routes/profiles/$profileId", parentId: "root", path: "profiles/:profileId", index: void 0, caseSensitive: void 0, module: "/build/routes/profiles/$profileId-7RPUATEO.js", imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/index": { id: "routes/profiles/index", parentId: "root", path: "profiles", index: !0, caseSensitive: void 0, module: "/build/routes/profiles/index-XSTRPDO4.js", imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-2112044E.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
@@ -7147,34 +6890,42 @@ var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { mod
     path: void 0,
     index: !0,
     caseSensitive: void 0,
-     module: dashboard_exports2
+    module: dashboard_exports2
   },
-   "routes/profiles/$profileId": {
-      id: "routes/profiles/$profileId",
-      parentId: "root",
-      path: "profiles/:profileId",
-      index: void 0,
-      caseSensitive: void 0,
-      module: profileId_exports
-   },
-   "routes/posts/delete-post": {
-      id: "routes/posts/delete-post",
-      parentId: "root",
-      path: "posts/delete-post",
-      index: void 0,
-      caseSensitive: void 0,
-      module: delete_post_exports
-   },
-   "routes/__auth/register": {
-      id: "routes/__auth/register",
-      parentId: "root",
-      path: "register",
-      index: void 0,
-      caseSensitive: void 0,
-      module: register_exports
-   },
-   "routes/profiles/index": {
-      id: "routes/profiles/index",
+  "routes/posts/$postId.delete": {
+    id: "routes/posts/$postId.delete",
+    parentId: "root",
+    path: "posts/:postId/delete",
+    index: void 0,
+    caseSensitive: void 0,
+    module: postId_delete_exports
+  },
+  "routes/profiles/$profileId": {
+    id: "routes/profiles/$profileId",
+    parentId: "root",
+    path: "profiles/:profileId",
+    index: void 0,
+    caseSensitive: void 0,
+    module: profileId_exports
+  },
+  "routes/posts/delete-post": {
+    id: "routes/posts/delete-post",
+    parentId: "root",
+    path: "posts/delete-post",
+    index: void 0,
+    caseSensitive: void 0,
+    module: delete_post_exports
+  },
+  "routes/__auth/register": {
+    id: "routes/__auth/register",
+    parentId: "root",
+    path: "register",
+    index: void 0,
+    caseSensitive: void 0,
+    module: register_exports
+  },
+  "routes/profiles/index": {
+    id: "routes/profiles/index",
     parentId: "root",
     path: "profiles",
     index: !0,
