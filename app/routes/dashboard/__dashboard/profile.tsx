@@ -10,17 +10,20 @@ import { Experience } from "~/models/experience.server";
 import { Education } from "~/models/education.server";
 import { getProfileWIthAll } from "~/models/profile.server";
 import { format } from "date-fns";
+import { getUserRepos } from "~/models/github.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
    const userId = await authenticatedUser(request);
    if (!userId) return redirect("/");
    const profile = await getProfileWIthAll(userId);
+   if (!profile) return redirect("/dashboard/create-profile");
+   const { repos } = await getUserRepos(profile.githubUsername as string);
 
-   return json({ profile });
+   return json({ profile, repos });
 };
 
 export default function ProfileShow() {
-   const { profile } = useLoaderData();
+   const { profile, repos } = useLoaderData();
 
    const renderExperience = (exp: Experience) => (
       <div key={exp.id} className="list-inside space-y-1 mb-4">
@@ -220,40 +223,26 @@ export default function ProfileShow() {
                         </span>
                         <span className="tracking-wide">Github repos</span>
                      </div>
+
                      {/* List of repos */}
-                     <div className="flex justify-between border">
-                        <div className="flex flex-col m-3 ml-4 text-sm">
-                           <p className="text-blueGreen font-semibold">testing</p>
-                           <p className="mt-4">Testing</p>
+                     {repos && repos.length > 0 ? repos.map((repo: any) => (
+                           <div key={repo.id} className="flex justify-between border">
+                              <div className="flex flex-col m-3 ml-4 text-sm">
+                                 <a href={repo.html_url} className="text-blueGreen font-semibold">{repo.name}</a>
+                                 <p className="mt-4">{repo.description}</p>
+                              </div>
+                              <div className="flex flex-col space-y-1 text-xs text-center m-3">
+                                 <div className="bg-blueGreen text-gray-200 p-1">Stars: {repo.stargazers_count}</div>
+                                 <div className="bg-darkColor text-gray-200 p-1">Watchers: {repo.watchers_count}</div>
+                                 <div className="bg-gray-200 p-1">Forks: {repo.forks}</div>
+                              </div>
+                           </div>
+                        )) :
+                        <div className="text-gray-700 text-sm">
+                           <div className="font-semibold">No Github Profile Found</div>
                         </div>
-                        <div className="flex flex-col space-y-1 text-xs text-center m-3">
-                           <div className="bg-blueGreen text-gray-200 p-1">Stars: 2</div>
-                           <div className="bg-darkColor text-gray-200 p-1">Watchers: 2</div>
-                           <div className="bg-gray-200 p-1">Forks: 23</div>
-                        </div>
-                     </div>
-                     <div className="flex justify-between border">
-                        <div className="flex flex-col m-3 ml-4 text-sm">
-                           <p className="text-blueGreen font-semibold">testing</p>
-                           <p className="mt-4">Testing</p>
-                        </div>
-                        <div className="flex flex-col space-y-1 text-xs text-center m-3">
-                           <div className="bg-blueGreen text-gray-200 p-1">Stars: 2</div>
-                           <div className="bg-darkColor text-gray-200 p-1">Watchers: 2</div>
-                           <div className="bg-gray-200 p-1">Forks: 23</div>
-                        </div>
-                     </div>
-                     <div className="flex justify-between border">
-                        <div className="flex flex-col m-3 ml-4 text-sm">
-                           <p className="text-blueGreen font-semibold">testing</p>
-                           <p className="mt-4">Testing</p>
-                        </div>
-                        <div className="flex flex-col space-y-1 text-xs text-center m-3">
-                           <div className="bg-blueGreen text-gray-200 p-1">Stars: 2</div>
-                           <div className="bg-darkColor text-gray-200 p-1">Watchers: 2</div>
-                           <div className="bg-gray-200 p-1">Forks: 23</div>
-                        </div>
-                     </div>
+                     }
+
                      {/*   End of list of repos */}
                   </div>
                   {/* End of about section */}
