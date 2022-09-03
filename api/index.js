@@ -1349,7 +1349,7 @@ __export(delete_exports, {
 var import_node6 = require("@remix-run/node");
 var loader5 = () => (0, import_node6.redirect)("/dashboard"), action2 = async ({ request }) => {
   let expId = (await request.formData()).get("expId");
-  return expId ? (await deleteExperience(expId.toString()), (0, import_node6.redirect)("/dashboard")) : (0, import_node6.redirect)("/dashboard");
+  return expId ? (await deleteExperience(expId.toString()), (0, import_node6.redirect)("/dashboard/experiences")) : (0, import_node6.redirect)("/dashboard");
 };
 
 // app/routes/dashboard/__dashboard/create-profile.tsx
@@ -1748,16 +1748,15 @@ __export(new_exports, {
 });
 var import_react12 = require("react"), import_node8 = require("@remix-run/node"), import_react13 = require("@remix-run/react");
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action4 = async ({ request }) => {
-   let fieldNames = ["title", "company", "location", "from", "to", "current", "description"],
-       fieldsToValidate = ["title", "company", "from"], errorMessages = {
-          title: "Job Title is required",
-          company: "Company is required",
-          from: "From date is required"
-       }, { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
-   if (errors)
-      return (0, import_node8.json)({ errors });
-   let experience = await createExperience(request, data);
-   return (0, import_node8.redirect)("/dashboard/experiences");
+  let fieldNames = ["title", "company", "location", "from", "to", "current", "description"], fieldsToValidate = ["title", "company", "from"], errorMessages = {
+    title: "Job Title is required",
+    company: "Company is required",
+    from: "From date is required"
+  }, { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
+  if (errors)
+    return (0, import_node8.json)({ errors });
+  let experience = await createExperience(request, data);
+  return (0, import_node8.redirect)("/dashboard/experiences");
 };
 function Experience2() {
   var _a, _b, _c, _d;
@@ -1772,20 +1771,20 @@ function Experience2() {
             className: "text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate",
             children: "Add an Experience"
           }, void 0, !1, {
-             fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-             lineNumber: 34,
-             columnNumber: 16
+            fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+            lineNumber: 34,
+            columnNumber: 16
           }, this)
         }, void 0, !1, {
-           fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-           lineNumber: 33,
-           columnNumber: 13
+          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+          lineNumber: 33,
+          columnNumber: 13
         }, this)
       }, void 0, !1, {
-          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-          lineNumber: 32,
-          columnNumber: 10
-       }, this),
+        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+        lineNumber: 32,
+        columnNumber: 10
+      }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         className: "max-w-7xl mx-auto px-4 sm:px-6 md:px-8",
         children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -1807,24 +1806,24 @@ function Experience2() {
                           placeholder: "* Job Title",
                           className: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                            lineNumber: 43,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 43,
+                          columnNumber: 28
+                        }, this),
                         (_a = actionData == null ? void 0 : actionData.errors) != null && _a.title ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.title
                         }, void 0, !1, {
-                           fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                           lineNumber: 48,
-                           columnNumber: 31
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 48,
+                          columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                        lineNumber: 42,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                      lineNumber: 42,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -1834,24 +1833,24 @@ function Experience2() {
                           placeholder: "* Company",
                           className: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                            lineNumber: 53,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 53,
+                          columnNumber: 28
+                        }, this),
                         (_b = actionData == null ? void 0 : actionData.errors) != null && _b.company ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.company
                         }, void 0, !1, {
-                           fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                           lineNumber: 58,
-                           columnNumber: 31
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 58,
+                          columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                        lineNumber: 52,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                      lineNumber: 52,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
@@ -1860,15 +1859,15 @@ function Experience2() {
                         placeholder: "Location",
                         className: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       }, void 0, !1, {
-                         fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                         lineNumber: 63,
-                         columnNumber: 28
+                        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                        lineNumber: 63,
+                        columnNumber: 28
                       }, this)
                     }, void 0, !1, {
-                        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                        lineNumber: 62,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                      lineNumber: 62,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -1877,24 +1876,24 @@ function Experience2() {
                           name: "from",
                           className: "appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                            lineNumber: 70,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 70,
+                          columnNumber: 28
+                        }, this),
                         (_c = actionData == null ? void 0 : actionData.errors) != null && _c.from ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.from
                         }, void 0, !1, {
-                           fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                           lineNumber: 74,
-                           columnNumber: 31
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 74,
+                          columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                        lineNumber: 69,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                      lineNumber: 69,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "flex items-center",
                       children: [
@@ -1905,25 +1904,25 @@ function Experience2() {
                           onChange: () => toggleCurrentJob(!isCurrentJob),
                           className: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                            lineNumber: 80,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 80,
+                          columnNumber: 28
+                        }, this),
                         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("label", {
                           htmlFor: "push-everything",
                           className: "ml-2 block text-sm font-medium text-gray-700",
                           children: "Current Job"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                            lineNumber: 84,
-                            columnNumber: 28
-                         }, this)
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 84,
+                          columnNumber: 28
+                        }, this)
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                        lineNumber: 78,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                      lineNumber: 78,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -1933,24 +1932,24 @@ function Experience2() {
                           disabled: isCurrentJob,
                           className: "appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                            lineNumber: 88,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 88,
+                          columnNumber: 28
+                        }, this),
                         (_d = actionData == null ? void 0 : actionData.errors) != null && _d.to ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.to
                         }, void 0, !1, {
-                           fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                           lineNumber: 93,
-                           columnNumber: 31
+                          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                          lineNumber: 93,
+                          columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                        lineNumber: 87,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                      lineNumber: 87,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("textarea", {
@@ -1959,21 +1958,21 @@ function Experience2() {
                         className: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm",
                         placeholder: "Job Description"
                       }, void 0, !1, {
-                         fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                         lineNumber: 98,
-                         columnNumber: 31
+                        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                        lineNumber: 98,
+                        columnNumber: 31
                       }, this)
                     }, void 0, !1, {
-                        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                        lineNumber: 97,
-                        columnNumber: 25
-                     }, this)
+                      fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                      lineNumber: 97,
+                      columnNumber: 25
+                    }, this)
                   ]
                 }, void 0, !0, {
-                    fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                    lineNumber: 41,
-                    columnNumber: 22
-                 }, this),
+                  fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                  lineNumber: 41,
+                  columnNumber: 22
+                }, this),
                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                   className: "px-4 py-3 bg-gray-50 text-right sm:px-6",
                   children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
@@ -1981,41 +1980,41 @@ function Experience2() {
                     className: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
                     children: "Save Experience"
                   }, void 0, !1, {
-                     fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                     lineNumber: 106,
-                     columnNumber: 25
+                    fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                    lineNumber: 106,
+                    columnNumber: 25
                   }, this)
                 }, void 0, !1, {
-                    fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-                    lineNumber: 105,
-                    columnNumber: 22
-                 }, this)
+                  fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+                  lineNumber: 105,
+                  columnNumber: 22
+                }, this)
               ]
             }, void 0, !0, {
-               fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-               lineNumber: 40,
-               columnNumber: 19
+              fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+              lineNumber: 40,
+              columnNumber: 19
             }, this)
           }, void 0, !1, {
-             fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-             lineNumber: 39,
-             columnNumber: 16
+            fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+            lineNumber: 39,
+            columnNumber: 16
           }, this)
         }, void 0, !1, {
-           fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-           lineNumber: 38,
-           columnNumber: 13
+          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+          lineNumber: 38,
+          columnNumber: 13
         }, this)
       }, void 0, !1, {
-          fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-          lineNumber: 37,
-          columnNumber: 10
-       }, this)
+        fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+        lineNumber: 37,
+        columnNumber: 10
+      }, this)
     ]
   }, void 0, !0, {
-     fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
-     lineNumber: 31,
-     columnNumber: 7
+    fileName: "app/routes/dashboard/__dashboard/experience/new.tsx",
+    lineNumber: 31,
+    columnNumber: 7
   }, this);
 }
 
@@ -2027,16 +2026,15 @@ __export(new_exports2, {
 });
 var import_react14 = require("react"), import_react15 = require("@remix-run/react"), import_node9 = require("@remix-run/node");
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action5 = async ({ request }) => {
-   let fieldNames = ["school", "degree", "fieldofstudy", "from", "to", "current", "description"],
-       fieldsToValidate = ["school", "degree", "from"], errorMessages = {
-          school: "School or bootcamp is required",
-          degree: "Degree is required",
-          from: "From date is required"
-       }, { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
-   if (errors)
-      return (0, import_node9.json)({ errors });
-   let education = await createEducation(request, data);
-   return (0, import_node9.redirect)("/dashboard/educations");
+  let fieldNames = ["school", "degree", "fieldofstudy", "from", "to", "current", "description"], fieldsToValidate = ["school", "degree", "from"], errorMessages = {
+    school: "School or bootcamp is required",
+    degree: "Degree is required",
+    from: "From date is required"
+  }, { errors, data } = await processEduExp(request, fieldNames, fieldsToValidate, errorMessages);
+  if (errors)
+    return (0, import_node9.json)({ errors });
+  let education = await createEducation(request, data);
+  return (0, import_node9.redirect)("/dashboard/educations");
 };
 function Experience3() {
   var _a, _b, _c, _d;
@@ -2051,20 +2049,20 @@ function Experience3() {
             className: "text-3xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate",
             children: "Add Education"
           }, void 0, !1, {
-             fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-             lineNumber: 37,
-             columnNumber: 16
+            fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+            lineNumber: 37,
+            columnNumber: 16
           }, this)
         }, void 0, !1, {
-           fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-           lineNumber: 36,
-           columnNumber: 13
+          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+          lineNumber: 36,
+          columnNumber: 13
         }, this)
       }, void 0, !1, {
-          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-          lineNumber: 35,
-          columnNumber: 10
-       }, this),
+        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+        lineNumber: 35,
+        columnNumber: 10
+      }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         className: "max-w-7xl mx-auto px-4 sm:px-6 md:px-8",
         children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -2086,24 +2084,24 @@ function Experience3() {
                           placeholder: "* School or Bootcamp",
                           className: "font-bold font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                            lineNumber: 46,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 46,
+                          columnNumber: 28
+                        }, this),
                         (_a = actionData == null ? void 0 : actionData.errors) != null && _a.school ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.school
                         }, void 0, !1, {
-                           fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                           lineNumber: 51,
-                           columnNumber: 31
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 51,
+                          columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                        lineNumber: 45,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                      lineNumber: 45,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -2113,24 +2111,24 @@ function Experience3() {
                           placeholder: "* Degree or Certificate",
                           className: "font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                            lineNumber: 56,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 56,
+                          columnNumber: 28
+                        }, this),
                         (_b = actionData == null ? void 0 : actionData.errors) != null && _b.degree ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.degree
                         }, void 0, !1, {
-                           fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                           lineNumber: 61,
-                           columnNumber: 31
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 61,
+                          columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                        lineNumber: 55,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                      lineNumber: 55,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
@@ -2139,15 +2137,15 @@ function Experience3() {
                         placeholder: "Field Of Study",
                         className: "font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       }, void 0, !1, {
-                         fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                         lineNumber: 66,
-                         columnNumber: 28
+                        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                        lineNumber: 66,
+                        columnNumber: 28
                       }, this)
                     }, void 0, !1, {
-                        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                        lineNumber: 65,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                      lineNumber: 65,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -2156,24 +2154,24 @@ function Experience3() {
                           name: "from",
                           className: "font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                            lineNumber: 72,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 72,
+                          columnNumber: 28
+                        }, this),
                         (_c = actionData == null ? void 0 : actionData.errors) != null && _c.from ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.from
                         }, void 0, !1, {
-                           fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                           lineNumber: 76,
-                           columnNumber: 31
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 76,
+                          columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                        lineNumber: 71,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                      lineNumber: 71,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "flex items-center",
                       children: [
@@ -2184,25 +2182,25 @@ function Experience3() {
                           onChange: () => toggleCurrentJob(!isCurrentJob),
                           className: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                            lineNumber: 82,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 82,
+                          columnNumber: 28
+                        }, this),
                         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("label", {
                           htmlFor: "push-everything",
                           className: "ml-2 block text-sm font-medium text-gray-700",
                           children: "Current School or Bootcamp"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                            lineNumber: 85,
-                            columnNumber: 28
-                         }, this)
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 85,
+                          columnNumber: 28
+                        }, this)
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                        lineNumber: 80,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                      lineNumber: 80,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: [
@@ -2212,24 +2210,24 @@ function Experience3() {
                           disabled: isCurrentJob,
                           className: "font-bold appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         }, void 0, !1, {
-                            fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                            lineNumber: 92,
-                            columnNumber: 28
-                         }, this),
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 92,
+                          columnNumber: 28
+                        }, this),
                         (_d = actionData == null ? void 0 : actionData.errors) != null && _d.to ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                           className: "py-1 text-red-700 text-sm",
                           children: actionData == null ? void 0 : actionData.errors.to
                         }, void 0, !1, {
-                           fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                           lineNumber: 97,
-                           columnNumber: 31
+                          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                          lineNumber: 97,
+                          columnNumber: 31
                         }, this) : null
                       ]
                     }, void 0, !0, {
-                        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                        lineNumber: 91,
-                        columnNumber: 25
-                     }, this),
+                      fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                      lineNumber: 91,
+                      columnNumber: 25
+                    }, this),
                     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "col-span-6 sm:col-span-4",
                       children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("textarea", {
@@ -2238,21 +2236,21 @@ function Experience3() {
                         className: "font-bold appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm",
                         placeholder: "Program Description"
                       }, void 0, !1, {
-                         fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                         lineNumber: 102,
-                         columnNumber: 28
+                        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                        lineNumber: 102,
+                        columnNumber: 28
                       }, this)
                     }, void 0, !1, {
-                        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                        lineNumber: 101,
-                        columnNumber: 25
-                     }, this)
+                      fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                      lineNumber: 101,
+                      columnNumber: 25
+                    }, this)
                   ]
                 }, void 0, !0, {
-                    fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                    lineNumber: 44,
-                    columnNumber: 22
-                 }, this),
+                  fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                  lineNumber: 44,
+                  columnNumber: 22
+                }, this),
                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                   className: "px-4 py-3 bg-gray-50 text-right sm:px-6",
                   children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
@@ -2260,41 +2258,41 @@ function Experience3() {
                     className: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
                     children: "Add Education"
                   }, void 0, !1, {
-                     fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                     lineNumber: 110,
-                     columnNumber: 25
+                    fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                    lineNumber: 110,
+                    columnNumber: 25
                   }, this)
                 }, void 0, !1, {
-                    fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-                    lineNumber: 109,
-                    columnNumber: 22
-                 }, this)
+                  fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+                  lineNumber: 109,
+                  columnNumber: 22
+                }, this)
               ]
             }, void 0, !0, {
-               fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-               lineNumber: 43,
-               columnNumber: 19
+              fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+              lineNumber: 43,
+              columnNumber: 19
             }, this)
           }, void 0, !1, {
-             fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-             lineNumber: 42,
-             columnNumber: 16
+            fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+            lineNumber: 42,
+            columnNumber: 16
           }, this)
         }, void 0, !1, {
-           fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-           lineNumber: 41,
-           columnNumber: 13
+          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+          lineNumber: 41,
+          columnNumber: 13
         }, this)
       }, void 0, !1, {
-          fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-          lineNumber: 40,
-          columnNumber: 10
-       }, this)
+        fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+        lineNumber: 40,
+        columnNumber: 10
+      }, this)
     ]
   }, void 0, !0, {
-     fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
-     lineNumber: 34,
-     columnNumber: 7
+    fileName: "app/routes/dashboard/__dashboard/education/new.tsx",
+    lineNumber: 34,
+    columnNumber: 7
   }, this);
 }
 
@@ -2890,15 +2888,30 @@ function ExperienceList() {
                         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("td", {
                           className: "relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6",
                           children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react17.Form, {
-                            children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
-                              className: "bg-red-600 text-gray-100 py-2 px-5 rounded-md",
-                              children: "Delete"
-                            }, void 0, !1, {
-                              fileName: "app/routes/dashboard/__dashboard/experiences.tsx",
-                              lineNumber: 88,
-                              columnNumber: 37
-                            }, this)
-                          }, void 0, !1, {
+                            action: "/dashboard/experience/delete",
+                            method: "post",
+                            children: [
+                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
+                                type: "hidden",
+                                name: "expId",
+                                value: exp.id
+                              }, void 0, !1, {
+                                fileName: "app/routes/dashboard/__dashboard/experiences.tsx",
+                                lineNumber: 88,
+                                columnNumber: 37
+                              }, this),
+                              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
+                                type: "submit",
+                                value: "deleteExperience",
+                                className: "bg-red-600 text-gray-100 py-2 px-5 rounded-md",
+                                children: "Delete"
+                              }, void 0, !1, {
+                                fileName: "app/routes/dashboard/__dashboard/experiences.tsx",
+                                lineNumber: 89,
+                                columnNumber: 37
+                              }, this)
+                            ]
+                          }, void 0, !0, {
                             fileName: "app/routes/dashboard/__dashboard/experiences.tsx",
                             lineNumber: 87,
                             columnNumber: 34
@@ -6808,315 +6821,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = {
-   version: "1f332f44",
-   entry: {
-      module: "/build/entry.client-FJVRV73T.js",
-      imports: ["/build/_shared/chunk-KZ663W32.js", "/build/_shared/chunk-SMWPKSDY.js"]
-   },
-   routes: {
-      root: {
-         id: "root",
-         parentId: void 0,
-         path: "",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/root-IOZFLRTE.js",
-         imports: ["/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !0
-      },
-      "routes/__auth/login": {
-         id: "routes/__auth/login",
-         parentId: "root",
-         path: "login",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/__auth/login-SUSIYFCY.js",
-         imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"],
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/__auth/logout": {
-         id: "routes/__auth/logout",
-         parentId: "root",
-         path: "logout",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/__auth/logout-GZBFO4HC.js",
-         imports: void 0,
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/__auth/register": {
-         id: "routes/__auth/register",
-         parentId: "root",
-         path: "register",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/__auth/register-VO3PUAFN.js",
-         imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"],
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard": {
-         id: "routes/dashboard/__dashboard",
-         parentId: "root",
-         path: "dashboard/",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard-PQCIFM6N.js",
-         imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-ENKIADX3.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/create-profile": {
-         id: "routes/dashboard/__dashboard/create-profile",
-         parentId: "routes/dashboard/__dashboard",
-         path: "create-profile",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/create-profile-67NG3XCN.js",
-         imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/edit-profile": {
-         id: "routes/dashboard/__dashboard/edit-profile",
-         parentId: "routes/dashboard/__dashboard",
-         path: "edit-profile",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/edit-profile-WC77XCWU.js",
-         imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/education/edit/$educationId": {
-         id: "routes/dashboard/__dashboard/education/edit/$educationId",
-         parentId: "routes/dashboard/__dashboard",
-         path: "education/edit/:educationId",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/education/edit/$educationId-UAQESMQ7.js",
-         imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/education/new": {
-         id: "routes/dashboard/__dashboard/education/new",
-         parentId: "routes/dashboard/__dashboard",
-         path: "education/new",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/education/new-LINOS7RZ.js",
-         imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-O5SOJ3II.js"],
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/educations": {
-         id: "routes/dashboard/__dashboard/educations",
-         parentId: "routes/dashboard/__dashboard",
-         path: "educations",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/educations-QTLNIH5Y.js",
-         imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/experience/delete": {
-         id: "routes/dashboard/__dashboard/experience/delete",
-         parentId: "routes/dashboard/__dashboard",
-         path: "experience/delete",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/experience/delete-RGV3SVV7.js",
-         imports: void 0,
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/experience/edit/$experienceId": {
-         id: "routes/dashboard/__dashboard/experience/edit/$experienceId",
-         parentId: "routes/dashboard/__dashboard",
-         path: "experience/edit/:experienceId",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/experience/edit/$experienceId-JBB4PZ2L.js",
-         imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"],
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/experience/new": {
-         id: "routes/dashboard/__dashboard/experience/new",
-         parentId: "routes/dashboard/__dashboard",
-         path: "experience/new",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/experience/new-ZQ3DDWZL.js",
-         imports: ["/build/_shared/chunk-O5SOJ3II.js", "/build/_shared/chunk-AVEI5MXU.js"],
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/experiences": {
-         id: "routes/dashboard/__dashboard/experiences",
-         parentId: "routes/dashboard/__dashboard",
-         path: "experiences",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/experiences-C3JSOWBS.js",
-         imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/index": {
-         id: "routes/dashboard/__dashboard/index",
-         parentId: "routes/dashboard/__dashboard",
-         path: void 0,
-         index: !0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/index-XYP3CA3D.js",
-         imports: ["/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/dashboard/__dashboard/profile": {
-         id: "routes/dashboard/__dashboard/profile",
-         parentId: "routes/dashboard/__dashboard",
-         path: "profile",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/dashboard/__dashboard/profile-VUZHKCTB.js",
-         imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/index": {
-         id: "routes/index",
-         parentId: "root",
-         path: void 0,
-         index: !0,
-         caseSensitive: void 0,
-         module: "/build/routes/index-OIODPH4E.js",
-         imports: void 0,
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/posts/$postId": {
-         id: "routes/posts/$postId",
-         parentId: "root",
-         path: "posts/:postId",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/posts/$postId-TE57AS7E.js",
-         imports: ["/build/_shared/chunk-BAE6T5G7.js"],
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/posts/$postId.delete": {
-         id: "routes/posts/$postId.delete",
-         parentId: "root",
-         path: "posts/:postId/delete",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/posts/$postId.delete-GQTMURJ6.js",
-         imports: void 0,
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/posts/delete-post": {
-         id: "routes/posts/delete-post",
-         parentId: "root",
-         path: "posts/delete-post",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/posts/delete-post-DRJVTCFF.js",
-         imports: void 0,
-         hasAction: !0,
-         hasLoader: !1,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/posts/index": {
-         id: "routes/posts/index",
-         parentId: "root",
-         path: "posts",
-         index: !0,
-         caseSensitive: void 0,
-         module: "/build/routes/posts/index-6NYQOW7M.js",
-         imports: ["/build/_shared/chunk-BAE6T5G7.js", "/build/_shared/chunk-ENKIADX3.js"],
-         hasAction: !0,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/profiles/$profileId": {
-         id: "routes/profiles/$profileId",
-         parentId: "root",
-         path: "profiles/:profileId",
-         index: void 0,
-         caseSensitive: void 0,
-         module: "/build/routes/profiles/$profileId-7RPUATEO.js",
-         imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      },
-      "routes/profiles/index": {
-         id: "routes/profiles/index",
-         parentId: "root",
-         path: "profiles",
-         index: !0,
-         caseSensitive: void 0,
-         module: "/build/routes/profiles/index-MC2QWMPH.js",
-         imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-MQDMLQQO.js"],
-         hasAction: !1,
-         hasLoader: !0,
-         hasCatchBoundary: !1,
-         hasErrorBoundary: !1
-      }
-   },
-   url: "/build/manifest-1F332F44.js"
-};
+var assets_manifest_default = { version: "07fd3631", entry: { module: "/build/entry.client-FJVRV73T.js", imports: ["/build/_shared/chunk-KZ663W32.js", "/build/_shared/chunk-SMWPKSDY.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-IOZFLRTE.js", imports: ["/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !0 }, "routes/__auth/login": { id: "routes/__auth/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/login-SUSIYFCY.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/logout": { id: "routes/__auth/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/logout-GZBFO4HC.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/__auth/register": { id: "routes/__auth/register", parentId: "root", path: "register", index: void 0, caseSensitive: void 0, module: "/build/routes/__auth/register-VO3PUAFN.js", imports: ["/build/_shared/chunk-ENKIADX3.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard": { id: "routes/dashboard/__dashboard", parentId: "root", path: "dashboard/", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard-PQCIFM6N.js", imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-ENKIADX3.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/create-profile": { id: "routes/dashboard/__dashboard/create-profile", parentId: "routes/dashboard/__dashboard", path: "create-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/create-profile-67NG3XCN.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/edit-profile": { id: "routes/dashboard/__dashboard/edit-profile", parentId: "routes/dashboard/__dashboard", path: "edit-profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/edit-profile-WC77XCWU.js", imports: ["/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/edit/$educationId": { id: "routes/dashboard/__dashboard/education/edit/$educationId", parentId: "routes/dashboard/__dashboard", path: "education/edit/:educationId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/edit/$educationId-UAQESMQ7.js", imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/education/new": { id: "routes/dashboard/__dashboard/education/new", parentId: "routes/dashboard/__dashboard", path: "education/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/education/new-LINOS7RZ.js", imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-O5SOJ3II.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/educations": { id: "routes/dashboard/__dashboard/educations", parentId: "routes/dashboard/__dashboard", path: "educations", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/educations-QTLNIH5Y.js", imports: ["/build/_shared/chunk-LCID5XWU.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/delete": { id: "routes/dashboard/__dashboard/experience/delete", parentId: "routes/dashboard/__dashboard", path: "experience/delete", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/delete-RGV3SVV7.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/edit/$experienceId": { id: "routes/dashboard/__dashboard/experience/edit/$experienceId", parentId: "routes/dashboard/__dashboard", path: "experience/edit/:experienceId", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/edit/$experienceId-JBB4PZ2L.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experience/new": { id: "routes/dashboard/__dashboard/experience/new", parentId: "routes/dashboard/__dashboard", path: "experience/new", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experience/new-ZQ3DDWZL.js", imports: ["/build/_shared/chunk-O5SOJ3II.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/experiences": { id: "routes/dashboard/__dashboard/experiences", parentId: "routes/dashboard/__dashboard", path: "experiences", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/experiences-6QMPG4FC.js", imports: ["/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js", "/build/_shared/chunk-AVEI5MXU.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/index": { id: "routes/dashboard/__dashboard/index", parentId: "routes/dashboard/__dashboard", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/index-XYP3CA3D.js", imports: ["/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/__dashboard/profile": { id: "routes/dashboard/__dashboard/profile", parentId: "routes/dashboard/__dashboard", path: "profile", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard/__dashboard/profile-VUZHKCTB.js", imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js", "/build/_shared/chunk-TF35UPAM.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-OIODPH4E.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$postId": { id: "routes/posts/$postId", parentId: "root", path: "posts/:postId", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$postId-TE57AS7E.js", imports: ["/build/_shared/chunk-BAE6T5G7.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$postId.delete": { id: "routes/posts/$postId.delete", parentId: "root", path: "posts/:postId/delete", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$postId.delete-GQTMURJ6.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/delete-post": { id: "routes/posts/delete-post", parentId: "root", path: "posts/delete-post", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/delete-post-DRJVTCFF.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/index": { id: "routes/posts/index", parentId: "root", path: "posts", index: !0, caseSensitive: void 0, module: "/build/routes/posts/index-6NYQOW7M.js", imports: ["/build/_shared/chunk-BAE6T5G7.js", "/build/_shared/chunk-ENKIADX3.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/$profileId": { id: "routes/profiles/$profileId", parentId: "root", path: "profiles/:profileId", index: void 0, caseSensitive: void 0, module: "/build/routes/profiles/$profileId-7RPUATEO.js", imports: ["/build/_shared/chunk-NCMAT42P.js", "/build/_shared/chunk-AMVGLWOM.js", "/build/_shared/chunk-R3RO4OTF.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/profiles/index": { id: "routes/profiles/index", parentId: "root", path: "profiles", index: !0, caseSensitive: void 0, module: "/build/routes/profiles/index-MC2QWMPH.js", imports: ["/build/_shared/chunk-QBKUEEND.js", "/build/_shared/chunk-MQDMLQQO.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-07FD3631.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
