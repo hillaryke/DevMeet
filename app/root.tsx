@@ -13,6 +13,7 @@ import appstyles from "~/styles/OldApp.css";
 import styles from "~/styles/app.css";
 import Headerr from "~/components/Headerr";
 import { isAuthenticated } from "~/session.server";
+import "~/messenger-script";
 
 export const links: LinksFunction = () => {
    return [
@@ -29,7 +30,7 @@ export const links: LinksFunction = () => {
          href: "https://fonts.googleapis.com/css?family=Raleway"
       },
    ];
-}
+};
 
 export const meta: MetaFunction = () => ({
    charset: "utf-8",
@@ -42,6 +43,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function App() {
+   const messHTML = "      <!-- Load Facebook SDK for JavaScript -->\n" +
+      "      <div id=\"fb-root\"></div>\n" +
+      "\n" +
+      "\n" +
+      "      <!-- Your Chat Plugin code -->\n" +
+      "      <div className=\"fb-customerchat\"\n" +
+      "           attribution=\"install_email\"\n" +
+      "           attribution_version=\"biz_inbox\"\n" +
+      "           page_id=\"103713732669836\">\n" +
+      "      </div>"
+
    return (
       <html lang="en" className="h-full bg-gray-100">
       <head>
@@ -49,39 +61,19 @@ export default function App() {
          <Links/>
       </head>
       <body className="h-full font-Railway bg-sky-7">
-         <!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
-<script>
-window.fbAsyncInit = function() {
-  FB.init({
-    xfbml            : true,
-    version          : 'v16.0'
-  });
-};
 
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+      <div dangerouslySetInnerHTML={{ __html: messHTML }}></div>
 
-<!-- Your Chat Plugin code -->
-<div class="fb-customerchat"
-  attribution="install_email"
-  attribution_version="biz_inbox"
-  page_id="103713732669836">
-</div>
       <Headerr/>
       <Outlet/>
-    <ScrollRestoration/>
-    <script src="https://kit.fontawesome.com/b6db36476d.js" crossOrigin="anonymous"/>
-    <Scripts/>
-    <LiveReload/>
-    </body>
-    </html>
-  );
+      <ScrollRestoration/>
+      <script src="https://kit.fontawesome.com/b6db36476d.js" crossOrigin="anonymous"/>
+      <script src="messenger-script" />
+      <Scripts/>
+      <LiveReload/>
+      </body>
+      </html>
+   );
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
